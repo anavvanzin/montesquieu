@@ -1,0 +1,8 @@
+{
+  "name": "Whose Liberty? Montesquieu in Brazil",
+  "description": "Interactive 7-slide discussant presentation by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026) on Montesquieu, reception, context, and the conditions of liberty.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

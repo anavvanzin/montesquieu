@@ -1,0 +1,23 @@
+{
+  "name": "discussing-dauchy-report",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Scroll-driven HTML report on Dauchy’s Montesquieu, adapted from the Athena owl template",
+  "scripts": {
+    "dev": "node server.cjs",
+    "start": "node server.cjs",
+    "build": "node --check server.cjs",
+    "lint": "node --check server.cjs && node --check js/report.js && node --check js/studio.js && node --check js/timeline-data.mjs && node --check js/audience-sync-logic.mjs && node --check js/workspace-firebase.js && node --check js/three-meridian.js && node --check js/qr-svg.mjs && node --check js/voice-control.js && node --check js/remote-controller.js && npx eslint firestore.rules"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@firebase/eslint-plugin-security-rules": "^0.0.2",
+    "@google/genai": "^3.0.0",
+    "@types/three": "^0.187.0",
+    "eslint": "^10.14.0",
+    "firebase": "^13.2.0",
+    "three": "^0.187.0"
+  }
+}

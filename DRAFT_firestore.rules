@@ -1,0 +1,240 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Pillar 1: Global Default-Deny Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Reusable Hardened Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isOwner(userId) {
+      return isVerifiedUser() && request.auth.uid == userId;
+    }
+
+    // Validation Blueprint: SlideDeckState (matches firebase-blueprint.json)
+    function isValidSlideDeckState(data) {
+      return data.keys().hasAll([
+          'ownerId',
+          'deckTitle',
+          'edits',
+          'lastExportedSlidesId',
+          'lastExportedSlidesUrl',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'ownerId',
+          'deckTitle',
+          'edits',
+          'lastExportedSlidesId',
+          'lastExportedSlidesUrl',
+          'updatedAt'
+        ])
+        && data.ownerId is string
+        && data.ownerId.size() >= 1
+        && data.ownerId.size() <= 128
+        && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.ownerId == request.auth.uid
+        && data.deckTitle is string
+        && data.deckTitle.size() >= 1
+        && data.deckTitle.size() <= 200
+        && data.edits is map
+        && data.edits.size() <= 100
+        && data.lastExportedSlidesId is string
+        && data.lastExportedSlidesId.size() <= 160
+        && data.lastExportedSlidesUrl is string
+        && data.lastExportedSlidesUrl.size() <= 500
+        && data.updatedAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    // Validation Blueprint: SlideRevision (matches firebase-blueprint.json)
+    function isValidSlideRevision(data) {
+      return data.keys().hasAll([
+          'ownerId',
+          'label',
+          'edits',
+          'slidesUrl',
+          'createdAt'
+        ])
+        && data.keys().hasOnly([
+          'ownerId',
+          'label',
+          'edits',
+          'slidesUrl',
+          'createdAt'
+        ])
+        && data.ownerId is string
+        && data.ownerId.size() >= 1
+        && data.ownerId.size() <= 128
+        && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.ownerId == request.auth.uid
+        && data.label is string
+        && data.label.size() >= 1
+        && data.label.size() <= 160
+        && data.edits is map
+        && data.edits.size() <= 100
+        && data.slidesUrl is string
+        && data.slidesUrl.size() <= 500
+        && data.createdAt is timestamp
+        && data.createdAt == request.time;
+    }
+
+    // Validation Blueprint: AudienceSyncSession (matches firebase-blueprint.json)
+    function isValidAudienceSyncSession(data) {
+      return data.keys().hasAll([
+          'ownerId',
+          'sessionCode',
+          'presenterName',
+          'currentSlide',
+          'slideTitle',
+          'activeCallout',
+          'status',
+          'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'ownerId',
+          'sessionCode',
+          'presenterName',
+          'currentSlide',
+          'slideTitle',
+          'activeCallout',
+          'status',
+          'updatedAt'
+        ])
+        && data.ownerId is string
+        && data.ownerId.size() >= 1
+        && data.ownerId.size() <= 128
+        && data.ownerId.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.ownerId == request.auth.uid
+        && data.sessionCode is string
+        && data.sessionCode.size() >= 4
+        && data.sessionCode.size() <= 32
+        && data.sessionCode.matches('^[a-zA-Z0-9_\\-]+$')
+        && data.presenterName is string
+        && data.presenterName.size() >= 1
+        && data.presenterName.size() <= 120
+        && data.currentSlide is int
+        && data.currentSlide >= 1
+        && data.currentSlide <= 7
+        && data.slideTitle is string
+        && data.slideTitle.size() >= 1
+        && data.slideTitle.size() <= 160
+        && data.activeCallout is string
+        && data.activeCallout.size() <= 64
+        && data.status is string
+        && data.status.size() >= 4
+        && data.status.size() <= 8
+        && (data.status == 'live' || data.status == 'ended')
+        && data.updatedAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    // Active Slide Deck State per User
+    match /users/{userId}/slideDecks/{deckId} {
+      allow get: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(deckId)
+        && existing().ownerId == request.auth.uid;
+
+      allow list: if isOwner(userId)
+        && existing().ownerId == request.auth.uid;
+
+      allow create: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(deckId)
+        && isValidSlideDeckState(incoming());
+
+      allow update: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(deckId)
+        && isValidSlideDeckState(incoming())
+        && incoming().ownerId == existing().ownerId
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['edits', 'deckTitle', 'updatedAt'])
+          ||
+          incoming().diff(existing()).affectedKeys().hasOnly(['edits', 'deckTitle', 'lastExportedSlidesId', 'lastExportedSlidesUrl', 'updatedAt'])
+        );
+
+      allow delete: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(deckId)
+        && existing().ownerId == request.auth.uid;
+    }
+
+    // Timestamped Revision History Snapshots per User (immutable after creation)
+    match /users/{userId}/revisions/{revisionId} {
+      allow get: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(revisionId)
+        && existing().ownerId == request.auth.uid;
+
+      allow list: if isOwner(userId)
+        && existing().ownerId == request.auth.uid;
+
+      allow create: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(revisionId)
+        && isValidSlideRevision(incoming());
+
+      allow update: if false;
+
+      allow delete: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(revisionId)
+        && existing().ownerId == request.auth.uid;
+    }
+
+    // Real-time Audience Slide Sync Sessions (no PII; single-doc lookup by session code)
+    match /syncSessions/{sessionId} {
+      allow get: if isValidId(sessionId)
+        && existing().sessionCode == sessionId
+        && (existing().status == 'live' || existing().status == 'ended');
+
+      allow list: if false;
+
+      allow create: if isVerifiedUser()
+        && isValidId(sessionId)
+        && isValidAudienceSyncSession(incoming())
+        && incoming().sessionCode == sessionId
+        && incoming().status == 'live';
+
+      allow update: if isVerifiedUser()
+        && isValidId(sessionId)
+        && isValidAudienceSyncSession(incoming())
+        && existing().ownerId == request.auth.uid
+        && incoming().ownerId == existing().ownerId
+        && incoming().sessionCode == existing().sessionCode
+        && existing().status != 'ended'
+        && (
+          (incoming().status == 'live' && incoming().diff(existing()).affectedKeys().hasOnly(['currentSlide', 'slideTitle', 'activeCallout', 'presenterName', 'updatedAt']))
+          ||
+          (incoming().status == 'ended' && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']))
+        );
+
+      allow delete: if isVerifiedUser()
+        && isValidId(sessionId)
+        && existing().ownerId == request.auth.uid;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "file": "vendor/fonts/inter-tight.css",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/inter-tight.css"
+  },
+  {
+    "file": "vendor/fonts/newsreader.css",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/newsreader.css"
+  },
+  {
+    "file": "vendor/fonts/pinyon-script.css",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/pinyon-script.css"
+  },
+  {
+    "file": "vendor/js/gsap.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"
+  },
+  {
+    "file": "vendor/js/ScrollTrigger.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"
+  },
+  {
+    "file": "vendor/js/SplitText.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"
+  },
+  {
+    "file": "vendor/js/locomotive-scroll.min.js",
+    "source": "https://cdn.jsdelivr.net/npm/locomotive-scroll@5.0.0/bundled/locomotive-scroll.min.js"
+  },
+  {
+    "file": "vendor/fonts/inter-tight-400-latin-ext.woff2",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/inter-tight-400-latin-ext.woff2"
+  },
+  {
+    "file": "vendor/fonts/inter-tight-400-latin.woff2",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/inter-tight-400-latin.woff2"
+  },
+  {
+    "file": "vendor/fonts/newsreader-latin-ext.woff2",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/newsreader-latin-ext.woff2"
+  },
+  {
+    "file": "vendor/fonts/newsreader-latin.woff2",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/newsreader-latin.woff2"
+  },
+  {
+    "file": "vendor/fonts/pinyon-script-latin-ext.woff2",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/pinyon-script-latin-ext.woff2"
+  },
+  {
+    "file": "vendor/fonts/pinyon-script-latin.woff2",
+    "source": "https://cdn.jsdelivr.net/gh/roninsegun/new-15@1ddbe25a76966693874e2d8045480c7b25b3f9e4/fonts/pinyon-script-latin.woff2"
+  },
+  {
+    "file": "docs/licenses/Inter-Tight-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/intertight/OFL.txt"
+  },
+  {
+    "file": "docs/licenses/Newsreader-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/newsreader/OFL.txt"
+  },
+  {
+    "file": "docs/licenses/Pinyon-Script-OFL.txt",
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/pinyonscript/OFL.txt"
+  }
+]

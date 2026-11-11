@@ -1,0 +1,2095 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive 7-slide discussant presentation by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026) on Montesquieu, reception, context, and the conditions of liberty.">
+  <meta property="og:title" content="Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC">
+  <meta property="og:description" content="Montesquieu and the three powers: Political liberty, legal images, and institutional autonomy in Brazil — Seven-slide discussant response by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026).">
+  <title>Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC</title>
+  <link rel="icon" href="./assets/img/logo-owl.png" type="image/png">
+  <link rel="stylesheet" href="./vendor/fonts/inter-tight.css">
+  <link rel="stylesheet" href="./vendor/fonts/newsreader.css">
+  <link rel="stylesheet" href="./vendor/fonts/pinyon-script.css">
+  <link rel="stylesheet" href="./css/report.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "firebase/app": "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js",
+        "firebase/database": "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js",
+        "three": "./node_modules/three/build/three.module.js",
+        "three/addons/": "./node_modules/three/examples/jsm/"
+      }
+    }
+  </script>
+  <script>
+    (function(){
+      document.documentElement.classList.add('js');
+      try {
+        var savedTheme = localStorage.getItem('dauchy-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        var savedProj = localStorage.getItem('dauchy-projector') || 'normal';
+        if (savedProj === 'high') {
+          document.documentElement.setAttribute('data-projector', 'high');
+        }
+        var search = window.location.search || '';
+        var hash = window.location.hash || '';
+        if (
+          /(?:^\?|&)autostart=1(?:&|$)/.test(search) ||
+          /(?:^\?|&)script=1(?:&|$)/.test(search) ||
+          search.indexOf('sync=') !== -1 ||
+          /^#slide-[1-7]$/.test(hash) ||
+          hash === '#sources' ||
+          hash === '#lectern-script'
+        ) {
+          document.documentElement.setAttribute('data-curtain-bypassed', 'true');
+        }
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#slide-1">Skip to Slide 1</a>
+<div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
+<div id="auto-pace-bar" class="auto-pace-hairline" aria-hidden="true"></div>
+<div id="mobile-remote-root"></div>
+
+<!-- =========================================================================
+     OPENING EVENT POSTER & FRANCO-BRAZILIAN FLAG MIX STAGE (#podium-curtain)
+     Full-bleed widescreen adaptation of today's PPGD-UFSC poster with painted
+     France & Brazil flags integrated directly on the torn-parchment canvas.
+     Automatically bypassed on ?autostart=1, ?script=1, ?sync= links, or #slide-N
+     ========================================================================= -->
+<section class="podium-curtain" id="podium-curtain" role="region" aria-labelledby="curtain-title">
+  <!-- TOP BAND: DEEP MIDNIGHT NAVY SKY (FAITHFUL TO OFFICIAL PPGD-UFSC POSTER) -->
+  <div class="poster-hero__navy">
+    <!-- Poster Geometric Tricolor/Gold Wheel & Orbital Arcs at the Right Seam -->
+    <svg class="poster-hero__sky-art" viewBox="0 0 1440 340" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <path d="M 960 340 C 1025 190, 1175 88, 1420 34" fill="none" stroke="#e2ba52" stroke-width="1.35" opacity="0.72" />
+      <path d="M 850 340 C 980 235, 1155 178, 1440 148" fill="none" stroke="#e2ba52" stroke-width="1.05" opacity="0.48" />
+      <circle cx="1142" cy="122" r="5.5" fill="#e2ba52" />
+      <circle cx="1268" cy="172" r="4.5" fill="#e2ba52" opacity="0.85" />
+      <path d="M 970 340 A 118 118 0 0 1 1196 290 L 1085 340 Z" fill="#1d569e" opacity="0.9" />
+      <circle cx="998" cy="318" r="56" fill="#e3b341" opacity="0.94" />
+      <path d="M 1052 340 A 92 92 0 0 1 1144 248 A 92 92 0 0 1 1218 340 Z" fill="#1b4d8c" opacity="0.92" />
+      <path d="M 1110 340 L 1168 268 A 96 96 0 0 1 1226 340 Z" fill="#be1e2d" opacity="0.94" />
+      <path d="M 906 340 A 58 58 0 0 1 964 288 L 964 340 Z" fill="#15803d" opacity="0.82" />
+    </svg>
+
+    <div class="poster-hero__container poster-hero__navy-inner">
+      <div class="poster-hero__kicker-line">
+        <span class="poster-hero__ppgd t-meta">PPGD-UFSC</span>
+        <span class="poster-hero__gold-stem" aria-hidden="true"></span>
+        <span class="poster-hero__dates-top t-meta" lang="pt">11 a 13 de novembro de 2026 · CCJ/UFSC</span>
+      </div>
+
+      <p class="poster-hero__series t-display-serif" lang="pt">
+        A circulação das
+        <em>ideias e saberes</em>
+        franceses na ciência jurídica brasileira
+      </p>
+    </div>
+  </div>
+
+  <!-- TORN DECKLE-EDGE PARCHMENT SEAM -->
+  <div class="poster-hero__tear-wrap" aria-hidden="true">
+    <svg class="poster-hero__tear" viewBox="0 0 1440 48" preserveAspectRatio="none">
+      <path
+        d="M0,48 L0,15 L34,9 L68,17 L108,6 L152,15 L196,8 L242,18 L288,10 L338,19 L386,7 L436,16 L488,9 L542,20 L596,11 L648,21 L702,12 L758,22 L814,13 L872,24 L928,15 L986,26 L1044,17 L1104,28 L1164,19 L1226,30 L1288,21 L1348,31 L1402,23 L1440,29 L1440,48 Z"
+        fill="rgba(3, 11, 24, 0.28)"
+      />
+      <path
+        d="M0,48 L0,20 L34,14 L68,22 L108,11 L152,20 L196,13 L242,23 L288,15 L338,24 L386,12 L436,21 L488,14 L542,25 L596,16 L648,26 L702,17 L758,27 L814,18 L872,29 L928,20 L986,31 L1044,22 L1104,33 L1164,24 L1226,35 L1288,26 L1348,36 L1402,28 L1440,34 L1440,48 Z"
+        fill="#f6eedc"
+      />
+    </svg>
+  </div>
+
+  <!-- LOWER BAND: CONTINUOUS WARM PARCHMENT WITH POSTER ROSTER + FRANCE/BRAZIL FLAGS -->
+  <div class="poster-hero__parchment">
+    <svg class="poster-hero__parchment-arcs" viewBox="0 0 1440 580" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path d="M 1110 -10 C 995 105, 925 235, 975 455" fill="none" stroke="#c81e1e" stroke-width="1.2" opacity="0.34" />
+      <path d="M -20 420 C 145 450, 265 515, 345 590" fill="none" stroke="#d4a73c" stroke-width="1.15" opacity="0.48" />
+      <circle cx="952" cy="146" r="4.5" fill="#c81e1e" opacity="0.65" />
+      <circle cx="182" cy="482" r="5" fill="#d4a73c" opacity="0.7" />
+    </svg>
+
+    <div class="poster-hero__container poster-hero__grid">
+      <div class="poster-hero__left">
+        <div class="poster-hero__thematic" lang="pt">
+          <span class="poster-hero__red-bar" aria-hidden="true"></span>
+          <p class="poster-hero__red-kicker t-meta">TEMÁTICA:</p>
+          <h1 class="poster-hero__montesquieu t-display-serif">Montesquieu</h1>
+        </div>
+
+        <div class="poster-hero__speakers" lang="pt">
+          <span class="poster-hero__red-bar" aria-hidden="true"></span>
+          <div class="poster-hero__speaker-block">
+            <p class="poster-hero__red-kicker t-meta">CONFERENCISTA</p>
+            <p class="poster-hero__person t-display-serif">
+              <strong>Serge Dauchy</strong> <span>(CNRS/Université de Lille)</span>
+            </p>
+          </div>
+
+          <div class="poster-hero__speaker-block">
+            <p class="poster-hero__red-kicker t-meta">DEBATEDORES</p>
+            <p class="poster-hero__person t-display-serif">
+              <strong>Marja Mangili</strong> <span>(UniCesusc)</span>
+            </p>
+            <p class="poster-hero__person t-display-serif">
+              <strong>Ana Vitória Vanzin Mendes</strong> <span>(UFSC)</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="poster-hero__schedule" lang="pt">
+          <span class="poster-hero__red-bar" aria-hidden="true"></span>
+          <p class="poster-hero__datetime t-display-serif">
+            11 de novembro de 2026 <span class="poster-hero__red-dot" aria-hidden="true">•</span> 15h10
+          </p>
+        </div>
+
+        <!-- Presentation Entry Strip -->
+        <div class="poster-hero__podium-bar">
+          <p class="poster-hero__intervention-line" id="curtain-title">
+            <span class="t-meta poster-hero__int-tag">INTERVENTION</span>
+            <strong class="t-display-serif">Montesquieu and the three powers</strong>
+            <span class="poster-hero__int-sub">— Political liberty, legal images, and institutional autonomy in Brazil</span>
+          </p>
+
+          <div class="podium-curtain__actions">
+            <button class="podium-curtain__start t-ui" id="curtain-start-btn" type="button">
+              <span>Start Presentation</span>
+              <span class="podium-curtain__key" aria-hidden="true">Enter ↵</span>
+            </button>
+            <button class="podium-curtain__browse t-ui" id="curtain-browse-btn" type="button">
+              Browse Slides
+            </button>
+            <button class="podium-curtain__browse t-ui" id="curtain-script-btn" type="button" title="Open 7-page Lectern Script &amp; Lecture Notes (L)">
+              Lectern Script (L)
+            </button>
+            <button
+              class="podium-curtain__music t-ui"
+              id="curtain-music-btn"
+              type="button"
+              aria-pressed="false"
+              title="Toggle Chopin Nocturne Op. 9 No. 2 at low background volume (B)"
+            >
+              <span class="music-note-glyph" aria-hidden="true">♪</span>
+              <span id="curtain-music-label">Play Nocturne · 12%</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Painted France & Brazil Impasto Flags Blended Seamlessly on the Poster Parchment -->
+      <div class="poster-hero__right">
+        <figure class="poster-hero__flags-art">
+          <div class="poster-hero__flags-blend">
+            <svg
+              class="poster-hero__flags-svg"
+              viewBox="0 0 1760 1060"
+              role="img"
+              aria-label="Oil-impasto painted map silhouettes of France in blue, white, and red tricolor beside Brazil in green, yellow, and celestial blue"
+            >
+              <defs>
+                <filter id="poster-flags-feather" x="-15%" y="-15%" width="130%" height="130%">
+                  <feGaussianBlur stdDeviation="34" />
+                </filter>
+                <filter id="poster-flags-rim" x="-10%" y="-10%" width="120%" height="120%">
+                  <feGaussianBlur stdDeviation="16" />
+                </filter>
+                <mask id="poster-flags-mask">
+                  <rect width="1760" height="1060" fill="#000" />
+                  <g filter="url(#poster-flags-feather)" fill="#fff">
+                    <ellipse cx="615" cy="665" rx="285" ry="270" />
+                    <ellipse cx="882" cy="912" rx="74" ry="68" />
+                    <ellipse cx="1028" cy="436" rx="382" ry="368" />
+                  </g>
+                  <rect
+                    x="40"
+                    y="40"
+                    width="1680"
+                    height="980"
+                    fill="none"
+                    stroke="#000"
+                    stroke-width="84"
+                    filter="url(#poster-flags-rim)"
+                  />
+                </mask>
+              </defs>
+              <image
+                href="./public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png"
+                x="80"
+                y="80"
+                width="1600"
+                height="900"
+                preserveAspectRatio="xMidYMid slice"
+                mask="url(#poster-flags-mask)"
+              />
+            </svg>
+          </div>
+          <figcaption class="poster-hero__ufsc-foot">
+            <div class="flag-mix-bar flag-mix-bar--compact" aria-hidden="true">
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-blue"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-white"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-red"></span>
+              <span class="flag-mix-bar__bridge"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-green"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-gold"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-blue"></span>
+            </div>
+            <span class="t-meta poster-hero__ufsc-name">UNIVERSIDADE FEDERAL DE SANTA CATARINA · CCJ / PPGD</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     CALM 3-ZONE TOP HEADER (BRAND · 7 SLIDES · SCRIPT / REMOTE / PRESENT + PREP)
+     ========================================================================= -->
+<header class="header" id="top-header">
+  <div class="header__bar">
+    <a class="header__brand" href="#slide-1">
+      <img class="header__owl-mark" src="./assets/img/logo-owl.png" alt="" width="20" height="20">
+      <span class="header__wordmark">Montesquieu and the three powers</span>
+    </a>
+
+    <nav class="header__nav t-ui" aria-label="Slide navigation">
+      <a href="#slide-1" data-slide-link="1" class="is-current">01 · Cover</a>
+      <a href="#slide-2" data-slide-link="2">02 · Montesquieu</a>
+      <a href="#slide-3" data-slide-link="3">03 · Three Powers</a>
+      <a href="#slide-4" data-slide-link="4">04 · Brazil 1824</a>
+      <a href="#slide-5" data-slide-link="5">05 · 1896 Oath</a>
+      <a href="#slide-6" data-slide-link="6">06 · 1961 Justice</a>
+      <a href="#slide-7" data-slide-link="7">07 · Questions</a>
+      <a href="#sources">Sources</a>
+    </nav>
+
+    <div class="header__right-group">
+      <button class="action-btn action-btn--script t-ui" id="header-script-btn" type="button" title="Open 7-page Lectern Script &amp; Lecture Notes (L)">
+        <span>📄 Script</span>
+      </button>
+
+      <button class="action-btn action-btn--remote t-ui" id="header-phone-remote-btn" type="button" title="Pair smartphone presentation remote (R)">
+        <span>📱 Remote</span>
+      </button>
+
+      <button class="action-btn action-btn--voice t-ui" id="header-voice-btn" type="button" aria-pressed="false" title="Hands-free voice slide navigation (V)">
+        <span id="header-voice-label">🎙️ Voice</span>
+      </button>
+
+      <button class="action-btn action-btn--present-primary t-ui" id="present-button" type="button" title="Enter clean fullscreen podium mode (F)">
+        <span id="present-label">Present</span>
+      </button>
+
+      <div class="prep-menu-wrap" id="prep-menu-wrap">
+        <button
+          class="action-btn action-btn--prep t-ui"
+          id="prep-menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="prep-popover"
+          title="Backstage tools: Lectern Script, Audience Sync, 3D Meridian, Studio, Timer, Projector &amp; Presenter Tips"
+        >
+          <span>Prep ▾</span>
+        </button>
+
+        <div class="prep-popover" id="prep-popover" role="region" aria-label="Backstage and preparation tools" hidden>
+          <div class="prep-popover__section">
+            <span class="prep-popover__label t-meta">PODIUM &amp; LECTERN SCRIPT</span>
+            <div class="prep-popover__row">
+              <div class="pacing-timer" id="pacing-timer" role="timer" aria-label="Optional rehearsal timer">
+                <button
+                  class="pacing-timer__readout t-meta"
+                  id="timer-preset-btn"
+                  type="button"
+                  title="Estimated intervention timer (~10 min). Click when paused to cycle duration (10 / 12 / 15 min)"
+                >10:00</button>
+                <button
+                  class="pacing-timer__btn t-meta"
+                  id="timer-toggle-btn"
+                  type="button"
+                  aria-pressed="false"
+                  title="Start or pause rehearsal timer"
+                >Start</button>
+                <button
+                  class="pacing-timer__btn pacing-timer__btn--reset t-meta"
+                  id="timer-reset-btn"
+                  type="button"
+                  hidden
+                  title="Reset countdown timer"
+                  aria-label="Reset countdown timer"
+                >↺</button>
+              </div>
+              <button class="action-btn t-ui" id="draw-curtain-btn" type="button" title="Show the opening PPGD-UFSC event poster screen (C)">
+                <span>Event Poster (C)</span>
+              </button>
+            </div>
+
+            <div class="prep-music-box" aria-label="Background music controls">
+              <div class="prep-music-box__top">
+                <button
+                  class="action-btn t-ui"
+                  id="prep-music-toggle"
+                  type="button"
+                  aria-pressed="false"
+                  title="Toggle Chopin Nocturne Op. 9 No. 2 background piano (B)"
+                >
+                  <span aria-hidden="true">♪</span>
+                  <span id="prep-music-label">Play Nocturne · 12%</span>
+                </button>
+                <div class="prep-music-slider-wrap">
+                  <label class="t-meta" for="prep-music-volume">Vol <span id="prep-music-vol-readout">12%</span></label>
+                  <input
+                    type="range"
+                    id="prep-music-volume"
+                    min="0"
+                    max="35"
+                    step="1"
+                    value="12"
+                    aria-label="Background music low volume percentage (0% to 35%)"
+                  >
+                </div>
+              </div>
+            </div>
+
+            <button class="action-btn prep-popover__tip-btn t-ui" id="prep-script-btn" type="button">
+              <span>📄 Open 7-Page Lectern Script &amp; Print (L)</span>
+            </button>
+
+            <button class="action-btn prep-popover__tip-btn t-ui" id="prep-tip-toggle" type="button">
+              <span>Show Current Slide Presenter Tip (N)</span>
+            </button>
+          </div>
+
+          <div class="prep-popover__section">
+            <span class="prep-popover__label t-meta">LIVE SYNC &amp; COMPANION STAGES</span>
+            <div class="prep-popover__grid">
+              <button class="action-btn action-btn--sync t-ui" id="sync-audience-btn" type="button" data-sync-mode="idle" aria-haspopup="dialog" aria-controls="sync-audience-dialog">
+                <span class="sync-status-dot" id="sync-status-dot" aria-hidden="true"></span>
+                <span id="sync-audience-label">Sync Audience</span>
+              </button>
+
+              <button class="action-btn t-ui" id="prep-remote-btn" type="button" title="Pair smartphone presentation remote (R)">
+                <span>📱 Remote (R)</span>
+              </button>
+
+              <button class="action-btn t-ui" id="prep-voice-btn" type="button" aria-pressed="false" title="Toggle hands-free voice commands (V)">
+                <span id="prep-voice-label">🎙️ Voice: OFF (V)</span>
+              </button>
+
+              <button class="action-btn t-ui" id="prep-auto-pace-btn" type="button" aria-pressed="false" title="Toggle ~9m30s auto-paced rehearsal delivery (T)">
+                <span id="prep-auto-pace-label">⏱️ Auto-Pace: OFF (T)</span>
+              </button>
+
+              <button class="action-btn action-btn--meridian3d t-ui" id="meridian-3d-button" type="button" data-open-meridian-3d="overview">
+                <span>3D Meridian (M)</span>
+              </button>
+
+              <button class="action-btn action-btn--studio t-ui" id="studio-button" type="button" aria-expanded="false" aria-controls="studio-drawer">
+                <span>Prep Studio (S)</span>
+              </button>
+
+              <button class="action-btn t-ui" id="print-button" type="button">
+                <span>Print Deck</span>
+              </button>
+
+              <button class="action-btn t-ui" id="prep-print-script-direct-btn" type="button">
+                <span>Print Script (7p)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="prep-popover__section">
+            <span class="prep-popover__label t-meta">DISPLAY &amp; TEXT REVISIONS</span>
+            <div class="prep-popover__grid">
+              <button class="action-btn t-ui" id="projector-toggle" type="button" aria-pressed="false">
+                <span aria-hidden="true">◎</span>
+                <span id="projector-label">Projector (P)</span>
+              </button>
+
+              <button class="theme-toggle t-ui" id="theme-toggle" type="button" aria-label="Toggle color theme">
+                <span class="theme-toggle__icon" aria-hidden="true">☼</span>
+                <span class="theme-toggle__text">Light</span>
+              </button>
+
+              <button class="action-btn t-ui" id="edit-toggle" type="button" aria-pressed="false">
+                <span id="edit-toggle-label">Edit Text</span>
+              </button>
+
+              <button class="action-btn t-ui" id="revisions-button" type="button">
+                <span>Revisions</span>
+              </button>
+
+              <button class="action-btn t-ui" id="reset-edits" type="button" hidden>
+                <span>Reset Edits</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="contents-toggle t-ui" id="contents-toggle" type="button" aria-expanded="false" aria-controls="mobile-contents">Slides</button>
+    </div>
+  </div>
+
+  <!-- Live Audience Sync Bar -->
+  <div class="audience-follow-bar" id="audience-follow-bar" role="status" aria-live="polite" hidden>
+    <div class="audience-follow-bar__inner">
+      <div class="audience-follow-bar__info">
+        <span class="audience-follow-bar__badge t-meta" id="follow-bar-badge">LIVE AUDIENCE SYNC · UFSC-2026</span>
+        <span class="audience-follow-bar__slide" id="follow-bar-slide">Slide 01 / 07 · Montesquieu and the three powers</span>
+      </div>
+      <div class="audience-follow-bar__actions">
+        <button type="button" class="text-link-sm" id="follow-bar-jump-btn">Jump to Presenter Slide</button>
+        <button type="button" class="text-link-sm is-active" id="follow-bar-autofollow-btn" aria-pressed="true">Auto-Follow: ON</button>
+        <button type="button" class="text-link-sm" id="follow-bar-copy-link-btn" hidden>Copy Audience Link</button>
+        <button type="button" class="text-link-sm text-link-sm--restore" id="follow-bar-disconnect-btn">Unlink ×</button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="mobile-contents" id="mobile-contents" aria-label="Slide contents and settings" hidden>
+    <a href="#slide-1">01 · Cover — Montesquieu and the three powers</a>
+    <a href="#slide-2">02 · Montesquieu — Who was Montesquieu (1689–1755)</a>
+    <a href="#slide-3">03 · Three Powers — Book XI, chapter 6 &amp; limits on power</a>
+    <a href="#slide-4">04 · Brazil 1824 — Montesquieu in Brazil, 1824 (Four powers)</a>
+    <a href="#slide-5">05 · 1896 Oath — Representing distinct and related institutions</a>
+    <a href="#slide-6">06 · 1961 Justice — Ceschiatti’s Justice: the sword and autonomy</a>
+    <a href="#slide-7">07 · Questions — Questions for Serge</a>
+    <a href="#sources">Sources &amp; Verification Notes</a>
+    <button class="mobile-theme-toggle t-ui" id="mobile-script-toggle" type="button">
+      <span>Lectern Script (7 Pages):</span>
+      <strong>Open Notes (L)</strong>
+    </button>
+    <button class="mobile-theme-toggle t-ui" id="mobile-curtain-toggle" type="button">
+      <span>Event Poster Start Screen:</span>
+      <strong>Open Poster</strong>
+    </button>
+    <button class="mobile-theme-toggle t-ui" id="mobile-music-toggle" type="button">
+      <span>Background Piano (Chopin):</span>
+      <strong id="mobile-music-label">12% (Low)</strong>
+    </button>
+    <button class="mobile-theme-toggle t-ui" id="mobile-sync-toggle" type="button">
+      <span>Sync Audience (Realtime DB):</span>
+      <strong id="mobile-sync-label">Open Sync</strong>
+    </button>
+    <button class="mobile-theme-toggle t-ui" id="mobile-studio-toggle" type="button">
+      <span>Preparation Studio:</span>
+      <strong>Open Drawer</strong>
+    </button>
+    <button class="mobile-theme-toggle t-ui" id="mobile-projector-toggle" type="button">
+      <span>Projector Legibility Mode:</span>
+      <strong id="mobile-projector-label">Standard</strong>
+    </button>
+    <button class="mobile-theme-toggle t-ui" id="mobile-theme-toggle" type="button">
+      <span>Theme:</span>
+      <strong id="mobile-theme-label">Light</strong>
+    </button>
+  </nav>
+</header>
+
+<!-- Layered restrained archival background scenes -->
+<div class="bg bg--storm" aria-hidden="true"><img src="./assets/img/bgs/storm.webp" alt=""></div>
+<div class="bg bg--palace" aria-hidden="true"><img src="./assets/img/bgs/palace.webp" alt=""></div>
+<div class="bg bg--lake" aria-hidden="true"><img src="./assets/img/bgs/lake.webp" alt=""></div>
+<div class="bg bg--nightsea" aria-hidden="true"><img src="./assets/img/bgs/nightsea.webp" alt=""></div>
+
+<main id="report">
+  <!-- Print-only masthead for the UFSC panel slide deck handout -->
+  <header class="print-lecture-header" aria-label="Panel and presentation information">
+    <div class="print-lecture-header__top">
+      <div class="print-lecture-header__inst">
+        <p class="print-lecture-header__kicker">UFSC · FLORIANÓPOLIS</p>
+        <p class="print-lecture-header__univ">Universidade Federal de Santa Catarina · PPGD</p>
+        <p class="print-lecture-header__dates">11 November 2026 · Panel on Montesquieu (~10-minute intervention)</p>
+      </div>
+      <div class="print-lecture-header__stamp">
+        <span class="print-lecture-header__badge">Discussant Intervention</span>
+        <span class="print-lecture-header__session">11 Nov. 2026</span>
+      </div>
+    </div>
+    <div class="print-lecture-header__main">
+      <h1 class="print-lecture-header__event-title">A circulação das ideias e saberes franceses na ciência jurídica brasileira</h1>
+      <p class="print-lecture-header__topic">TEMÁTICA: <strong>Montesquieu</strong> · Conferencista: Serge Dauchy (CNRS/Univ. de Lille) · Debatedores: Marja Mangili (UniCesusc) &amp; Ana Vitória Vanzin Mendes (UFSC) · 11 Nov. 2026 · 15h10 · CCJ/UFSC</p>
+    </div>
+    <div class="print-lecture-header__paper">
+      <span class="print-lecture-header__label">Presentation Title &amp; Subtitle</span>
+      <h2 class="print-lecture-header__paper-title">Montesquieu and the three powers</h2>
+      <p class="print-lecture-header__paper-subtitle">Political liberty, legal images, and institutional autonomy in Brazil</p>
+      <p class="print-lecture-header__author"><strong>Ana Vitória Vanzin Mendes · Discussant (PPGD/UFSC)</strong></p>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       SLIDE 01 · MONTESQUIEU AND THE THREE POWERS (0:00–0:50)
+       Stage 1: the author and his problem
+       ===================================================================== -->
+  <section class="slide-canvas slide-canvas--hero" id="slide-1" data-slide="1" aria-labelledby="s1-title">
+    <div class="hero-drapery" aria-hidden="true">
+      <img src="./assets/img/hero/front-l.webp" alt="" fetchpriority="high">
+    </div>
+    <div class="hero-drapery hero-drapery--right" aria-hidden="true">
+      <img src="./assets/img/hero/front-r.webp" alt="">
+    </div>
+
+    <article class="slide-frame slide-frame--s1" data-reveal>
+      <div class="presenter-tip" data-presenter-tip-slide="1" data-tip-mode="closed">
+        <button
+          class="presenter-tip__btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="presenter-tip-panel-1"
+          aria-label="Presenter Tip · Slide 01: Opening &amp; Research Question (hover or click, shortcut N)"
+          title="Presenter Tip · Hover or click for podium cues (N)"
+        >
+          <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3.5" y="2.75" width="13" height="14.5" rx="1.75" stroke="currentColor" stroke-width="1.35" />
+            <line x1="6.5" y1="6.75" x2="13.5" y2="6.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+            <line x1="6.5" y1="10" x2="13.5" y2="10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+            <line x1="6.5" y1="13.25" x2="10.75" y2="13.25" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="presenter-tip__panel" id="presenter-tip-panel-1" role="region" aria-label="Presenter Tip for Slide 01" hidden></div>
+      </div>
+
+      <div class="s1-grid">
+        <div class="s1-copy">
+          <div class="s1-flag-meridian" aria-hidden="true">
+            <span class="flag-mix-bar flag-mix-bar--compact">
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-blue"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-white"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-red"></span>
+              <span class="flag-mix-bar__bridge"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-green"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-gold"></span>
+              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-blue"></span>
+            </span>
+            <span class="t-meta s1-flag-meridian__caption">BORDEAUX 1748 ⇄ BRAZIL 1824 · 1896 · 1961</span>
+          </div>
+
+          <p class="slide-kicker t-meta" data-editable="s1-kicker">01 · STAGE 1: THE AUTHOR AND HIS PROBLEM · PPGD-UFSC · 11 NOVEMBER 2026</p>
+          <p class="s1-event-line" data-editable="s1-event">
+            Temática: Montesquieu · <span lang="pt"><em>A circulação das ideias e saberes franceses na ciência jurídica brasileira</em></span>
+          </p>
+
+          <h1 class="s1-title t-display-serif" id="s1-title" data-editable="s1-title">
+            Montesquieu and the three powers
+          </h1>
+
+          <h2 class="s1-subtitle t-display-serif" data-editable="s1-subtitle">
+            Political liberty, legal images, and institutional autonomy in Brazil
+          </h2>
+
+          <footer class="s1-byline">
+            <strong data-editable="s1-author">Ana Vitória Vanzin Mendes · Discussant</strong>
+            <span class="t-meta" data-editable="s1-affil">Doctoral Researcher in Law · UFSC · Conferencista: Serge Dauchy (CNRS/Université de Lille)</span>
+          </footer>
+        </div>
+
+        <figure class="s1-portrait-wrap" id="s1-portrait-box" aria-label="Oval portrait of Montesquieu with constitutional orbit filigree">
+          <div class="medallion-orbit" id="s1-medallion-orbit">
+            <svg class="medallion-filigree" viewBox="0 0 420 490" aria-hidden="true">
+              <ellipse cx="210" cy="245" rx="200" ry="235" fill="none" stroke="currentColor" stroke-width="1.1" stroke-dasharray="5 9" />
+              <ellipse cx="210" cy="245" rx="188" ry="222" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.5" />
+              <circle cx="210" cy="10" r="4" fill="currentColor" />
+              <circle cx="386" cy="356" r="3.5" fill="currentColor" />
+              <circle cx="34" cy="356" r="3.5" fill="currentColor" />
+            </svg>
+            <div class="oval-medallion" id="s1-medallion-stage">
+              <img id="montesquieu-image" src="./assets/report/montesquieu-oval.webp" data-original-src="./assets/report/montesquieu-oval.webp" alt="Oval portrait of Charles-Louis de Secondat, Baron de Montesquieu" width="1365" height="1615" fetchpriority="high">
+              <span class="medallion-sheen" aria-hidden="true"></span>
+            </div>
+            <img class="s1-owl-vignette" src="./assets/owl-perched.webp" alt="" aria-hidden="true">
+          </div>
+          <figcaption class="s1-portrait-caption t-meta">
+            Charles-Louis de Secondat, Baron de Montesquieu (1689–1755) · <cite lang="fr">De l’esprit des lois</cite> (1748)
+          </figcaption>
+          <div class="s1-portrait-bar">
+            <button class="text-link-sm" type="button" data-open-meridian-3d="france1748">3D Meridian ↗</button>
+            <button class="text-link-sm" type="button" data-open-studio="timeline">Circulation Timeline ↗</button>
+            <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-1" hidden>Restore Original ↺</button>
+          </div>
+        </figure>
+      </div>
+
+      <div class="slide-footer-meta">
+        <span class="t-meta"><a href="#src-dauchy">Serge Dauchy, Conference Paper</a> · <a href="#src-montesquieu">Montesquieu, De l’esprit des lois (1748)</a></span>
+        <span class="slide-num t-meta">01 / 07</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- =====================================================================
+       SLIDE 02 · WHO WAS MONTESQUIEU (0:50–2:05)
+       Charles-Louis de Secondat (1689–1755) · Parlement of Bordeaux · 1748
+       ===================================================================== -->
+  <section class="slide-canvas" id="slide-2" data-scene="palace" data-slide="2" aria-labelledby="s2-title">
+    <article class="slide-frame" data-reveal>
+      <div class="presenter-tip" data-presenter-tip-slide="2" data-tip-mode="closed">
+        <button
+          class="presenter-tip__btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="presenter-tip-panel-2"
+          aria-label="Presenter Tip · Slide 02: Who was Montesquieu (hover or click, shortcut N)"
+          title="Presenter Tip · Hover or click for podium cues (N)"
+        >
+          <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3.5" y="2.75" width="13" height="14.5" rx="1.75" stroke="currentColor" stroke-width="1.35" />
+            <line x1="6.5" y1="6.75" x2="13.5" y2="6.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+            <line x1="6.5" y1="10" x2="13.5" y2="10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+            <line x1="6.5" y1="13.25" x2="10.75" y2="13.25" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="presenter-tip__panel" id="presenter-tip-panel-2" role="region" aria-label="Presenter Tip for Slide 02" hidden></div>
+      </div>
+
+      <p class="slide-kicker t-meta" data-editable="s2-kicker">02 · STAGE 1: THE AUTHOR AND HIS PROBLEM · 1689–1755</p>
+
+      <div class="s2-grid">
+        <div class="s2-left" data-pole-panel="court">
+          <h2 class="s2-display t-display-serif" id="s2-title" data-editable="s2-title">
+            Who was Montesquieu
+          </h2>
+
+          <div class="s2-block">
+            <p class="source-tag t-meta" data-editable="s2-source-line">Charles-Louis de Secondat (1689–1755) · The Spirit of the Laws (1748)</p>
+            <p class="s2-framing-note" data-editable="s2-framing-note">
+              More than a diagram of government: asking how power operates, what restrains it, and under what conditions people can live without fearing its arbitrary exercise.
+            </p>
+          </div>
+        </div>
+
+        <div class="s2-right">
+          <ul class="s2-elements-list" aria-label="Montesquieu’s judicial background, 1748 treatise, and account of political liberty">
+            <li class="s2-element-item" tabindex="0" data-pole-panel="court" data-eq-select="court">
+              <span class="t-meta s2-element-item__num">I</span>
+              <div class="s2-element-item__body">
+                <span class="t-display-serif s2-element-item__label" data-editable="s2-el-1">Magistrate in the Parlement of Bordeaux</span>
+                <span class="s2-element-item__sub" data-editable="s2-el-1-sub">A judicial court (1689–1755), not a parliament in the modern legislative sense.</span>
+              </div>
+            </li>
+            <li class="s2-element-item" tabindex="0" data-pole-panel="spirit" data-eq-select="spirit">
+              <span class="t-meta s2-element-item__num">II</span>
+              <div class="s2-element-item__body">
+                <span class="t-display-serif s2-element-item__label" data-editable="s2-el-2">The Spirit of the Laws (1748)</span>
+                <span class="s2-element-item__sub" data-editable="s2-el-2-sub">Relates laws to forms of government and societal circumstances: customs, religion, commerce, geography, and history.</span>
+              </div>
+            </li>
+            <li class="s2-element-item" tabindex="0" data-pole-panel="liberty" data-eq-select="liberty">
+              <span class="t-meta s2-element-item__num">III</span>
+              <div class="s2-element-item__body">
+                <span class="t-display-serif s2-element-item__label" data-editable="s2-el-3">Political liberty as security under laws</span>
+                <span class="s2-element-item__sub" data-editable="s2-el-3-sub">Requires security under laws and limits on those who exercise public power—distribution of powers is one essential part.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interactive Equilibrium Balance Across Montesquieu’s Problem of Power -->
+      <div class="equilibrium-bridge" id="s2-equilibrium-bridge" data-active-pole="balanced" aria-label="Magistracy, societal context, and security under laws">
+        <button class="eq-pole-btn t-meta" type="button" data-eq-pole="court" aria-pressed="false">
+          <span>Parlement of Bordeaux (Court)</span>
+        </button>
+
+        <svg class="equilibrium-bridge__svg" viewBox="0 0 560 64" aria-hidden="true">
+          <line x1="36" y1="32" x2="524" y2="32" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.35" />
+          <g class="equilibrium-bridge__beam">
+            <line x1="74" y1="32" x2="486" y2="32" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="74" cy="32" r="6" fill="var(--accent)" />
+            <circle cx="280" cy="32" r="5.5" fill="var(--ink-md)" />
+            <circle cx="486" cy="32" r="6" fill="var(--gilt)" />
+          </g>
+          <polygon points="280,28 287,44 273,44" fill="currentColor" opacity="0.7" />
+        </svg>
+
+        <div class="eq-pole-pair">
+          <button class="eq-pole-btn t-meta" type="button" data-eq-pole="spirit" aria-pressed="false">
+            <span>Societal circumstances</span>
+          </button>
+          <button class="eq-pole-btn t-meta" type="button" data-eq-pole="liberty" aria-pressed="false">
+            <span>Security under laws</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="slide-footer-meta">
+        <span class="t-meta"><a href="#src-montesquieu">Montesquieu, De l’esprit des lois (1748)</a> · <a href="#src-dauchy">Serge Dauchy, Conference Paper</a></span>
+        <span class="slide-num t-meta">02 / 07</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- =====================================================================
+       SLIDE 03 · THREE POWERS, LIMITS ON POWER (2:05–3:35)
+       Book XI, chapter 6 · Dangers of concentration & historical distance
+       ===================================================================== -->
+  <section class="slide-canvas" id="slide-3" data-scene="palace" data-slide="3" aria-labelledby="s3-title">
+    <article class="slide-frame" data-reveal>
+      <div class="presenter-tip" data-presenter-tip-slide="3" data-tip-mode="closed">
+        <button
+          class="presenter-tip__btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="presenter-tip-panel-3"
+          aria-label="Presenter Tip · Slide 03: Book XI, Ch. 6 &amp; Historical Distance (hover or click, shortcut N)"
+          title="Presenter Tip · Hover or click for podium cues (N)"
+        >
+          <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3.5" y="2.75" width="13" height="14.5" rx="1.75" stroke="currentColor" stroke-width="1.35" />
+            <line x1="6.5" y1="6.75" x2="13.5" y2="6.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+            <line x1="6.5" y1="10" x2="13.5" y2="10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+            <line x1="6.5" y1="13.25" x2="10.75" y2="13.25" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="presenter-tip__panel" id="presenter-tip-panel-3" role="region" aria-label="Presenter Tip for Slide 03" hidden></div>
+      </div>
+
+      <header class="slide-top">
+        <p class="slide-kicker t-meta" data-editable="s3-kicker">03 · DE L’ESPRIT DES LOIS (1748), BOOK XI, CHAPTER 6</p>
+        <h2 class="slide-main-heading t-display-serif" id="s3-title" data-editable="s3-title">
+          Three powers, limits on power
+        </h2>
+      </header>
+
+      <!-- Interactive Scale Arm Across the Three Functions -->
+      <div class="drafting-scale-bar" id="s3-functions-scale" data-step="judicial" aria-hidden="true">
+        <svg class="drafting-scale-svg" viewBox="0 0 760 54">
+          <line x1="60" y1="27" x2="700" y2="27" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.3" />
+          <g class="drafting-scale-svg__arm">
+            <line x1="120" y1="27" x2="640" y2="27" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="120" cy="27" r="5.5" fill="var(--accent)" />
+            <circle cx="380" cy="27" r="6.5" fill="var(--gilt)" />
+            <circle cx="640" cy="27" r="5.5" fill="var(--accent)" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="s6-timeline s3-functions-grid" role="group" aria-label="Three powers in Book XI, chapter 6 and risks of concentration">
+        <article class="s6-step" tabindex="0" data-s3-fn="legislative">
+          <span class="source-tag t-meta">I · LEGISLATIVE</span>
+          <h3 class="t-display-serif" data-editable="s3-fn1-title">Making laws</h3>
+          <p class="s3-fn-risk" data-editable="s3-fn1-risk">
+            Joined with execution: the same authority can enact oppressive laws and enforce them.
+          </p>
+        </article>
+
+        <article class="s6-step" tabindex="0" data-s3-fn="executive">
+          <span class="source-tag t-meta">II · EXECUTIVE</span>
+          <h3 class="t-display-serif" data-editable="s3-fn2-title">Conducting government</h3>
+          <p class="s3-fn-risk" data-editable="s3-fn2-risk">
+            Joined with judging: judging can acquire the force of an oppressor.
+          </p>
+        </article>
+
+        <article class="s6-step is-active" tabindex="0" data-s3-fn="judicial">
+          <span class="source-tag t-meta">III · JUDICIAL</span>
+          <h3 class="t-display-serif" data-editable="s3-fn3-title">Judging crimes and disputes</h3>
+          <p class="s3-fn-risk" data-editable="s3-fn3-risk">
+            Joined with legislation: the judge can become the lawmaker.
+          </p>
+        </article>
+      </div>
+
+      <div class="slide-bottom-claim s3-distance-box">
+        <p class="claim-blue t-display-serif" data-editable="s3-claim">
+          Relational arrangements prevent unchecked accumulation — not three isolated institutions with no relationship.
+        </p>
+        <p class="s3-distance-note" data-editable="s3-distance">
+          <strong>Historical distance:</strong> Montesquieu’s account of judging is not a description of today’s permanent constitutional courts.
+        </p>
+      </div>
+
+      <div class="slide-footer-meta">
+        <span class="t-meta"><a href="#src-montesquieu">Montesquieu, De l’esprit des lois (1748), Book XI, ch. 6</a></span>
+        <span class="slide-num t-meta">03 / 07</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- =====================================================================
+       SLIDE 04 · MONTESQUIEU IN BRAZIL, 1824 (3:35–4:45)
+       Stage 2: institutions and their images · Constitution of 1824, Art. 10
+       ===================================================================== -->
+  <section class="slide-canvas" id="slide-4" data-scene="palace" data-slide="4" aria-labelledby="s4-title">
+    <article class="slide-frame" data-reveal>
+      <div class="presenter-tip" data-presenter-tip-slide="4" data-tip-mode="closed">
+        <button
+          class="presenter-tip__btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="presenter-tip-panel-4"
+          aria-label="Presenter Tip · Slide 04: 1824 Four Powers &amp; Adaptation (hover or click, shortcut N)"
+          title="Presenter Tip · Hover or click for podium cues (N)"
+        >
+          <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3.5" y="2.75" width="13" height="14.5" rx="1.75" stroke="currentColor" stroke-width="1.35" />
+            <line x1="6.5" y1="6.75" x2="13.5" y2="6.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+            <line x1="6.5" y1="10" x2="13.5" y2="10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+            <line x1="6.5" y1="13.25" x2="10.75" y2="13.25" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="presenter-tip__panel" id="presenter-tip-panel-4" role="region" aria-label="Presenter Tip for Slide 04" hidden></div>
+      </div>
+
+      <p class="slide-kicker t-meta" data-editable="s4-kicker">04 · STAGE 2: INSTITUTIONS AND THEIR IMAGES · CONSTITUTION OF 1824</p>
+
+      <div class="s3-grid">
+        <div class="s3-left">
+          <div class="s3-year t-display-serif" aria-hidden="true">1824</div>
+          <h2 class="s3-title t-display-serif" id="s4-title" data-editable="s4-title">
+            Montesquieu in Brazil, 1824
+          </h2>
+
+          <div class="s3-chain-line" data-editable="s4-chain" aria-label="Pre-independence circulation, 1823 debates, and 1824 adaptation">
+            <span>1823 debates</span>
+            <span class="s3-chain-neq" aria-hidden="true">&rarr;</span>
+            <span>choices &amp; adaptation</span>
+            <span class="s3-chain-neq" aria-hidden="true">&rarr;</span>
+            <span>imperial monarchy</span>
+          </div>
+
+          <!-- Interactive Three Powers vs. Four Powers Orbital Diagram -->
+          <div class="powers-orbit-box" id="s4-powers-orbit" data-mode="four-powers">
+            <div class="powers-orbit-box__head">
+              <span class="t-meta">CONSTITUTIONAL GEOMETRY</span>
+              <div class="powers-orbit-box__switches" role="group" aria-label="Compare tripartite formula and 1824 four powers">
+                <button class="text-link-sm" type="button" data-powers-mode="three-powers" aria-pressed="false">
+                  Tripartite · Three Powers
+                </button>
+                <button class="text-link-sm is-active" type="button" data-powers-mode="four-powers" aria-pressed="true">
+                  1824 Art. 10 · Four Powers
+                </button>
+              </div>
+            </div>
+
+            <svg class="powers-orbit-svg" viewBox="0 0 460 175" role="img" aria-label="Orbital diagram showing Legislative, Moderating, Executive, and Judicial powers in Article 10 of the 1824 Brazilian Constitution">
+              <ellipse cx="230" cy="96" rx="164" ry="56" fill="none" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.35" />
+              <line class="orbit-link orbit-link--triad" x1="102" y1="118" x2="358" y2="118" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
+              <line class="orbit-link orbit-link--triad" x1="102" y1="118" x2="230" y2="146" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
+              <line class="orbit-link orbit-link--triad" x1="358" y1="118" x2="230" y2="146" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
+              <g class="orbit-moderador-links">
+                <line x1="230" y1="30" x2="102" y2="118" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
+                <line x1="230" y1="30" x2="358" y2="118" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
+                <line x1="230" y1="30" x2="230" y2="146" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
+              </g>
+              <g class="orbit-node orbit-node--leg">
+                <circle cx="102" cy="118" r="7" fill="var(--accent)" />
+                <text x="102" y="99" text-anchor="middle">Legislative</text>
+              </g>
+              <g class="orbit-node orbit-node--exec">
+                <circle cx="358" cy="118" r="7" fill="var(--accent)" />
+                <text x="358" y="99" text-anchor="middle">Executive</text>
+              </g>
+              <g class="orbit-node orbit-node--jud">
+                <circle cx="230" cy="146" r="7" fill="var(--accent)" />
+                <text x="230" y="168" text-anchor="middle">Judicial</text>
+              </g>
+              <g class="orbit-node orbit-node--mod">
+                <circle cx="230" cy="30" r="9" fill="var(--gilt)" />
+                <text x="230" y="15" text-anchor="middle" class="orbit-mod-label">Moderating · Art. 10</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="s3-right">
+          <p class="source-tag t-meta" data-editable="s4-const-tag">Article 10 · Four powers:</p>
+          <div class="s3-powers t-display-serif" aria-label="Legislative, Moderating, Executive, Judicial">
+            <span data-editable="s4-p1">Legislative</span>
+            <span class="power-highlight" data-editable="s4-p2">Moderating</span>
+            <span data-editable="s4-p3">Executive</span>
+            <span data-editable="s4-p4">Judicial</span>
+          </div>
+          <p class="s3-inline-powers" data-editable="s4-constant-note">
+            The <strong>Moderating Power</strong> belonged to the emperor under <strong>Benjamin Constant’s</strong> model — not another branch invented by Montesquieu.
+          </p>
+
+          <p class="s3-source-citation t-meta" data-editable="s4-source-line">
+            Source: Constitution of 1824, article 10; Serge Dauchy, conference text (§ 6)
+          </p>
+        </div>
+      </div>
+
+      <div class="slide-footer-meta">
+        <span class="t-meta"><a href="#src-const-1824">Constitution of 1824, article 10</a> · <a href="#src-dauchy">Dauchy, paragraph 6</a></span>
+        <span class="slide-num t-meta">04 / 07</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- =====================================================================
+       SLIDE 05 · REPRESENTING DISTINCT AND RELATED INSTITUTIONS (4:45–6:15)
+       Aurélio de Figueiredo, Compromisso Constitucional (1896; oath of 1891)
+       Preserves verified Museu da República artwork and Romulo Fialdini credit
+       ===================================================================== -->
+  <section class="slide-canvas" id="slide-5" data-scene="lake" data-slide="5" aria-labelledby="s5-title">
+    <article class="slide-frame" data-reveal>
+      <div class="presenter-tip" data-presenter-tip-slide="5" data-tip-mode="closed">
+        <button
+          class="presenter-tip__btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="presenter-tip-panel-5"
+          aria-label="Presenter Tip · Slide 05: Figueiredo (1896) &amp; 1891 Oath (hover or click, shortcut N)"
+          title="Presenter Tip · Hover or click for podium cues (N)"
+        >
+          <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3.5" y="2.75" width="13" height="14.5" rx="1.75" stroke="currentColor" stroke-width="1.35" />
+            <line x1="6.5" y1="6.75" x2="13.5" y2="6.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+            <line x1="6.5" y1="10" x2="13.5" y2="10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+            <line x1="6.5" y1="13.25" x2="10.75" y2="13.25" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="presenter-tip__panel" id="presenter-tip-panel-5" role="region" aria-label="Presenter Tip for Slide 05" hidden></div>
+      </div>
+
+      <header class="slide-top s4-header-row">
+        <div>
+          <p class="slide-kicker t-meta" data-editable="s5-kicker">05 · INSTITUTIONAL CEREMONY &amp; OBLIGATION · 1891 / 1896</p>
+          <h2 class="slide-main-heading t-display-serif" id="s5-title" data-editable="s5-title">
+            Representing distinct and related institutions
+          </h2>
+        </div>
+        <button class="text-link-sm text-link-sm--pause" type="button" data-visual-pause="5" title="Dim labels for 5 seconds to give the audience a moment to look">
+          ◎ 5s Look
+        </button>
+      </header>
+
+      <div class="s4-layout s5-museum-layout">
+        <!-- Verified Museum Plate: Aurélio de Figueiredo, Compromisso Constitucional, 1896 -->
+        <figure class="s4-artwork" id="s5-artwork-box" data-active-spot="" aria-labelledby="s5-caption-text">
+          <div class="s4-artwork__stage" id="s5-artwork-stage">
+            <img id="compromisso-image" src="./assets/report/compromisso.jpg" data-original-src="./assets/report/compromisso.jpg" alt="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents Deodoro da Fonseca taking the constitutional oath of 26 February 1891 before Prudente de Moraes and the Constituent Congress" decoding="async">
+
+            <div class="painting-hotspot painting-hotspot--deodoro" aria-hidden="true">
+              <span>Deodoro · Constitutional Book</span>
+            </div>
+            <div class="painting-hotspot painting-hotspot--prudente" aria-hidden="true">
+              <span>Prudente de Moraes · Congress</span>
+            </div>
+            <div class="painting-hotspot painting-hotspot--gallery" aria-hidden="true">
+              <span>Shared Ceremony · 26 Feb. 1891</span>
+            </div>
+
+            <div class="visual-pause-badge" id="s5-pause-badge" hidden aria-hidden="true">
+              <svg class="visual-pause-ring" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2.2" />
+                <circle class="visual-pause-ring__bar" cx="18" cy="18" r="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="94.25" stroke-dashoffset="0" />
+              </svg>
+              <span class="t-meta">5s Visual Pause</span>
+            </div>
+          </div>
+
+          <figcaption class="artwork-official-caption s4-diptych__caption" id="s5-caption-text">
+            <strong class="s4-diptych__artist" data-editable="s5-artist">Aurélio de Figueiredo</strong>
+            <span class="s4-diptych__work" data-editable="s5-work"><cite lang="pt">Compromisso Constitucional</cite>, painted in 1896</span>
+            <span class="s4-diptych__sub" data-editable="s5-sub">Represents Deodoro da Fonseca’s constitutional oath of 26 February 1891 (painting date ≠ event date)</span>
+          </figcaption>
+
+          <div class="s4-artwork__bar">
+            <span class="t-meta">Museu da República · Oil on canvas, 330 × 257 cm · Reproduction: Romulo Fialdini</span>
+            <div class="s4-artwork__actions">
+              <button class="text-link-sm" type="button" id="s5-oath-full-btn" data-image="./assets/report/compromisso.jpg" data-alt="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents the oath of 26 February 1891." data-caption="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents the oath of 26 February 1891. (Museu da República · Oil on canvas, 330 × 257 cm · Reproduction: Romulo Fialdini)">Full painting ↗</button>
+              <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-5" hidden>Restore Original ↺</button>
+            </div>
+          </div>
+        </figure>
+
+        <div class="s5-reading-col">
+          <ul class="s4-observations" aria-label="Interactive composition callouts and constitutional comparison">
+            <li tabindex="0" data-spot-select="deodoro">
+              <span class="source-tag t-meta">EXECUTIVE COMMITMENT</span>
+              <p class="obs-en t-display-serif" data-editable="s5-obs-1">
+                Deodoro da Fonseca holds the constitutional book in a shared ceremony.
+              </p>
+            </li>
+            <li tabindex="0" data-spot-select="prudente">
+              <span class="source-tag t-meta">CONSTITUENT CONGRESS</span>
+              <p class="obs-en t-display-serif" data-editable="s5-obs-2">
+                Prudente de Moraes presides over the Congress receiving the commitment.
+              </p>
+            </li>
+            <li tabindex="0" data-spot-select="gallery">
+              <span class="source-tag t-meta">CONSTITUTION OF 1891 · ARTICLES 15 &amp; 44</span>
+              <p class="obs-en t-display-serif" data-editable="s5-obs-3">
+                Art. 15: harmonious and independent powers · Art. 44: presidential oath to uphold the Constitution.
+              </p>
+            </li>
+          </ul>
+
+          <div class="s5-retention">
+            <p class="s5-retention__en" data-editable="s5-reading">
+              <strong>My reading:</strong> makes executive authority under an obligation visible—yet this is an interpretation of the image, not proof of independence in practice or direct influence from Montesquieu.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer-meta">
+        <span class="t-meta"><a href="#src-figueiredo">Museu da República · Reproduction: Romulo Fialdini</a> · <a href="#src-const-1824">Constitution of 1891, arts. 15 &amp; 44</a></span>
+        <span class="slide-num t-meta">05 / 07</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- =====================================================================
+       SLIDE 06 · CESCHIATTI’S JUSTICE: THE SWORD AND AUTONOMY (6:15–8:20)
+       Alfredo Ceschiatti, A Justiça, 1961 · Supremo Tribunal Federal, Brasília
+       Preserves verified STF photograph and Fellipe Sampaio / STF credit
+       ===================================================================== -->
+  <section class="slide-canvas" id="slide-6" data-scene="storm" data-slide="6" aria-labelledby="s6-title">
+    <article class="slide-frame" data-reveal>
+      <div class="presenter-tip" data-presenter-tip-slide="6" data-tip-mode="closed">
+        <button
+          class="presenter-tip__btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="presenter-tip-panel-6"
+          aria-label="Presenter Tip · Slide 06: Ceschiatti (1961), Sword &amp; Autonomy (hover or click, shortcut N)"
+          title="Presenter Tip · Hover or click for podium cues (N)"
+        >
+          <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3.5" y="2.75" width="13" height="14.5" rx="1.75" stroke="currentColor" stroke-width="1.35" />
+            <line x1="6.5" y1="6.75" x2="13.5" y2="6.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+            <line x1="6.5" y1="10" x2="13.5" y2="10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+            <line x1="6.5" y1="13.25" x2="10.75" y2="13.25" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="presenter-tip__panel" id="presenter-tip-panel-6" role="region" aria-label="Presenter Tip for Slide 06" hidden></div>
+      </div>
+
+      <header class="slide-top">
+        <p class="slide-kicker t-meta" data-editable="s6-kicker">06 · PRAÇA DOS TRÊS PODERES · BRASÍLIA, 1961</p>
+        <h2 class="slide-main-heading t-display-serif" id="s6-title" data-editable="s6-title">
+          Ceschiatti’s Justice: the sword and autonomy
+        </h2>
+      </header>
+
+      <div class="s5-layout s6-justica-layout">
+        <!-- Verified STF Sculpture Plate: Alfredo Ceschiatti, A Justiça, 1961 -->
+        <figure class="s5-photo-wrap" id="s6-photo-box" aria-labelledby="s6-caption-text">
+          <div class="s5-photo-stage s6-photo-stage" id="s6-photo-stage">
+            <img id="justica-image" src="./assets/report/justica.jpg" data-original-src="./assets/report/justica.jpg" alt="Alfredo Ceschiatti, A Justiça, 1961. Seated granite figure holding a sword at rest across her lap in front of the Supremo Tribunal Federal, Brasília" decoding="async">
+          </div>
+
+          <figcaption class="artwork-official-caption s4-diptych__caption" id="s6-caption-text">
+            <strong class="s4-diptych__artist" data-editable="s6-artist">Alfredo Ceschiatti</strong>
+            <span class="s4-diptych__work" data-editable="s6-work"><cite lang="pt">A Justiça</cite>, 1961</span>
+            <span class="s4-diptych__sub" data-editable="s6-sub">Supremo Tribunal Federal · Praça dos Três Poderes, Brasília</span>
+          </figcaption>
+
+          <div class="s5-photo-bar">
+            <span class="t-meta">Granite, 3.30 m · Photograph: Fellipe Sampaio / STF</span>
+            <div class="s5-photo-actions">
+              <button class="text-link-sm" type="button" id="toggle-sword-focus" aria-pressed="false">Detail: Sword on lap</button>
+              <button class="text-link-sm" type="button" id="s6-justica-full-btn" data-image="./assets/report/justica.jpg" data-alt="Alfredo Ceschiatti, A Justiça, 1961. Supremo Tribunal Federal." data-caption="Alfredo Ceschiatti, A Justiça, 1961. Supremo Tribunal Federal, Praça dos Três Poderes, Brasília. (Granite, 3.30 m · Photograph: Fellipe Sampaio / STF)">Full photo ↗</button>
+              <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-6" hidden>Restore Original ↺</button>
+            </div>
+          </div>
+        </figure>
+
+        <div class="s6-analysis-col">
+          <div class="praca-triad-locus" id="s6-praca-triad" role="group" aria-label="Distinct buildings within the Praça dos Três Poderes">
+            <span class="source-tag t-meta">COMMON CIVIC SPACE · PRAÇA DOS TRÊS PODERES</span>
+            <div class="s6-triad-pills">
+              <button type="button" class="text-link-sm is-active" data-praca-node="stf" aria-pressed="true">Supreme Federal Court (STF)</button>
+              <button type="button" class="text-link-sm" data-praca-node="congress" aria-pressed="false">National Congress</button>
+              <button type="button" class="text-link-sm" data-praca-node="planalto" aria-pressed="false">Presidential Palace</button>
+            </div>
+            <p class="s6-triad-caption" id="s6-triad-caption" data-editable="s6-setting-note">
+              Positioned before the Supreme Federal Court, alongside Congress and the presidential palace within a shared civic space.
+            </p>
+          </div>
+
+          <article class="s6-reading-card">
+            <span class="source-tag t-meta">CONTEXTUAL HYPOTHESIS · ARNO &amp; RAFAEL SIMIONI</span>
+            <p class="t-display-serif s6-reading-card__lead" data-editable="s6-sword-hypothesis">
+              The sword is at rest across Justice’s lap — treated as a hypothesis about this sculpture in this place, and interpreted by Rafael Simioni in terms of judicial autonomy.
+            </p>
+          </article>
+
+          <div class="s5-retention">
+            <p class="s5-retention__en" data-editable="s6-distinction">
+              <strong>Visual ideal vs. actual guarantees:</strong> a sword cannot show whether judges are protected from interference or their decisions enforced. Sustaining that ideal depends on the laws and practices through which public power is exercised.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer-meta">
+        <span class="t-meta"><a href="#src-ceschiatti">Supremo Tribunal Federal · Photograph: Fellipe Sampaio / STF</a> · <a href="#src-simioni">Rafael Simioni (Judicial Autonomy)</a></span>
+        <span class="slide-num t-meta">06 / 07</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- =====================================================================
+       SLIDE 07 · QUESTIONS FOR SERGE (8:20–9:30)
+       Stage 3: the discussion — Preserves BOTH closing questions verbatim
+       ===================================================================== -->
+  <section class="slide-canvas slide-canvas--nightsea" id="slide-7" data-scene="nightsea" data-slide="7" aria-labelledby="s7-title">
+    <div class="nightsea-backdrop" aria-hidden="true">
+      <img src="./assets/img/bgs/nightsea.webp" alt="">
+      <div class="moonlight-shimmer"></div>
+    </div>
+
+    <img class="s7-owl-silhouette" src="./assets/owl-perched.webp" alt="" aria-hidden="true">
+
+    <article class="slide-frame slide-frame--dark" data-reveal>
+      <div class="presenter-tip presenter-tip--dark" data-presenter-tip-slide="7" data-tip-mode="closed">
+        <button
+          class="presenter-tip__btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="presenter-tip-panel-7"
+          aria-label="Presenter Tip · Slide 07: Questions for Serge Dauchy (hover or click, shortcut N)"
+          title="Presenter Tip · Hover or click for podium cues (N)"
+        >
+          <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="3.5" y="2.75" width="13" height="14.5" rx="1.75" stroke="currentColor" stroke-width="1.35" />
+            <line x1="6.5" y1="6.75" x2="13.5" y2="6.75" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" />
+            <line x1="6.5" y1="10" x2="13.5" y2="10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+            <line x1="6.5" y1="13.25" x2="10.75" y2="13.25" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" />
+          </svg>
+        </button>
+        <div class="presenter-tip__panel" id="presenter-tip-panel-7" role="region" aria-label="Presenter Tip for Slide 07" hidden></div>
+      </div>
+
+      <header class="slide-top">
+        <p class="slide-kicker t-meta" data-editable="s7-kicker">07 · STAGE 3: THE DISCUSSION · DIALOGUE WITH SERGE DAUCHY</p>
+        <h2 class="s7-title t-display-serif" id="s7-title" data-editable="s7-title">
+          Questions for Serge
+        </h2>
+      </header>
+
+      <!-- Compact Three-Stage Arc Synthesis -->
+      <div class="s7-constellation-strip" aria-label="Three stages across the intervention">
+        <div class="s7-constellation-item">
+          <span class="t-meta">I · MONTESQUIEU &amp; BOOK XI (1748)</span>
+          <p>Security under laws, societal circumstances &amp; preventing concentrated power</p>
+        </div>
+        <div class="s7-constellation-item">
+          <span class="t-meta">II · 1824 &amp; LEGAL IMAGES (1896, 1961)</span>
+          <p>Constitutional adaptation, obligation under oath &amp; judicial autonomy as ideal</p>
+        </div>
+        <div class="s7-constellation-item">
+          <span class="t-meta">III · BEYOND A FORMULA</span>
+          <p>Civil and criminal laws, judicial institutions &amp; renegotiated legal boundaries</p>
+        </div>
+      </div>
+
+      <div class="s7-questions">
+        <article class="s7-q is-active" tabindex="0" data-q-spot="q1">
+          <span class="s7-q__num t-display-serif" aria-hidden="true">1</span>
+          <div>
+            <h3 class="t-display-serif" data-editable="s7-q1">
+              “You begin with Montesquieu’s insistence that laws belong to a particular society, and end with legal systems whose boundaries are constantly being renegotiated. What changes in our understanding of context when we move from the first picture to the second?”
+            </h3>
+            <p class="s7-q__elaboration" data-editable="s7-q1-sub">
+              What evidence distinguishes borrowing from a change of legal meaning?
+            </p>
+          </div>
+        </article>
+
+        <article class="s7-q" tabindex="0" data-q-spot="q2">
+          <span class="s7-q__num t-display-serif" aria-hidden="true">2</span>
+          <div>
+            <h3 class="t-display-serif" data-editable="s7-q2">
+              “You show how Montesquieu came to be read mainly through the separation of powers. What do you think was lost in that reading?”
+            </h3>
+            <p class="s7-q__elaboration" data-editable="s7-q2-sub">
+              Where would you begin investigating a “system of liberty” beyond the constitution?
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="slide-footer-meta">
+        <span class="t-meta">Ana Vitória Vanzin Mendes · Discussant · PPGD/UFSC · 11 November 2026</span>
+        <span class="slide-num t-meta">07 / 07</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- =====================================================================
+       SOURCES, VERIFICATION REGISTER & PODIUM REFERENCE APPENDIX
+       ===================================================================== -->
+  <section class="sources" id="sources" aria-labelledby="sources-title">
+    <div class="sources__inner">
+      <header class="section-heading">
+        <p class="section-index t-meta">Appendix · Documentary Register &amp; Podium Reference</p>
+        <h2 id="sources-title">Sources, captions and verification notes</h2>
+      </header>
+
+      <div class="method-grid">
+        <article>
+          <h3>Montesquieu &amp; Serge Dauchy</h3>
+          <p>
+            Aligned with the 7-slide Montesquieu Lectern Script (~9m30s), this response moves from Montesquieu’s judicial role in the <em>Parlement</em> of Bordeaux and <cite lang="fr">De l’esprit des lois</cite> (1748, Book XI, ch. 6) to Brazil’s 1824 Constitution (Art. 10; Dauchy § 6) and Serge Dauchy’s emphasis on civil and criminal laws, judicial institutions, and renegotiated boundaries (§§ 7, 11–14).
+          </p>
+        </article>
+        <article>
+          <h3>Historical Artworks &amp; Credits</h3>
+          <p>
+            Slide 05 examines Aurélio de Figueiredo’s <cite lang="pt">Compromisso Constitucional</cite> (1896, representing the oath of 26 February 1891; Museu da República · Reproduction: Romulo Fialdini) alongside Articles 15 and 44 of the 1891 Constitution. Slide 06 examines Alfredo Ceschiatti’s <cite lang="pt">A Justiça</cite> (1961; Supremo Tribunal Federal · Photograph: Fellipe Sampaio / STF) alongside Rafael Simioni’s study on autonomy.
+          </p>
+        </article>
+        <article>
+          <h3>Lectern Script &amp; Standing Tools</h3>
+          <p>
+            Full verbatim lecture notes with bold sentence lead-ins and silent slide-change cues are available in the <strong>Lectern Script</strong> reader (press <code>L</code> or print as a 7-page A4 packet), synchronized with each slide’s top-right Presenter Tip (<code>N</code>) and the Smartphone Remote (<code>R</code>).
+          </p>
+        </article>
+      </div>
+
+      <ol class="source-register">
+        <li id="src-dauchy">
+          <span class="source-number">S1</span>
+          <p>
+            <strong>DAUCHY, Serge.</strong> <cite lang="fr">« Montesquieu, De l’esprit des lois (1748) »</cite> — Conference paper presented at <em>A circulação das ideias e saberes franceses na ciência jurídica brasileira</em>, PPGD/UFSC, 11 November 2026, esp. paragraphs 6, 7, and 11–14.
+          </p>
+        </li>
+        <li id="src-montesquieu">
+          <span class="source-number">S2</span>
+          <p>
+            <strong>MONTESQUIEU, Charles-Louis de Secondat, Baron de.</strong> <cite lang="fr">De l’esprit des lois</cite> (1748; 1777 ed.), esp. Book XI, chapter 6. Reference text: <a href="https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L11/C6" target="_blank" rel="noopener">Wikisource · De l’esprit des lois (1777)</a>.
+          </p>
+        </li>
+        <li id="src-const-1824">
+          <span class="source-number">S3</span>
+          <p>
+            <strong>BRAZIL.</strong> <cite lang="pt">Constituição Política do Império do Brazil</cite> (25 March 1824), Article 10 (Legislative, Moderating, Executive, Judicial); <cite lang="pt">Constituição da República dos Estados Unidos do Brasil</cite> (24 February 1891), Articles 15 and 44. Câmara dos Deputados: <a href="https://www2.camara.leg.br/legin/fed/consti/1824-1899/constituicao-35041-25-marco-1824-532540-publicacaooriginal-14770-pl.html" target="_blank" rel="noopener">Constitutional Archive</a>.
+          </p>
+        </li>
+        <li id="src-figueiredo">
+          <span class="source-number">S4</span>
+          <p>
+            <strong>MUSEU DA REPÚBLICA.</strong> Catalogue entry for Aurélio de Figueiredo, <cite lang="pt">Compromisso Constitucional</cite>, 1896 (Represents Deodoro da Fonseca’s oath of 26 February 1891 before Prudente de Moraes and the Constituent Congress; oil on canvas, 330 × 257 cm; reproduction credit: Romulo Fialdini): <a href="https://museudarepublica.acervos.museus.gov.br/acervo-museologico/pintura-historica-4/" target="_blank" rel="noopener">Museu da República · Acervo Museológico</a>.
+          </p>
+        </li>
+        <li id="src-ceschiatti">
+          <span class="source-number">S5</span>
+          <p>
+            <strong>SUPREMO TRIBUNAL FEDERAL (STF).</strong> <cite lang="pt">130 anos: conheça os destaques do acervo cultural do STF</cite> — Alfredo Ceschiatti, <cite lang="pt">A Justiça</cite>, 1961 (Supremo Tribunal Federal, Praça dos Três Poderes, Brasília; granite, 3.30 m; photograph credit: Fellipe Sampaio / STF): <a href="https://noticias.stf.jus.br/postsnoticias/130-anos-conheca-os-destaques-do-acervo-cultural-stf/" target="_blank" rel="noopener">STF · Acervo Cultural</a>.
+          </p>
+        </li>
+        <li id="src-simioni">
+          <span class="source-number">S6</span>
+          <p>
+            <strong>SIMIONI, Rafael Lazzarotto.</strong> Study on Alfredo Ceschiatti’s sculpture <cite lang="pt">A Justiça</cite> (STF, Brasília) and the iconography of judicial autonomy (engaged on Slide 06 alongside Arno’s conference prompt).
+          </p>
+        </li>
+      </ol>
+
+      <div class="source-actions">
+        <button class="download-link" type="button" id="footer-script-open-btn">Open 7-Page Lectern Script <span>L</span></button>
+        <button class="download-link" type="button" id="footer-script-print-btn">Print Lectern Script (7 Pages) <span>A4</span></button>
+        <button class="download-link" type="button" id="footer-print-btn">Print 7 Slides &amp; Sources <span>A4</span></button>
+        <a class="download-link" href="#slide-1">Return to Slide 01 <span aria-hidden="true">↑</span></a>
+      </div>
+
+      <footer class="colophon">
+        <p>Presenter: <strong>Ana Vitória Vanzin Mendes · Discussant · Doctoral Researcher in Law (UFSC)</strong> (11 November 2026 · 15h10 · CCJ/UFSC).</p>
+        <p>Temática: Montesquieu · Conferencista: <strong>Serge Dauchy</strong> (CNRS/Université de Lille) · Debatedoras: <strong>Marja Mangili</strong> (UniCesusc) &amp; <strong>Ana Vitória Vanzin Mendes</strong> (UFSC) · <em>A circulação das ideias e saberes franceses na ciência jurídica brasileira</em>.</p>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<!-- Dedicated 7-Page A4 Print Container for the Revised Lectern Script (active only during body.is-printing-script) -->
+<section class="print-lectern-script" id="print-lectern-script" hidden aria-hidden="true"></section>
+
+<!-- =========================================================================
+     SUBTLE FLOATING ORBITAL POWER CONSTELLATION DIAL & AMBIENT MUSIC TOGGLE
+     ========================================================================= -->
+<aside class="constellation-dial" id="constellation-dial" data-constellation-mode="triad" aria-label="Power-distribution constellation and ambient music">
+  <button
+    class="constellation-dial__btn"
+    id="constellation-toggle"
+    type="button"
+    aria-expanded="false"
+    title="Power-distribution constellation for current slide (click to toggle label)"
+  >
+    <svg class="constellation-dial__svg" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3 4" opacity="0.42" />
+      <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" stroke-width="0.6" opacity="0.28" />
+      <line id="const-line-le" x1="22" y1="48" x2="78" y2="48" stroke="currentColor" stroke-width="1" opacity="0.55" />
+      <line id="const-line-ej" x1="78" y1="48" x2="50" y2="20" stroke="currentColor" stroke-width="1" opacity="0.55" />
+      <line id="const-line-jl" x1="50" y1="20" x2="22" y2="48" stroke="currentColor" stroke-width="1" opacity="0.55" />
+      <line id="const-line-dom" x1="50" y1="20" x2="50" y2="80" stroke="var(--gilt)" stroke-width="1.1" stroke-dasharray="2.5 2.5" opacity="0.8" />
+      <circle id="const-node-leg" cx="22" cy="48" r="3.6" fill="var(--accent)" />
+      <circle id="const-node-exec" cx="78" cy="48" r="3.6" fill="var(--accent)" />
+      <circle id="const-node-jud" cx="50" cy="20" r="3.8" fill="var(--accent)" />
+      <circle id="const-node-dom" cx="50" cy="80" r="3.6" fill="var(--gilt)" />
+    </svg>
+    <span class="constellation-dial__meta" id="constellation-caption">
+      <strong class="t-meta" id="constellation-slide-tag">01 · POWER ORBIT</strong>
+      <span id="constellation-label-text">Montesquieu &amp; Three Powers</span>
+    </span>
+  </button>
+
+  <button
+    class="floating-music-btn t-ui"
+    id="floating-music-btn"
+    type="button"
+    aria-pressed="false"
+    title="Toggle Chopin Nocturne Op. 9 No. 2 background piano at low volume (B)"
+  >
+    <span class="floating-music-btn__glyph" aria-hidden="true">♪</span>
+    <span class="floating-music-btn__text t-meta" id="floating-music-label">Play Nocturne · 12%</span>
+  </button>
+</aside>
+
+<!-- Gentle low-volume Chopin Nocturne Op. 9 No. 2 background audio -->
+<audio
+  id="bg-music-audio"
+  src="./public/assets/aistudio/Classicals.de_-_Chopin_-_Nocturne_Op._9_no._2_in_E-flat_major_a91ca46b.mp3"
+  loop
+  preload="auto"
+></audio>
+
+<!-- Floating slide stepper & audience mode exit bar -->
+<aside class="slide-stepper" aria-label="Slide controls">
+  <button type="button" class="slide-stepper__btn" id="prev-slide" aria-label="Previous slide" title="Previous slide (←)">←</button>
+  <span class="slide-stepper__status t-meta" id="slide-indicator">01 / 07</span>
+  <button type="button" class="slide-stepper__btn" id="next-slide" aria-label="Next slide" title="Next slide (→)">→</button>
+  <button type="button" class="slide-stepper__exit t-meta" id="exit-present-btn" hidden title="Exit fullscreen presentation (Esc)">
+    Exit ×
+  </button>
+</aside>
+
+<dialog class="image-dialog" id="image-dialog" aria-labelledby="dialog-caption">
+  <button class="dialog-close" id="dialog-close" type="button" aria-label="Close image viewer">Close ×</button>
+  <img id="dialog-image" src="" alt="">
+  <p id="dialog-caption"></p>
+</dialog>
+
+<!-- Revised 7-Page Lectern Script & Lecture Notes Dialog (Shortcut L) -->
+<dialog class="workspace-dialog lectern-script-dialog" id="lectern-script-dialog" data-script-size="standard" aria-labelledby="lectern-script-dialog-title">
+  <div class="workspace-dialog__header lectern-script-dialog__header">
+    <div>
+      <p class="source-tag t-meta">MONTESQUIEU • LECTERN SCRIPT • ANA VITÓRIA VANZIN MENDES</p>
+      <h2 class="t-display-serif workspace-dialog__title" id="lectern-script-dialog-title">
+        Revised 7-Page Lectern Script &amp; Lecture Notes
+      </h2>
+    </div>
+    <button class="dialog-close" id="lectern-script-close" type="button" aria-label="Close Lectern Script">Close ×</button>
+  </div>
+
+  <div class="lectern-script-toolbar">
+    <p class="lectern-script-toolbar__note">
+      Read the full prose. Bracketed cues are silent. Total target about 9–10 minutes (<code>0:00–9:30</code>), synchronized 1-to-1 with all 7 slides and both closing questions on Slide 7.
+    </p>
+    <div class="lectern-script-toolbar__actions">
+      <div class="lectern-size-group" role="group" aria-label="Lectern script text size">
+        <button type="button" class="text-link-sm is-active" data-script-font="standard" aria-pressed="true">Standard Type</button>
+        <button type="button" class="text-link-sm" data-script-font="large" aria-pressed="false">Large Lectern Type</button>
+      </div>
+      <button type="button" class="action-btn action-btn--present-primary t-ui" id="print-script-only-btn">
+        🖨️ Print 7-Page Lectern Script (A4)
+      </button>
+    </div>
+  </div>
+
+  <div class="lectern-script-pages" id="lectern-script-pages" aria-label="Seven lectern script pages">
+    <!-- Rendered dynamically from getLecternScriptPages() -->
+  </div>
+</dialog>
+
+<!-- Smartphone Presenter Remote Dialog (QR Code, Direct URL & Live Remote Launch) -->
+<dialog class="phone-remote-dialog" id="phone-remote-dialog" aria-labelledby="phone-remote-dialog-title">
+  <div class="phone-remote-dialog__header">
+    <h2 class="phone-remote-dialog__title" id="phone-remote-dialog-title">
+      📱 Smartphone Presenter Remote
+    </h2>
+    <button class="dialog-close" id="phone-remote-dialog-close" type="button" aria-label="Close smartphone remote dialog">Close ×</button>
+  </div>
+  <p class="phone-remote-dialog__instructions">
+    Scan with your phone camera while standing at the lectern. Includes your full verbatim <strong>Lectern Script</strong> (with bold sentence lead-ins and silent cues), Quick Cues toggle, live timer, and giant thumb slide buttons.
+  </p>
+  <div class="phone-remote-dialog__qr-wrap" id="phone-remote-qr-wrap">
+    <!-- QR Code SVG injected dynamically -->
+  </div>
+  <div class="phone-remote-dialog__url-row">
+    <input type="text" class="phone-remote-dialog__url-input" id="phone-remote-url-input" readonly aria-label="Smartphone remote controller URL">
+    <button type="button" class="action-btn t-ui" id="phone-remote-copy-btn">Copy Link</button>
+  </div>
+  <div class="phone-remote-dialog__actions">
+    <button type="button" class="action-btn action-btn--present-primary t-ui" id="phone-remote-launch-btn">
+      Open Remote Controller ↗
+    </button>
+    <button type="button" class="action-btn t-ui" id="phone-remote-dismiss-btn">Done</button>
+  </div>
+</dialog>
+
+<!-- Sync Audience Modal (Firebase Realtime Database & Live Room Sync) -->
+<dialog class="workspace-dialog sync-audience-dialog" id="sync-audience-dialog" aria-labelledby="sync-audience-dialog-title">
+  <div class="workspace-dialog__header">
+    <div>
+      <p class="source-tag t-meta">FIREBASE REALTIME DATABASE · LIVE SLIDE SYNCHRONIZATION</p>
+      <h2 class="t-display-serif workspace-dialog__title" id="sync-audience-dialog-title">
+        Sync Audience
+      </h2>
+    </div>
+    <button class="dialog-close" id="sync-audience-dialog-close" type="button" aria-label="Close Sync Audience dialog">Close ×</button>
+  </div>
+
+  <p class="workspace-dialog__desc">
+    Link audience browsers to <strong>Ana Vitória Vanzin Mendes’s</strong> active slide (01 / 07 to 07 / 07), visual pauses, and constitutional callouts in real time during the UFSC panel intervention.
+  </p>
+
+  <div class="sync-status-card" id="sync-status-card" data-sync-state="idle">
+    <div class="sync-status-card__top">
+      <span class="t-meta sync-status-card__pill" id="sync-dialog-mode-badge">STATUS · STANDING BY</span>
+      <span class="t-meta sync-status-card__path" id="sync-dialog-rtdb-path">RTDB Path: syncSessions/UFSC-2026</span>
+    </div>
+    <div class="sync-status-card__main">
+      <div>
+        <strong class="t-display-serif sync-status-card__slide" id="sync-dialog-slide-readout">
+          Slide 01 / 07 · Montesquieu and the three powers
+        </strong>
+        <p class="sync-status-card__sub" id="sync-dialog-detail-readout">
+          Presenter: Ana Vitória Vanzin Mendes · PPGD/UFSC · Callout: Default view
+        </p>
+      </div>
+      <div class="sync-status-card__metrics t-meta">
+        <span id="sync-dialog-viewers-count">0 Linked Viewers</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="sync-validation-error t-ui" id="sync-validation-error" role="alert" hidden></p>
+
+  <div class="sync-roles-grid">
+    <section class="sync-role-card" aria-labelledby="sync-viewer-heading">
+      <span class="source-tag t-meta">FOR PANEL AUDIENCE &amp; FELLOW DISCUSSANTS</span>
+      <h3 class="t-display-serif sync-role-card__title" id="sync-viewer-heading">
+        Follow Presenter’s Slide
+      </h3>
+      <p class="sync-role-card__desc">
+        Enter the session code to automatically scroll your browser to the presenter’s current slide and active callout.
+      </p>
+
+      <div class="sync-form-group">
+        <label class="studio-label t-meta" for="sync-join-code-input">Session Code</label>
+        <div class="workspace-dialog__form-row">
+          <input
+            type="text"
+            id="sync-join-code-input"
+            class="workspace-input mono"
+            maxlength="32"
+            value="UFSC-2026"
+            placeholder="e.g., UFSC-2026"
+          >
+          <button class="action-btn t-ui workspace-primary-btn" id="sync-join-btn" type="button">
+            Link Browser
+          </button>
+        </div>
+      </div>
+
+      <div class="sync-viewer-controls" id="sync-viewer-active-controls" hidden>
+        <label class="studio-checkbox">
+          <input type="checkbox" id="sync-autofollow-checkbox" checked>
+          <span>Automatically scroll to presenter’s active slide &amp; callouts</span>
+        </label>
+        <div class="sync-inline-actions">
+          <button class="action-btn t-ui" id="sync-jump-now-btn" type="button">
+            Jump to Presenter’s Current Slide
+          </button>
+          <button class="action-btn t-ui" id="sync-leave-btn" type="button">
+            Disconnect Viewer
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="sync-role-card sync-role-card--presenter" aria-labelledby="sync-presenter-heading">
+      <span class="source-tag t-meta">FOR PRESENTER · ANA VITÓRIA VANZIN MENDES</span>
+      <h3 class="t-display-serif sync-role-card__title" id="sync-presenter-heading">
+        Broadcast Current Slide
+      </h3>
+      <p class="sync-role-card__desc">
+        Publish your live slide (01 / 07–07 / 07), power-distribution callouts, and 5-second visual pauses as you present.
+      </p>
+
+      <div class="sync-form-group">
+        <label class="studio-label t-meta" for="sync-host-code-input">Broadcast Session Code</label>
+        <div class="workspace-dialog__form-row">
+          <input
+            type="text"
+            id="sync-host-code-input"
+            class="workspace-input mono"
+            maxlength="32"
+            value="UFSC-2026"
+            placeholder="e.g., UFSC-2026"
+          >
+          <button class="action-btn t-ui workspace-primary-btn" id="sync-host-btn" type="button" aria-pressed="false">
+            Start Broadcast
+          </button>
+        </div>
+      </div>
+
+      <div class="sync-share-box">
+        <span class="studio-label t-meta">Shareable Audience Sync Link</span>
+        <div class="workspace-dialog__form-row">
+          <input
+            type="text"
+            id="sync-share-url-input"
+            class="workspace-input mono"
+            readonly
+            aria-label="Shareable Audience Sync URL"
+          >
+          <button class="action-btn t-ui" id="sync-copy-link-btn" type="button">
+            Copy Link
+          </button>
+        </div>
+      </div>
+
+      <div class="sync-quick-slides" aria-label="Broadcast specific slide">
+        <span class="studio-label t-meta">Push Slide Directly to Linked Viewers:</span>
+        <div class="sync-quick-slides__row">
+          <button type="button" class="text-link-sm" data-sync-push-slide="1">01 · Cover</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="2">02 · Montesquieu</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="3">03 · Three Powers</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="4">04 · Brazil 1824</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="5">05 · 1896 Oath</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="6">06 · 1961 Justice</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="7">07 · Questions</button>
+        </div>
+      </div>
+
+      <div class="sync-auth-row">
+        <span class="t-meta" id="sync-auth-status-text">Firebase Realtime Sync ready · Optional Google Sign-In for authenticated cloud lock</span>
+        <button type="button" class="text-link-sm" id="sync-google-auth-btn">Sign in with Google</button>
+      </div>
+    </section>
+  </div>
+</dialog>
+
+<!-- Slide Revision History & Backup Modal -->
+<dialog class="workspace-dialog" id="revisions-dialog" aria-labelledby="revisions-dialog-title">
+  <div class="workspace-dialog__header">
+    <div>
+      <p class="source-tag t-meta">REVISION HISTORY &amp; LOCAL EDITS PROTECTION</p>
+      <h2 class="t-display-serif workspace-dialog__title" id="revisions-dialog-title">Slide Revisions &amp; Backups</h2>
+    </div>
+    <button class="dialog-close" id="revisions-dialog-close" type="button">Close ×</button>
+  </div>
+
+  <p class="workspace-dialog__desc">
+    Inline edits made with <strong>Edit Text</strong> are saved automatically in your browser and can be snapshotted or exported as JSON at any time.
+  </p>
+
+  <div class="workspace-dialog__form-row">
+    <input
+      type="text"
+      id="revision-label-input"
+      class="workspace-input"
+      maxlength="160"
+      placeholder="Snapshot label (e.g., Pre-panel wording · 11 Nov)"
+      aria-label="Revision snapshot label"
+    >
+    <button class="action-btn t-ui workspace-primary-btn" id="save-revision-btn" type="button">
+      Save Snapshot
+    </button>
+  </div>
+
+  <div class="workspace-dialog__actions">
+    <button class="action-btn t-ui" id="export-revisions-json-btn" type="button">
+      Export Saved Edits (.json)
+    </button>
+    <button class="action-btn t-ui" id="import-revisions-json-btn" type="button">
+      Import Backup (.json)
+    </button>
+    <input type="file" id="import-revisions-file-input" accept="application/json,.json" hidden>
+  </div>
+
+  <ul class="revisions-list" id="revisions-list" aria-label="Saved slide revisions"></ul>
+</dialog>
+
+<!-- Explicit User Confirmation Modal for Mutating Operations -->
+<dialog class="workspace-dialog workspace-dialog--confirm" id="confirm-dialog" aria-labelledby="confirm-dialog-title">
+  <h3 class="t-display-serif workspace-dialog__title" id="confirm-dialog-title">Confirm action</h3>
+  <p class="workspace-dialog__desc" id="confirm-dialog-message">Are you sure you want to proceed?</p>
+  <div class="workspace-dialog__actions">
+    <button class="action-btn t-ui workspace-primary-btn" id="confirm-dialog-accept" type="button">Confirm</button>
+    <button class="action-btn t-ui" id="confirm-dialog-cancel" type="button">Cancel</button>
+  </div>
+</dialog>
+
+<!-- Research & Media Studio Drawer (Backstage preparation tool) -->
+<div class="studio-backdrop" id="studio-backdrop" hidden></div>
+<aside class="studio-drawer" id="studio-drawer" aria-labelledby="studio-drawer-title" hidden>
+  <header class="studio-drawer__header">
+    <div>
+      <p class="source-tag t-meta">DISCUSSANT RESEARCH &amp; ARCHIVAL STUDIO · UFSC</p>
+      <h2 class="t-display-serif studio-drawer__title" id="studio-drawer-title">Preparation Studio</h2>
+    </div>
+    <button class="dialog-close" id="studio-drawer-close" type="button" aria-label="Close Studio drawer">Close ×</button>
+  </header>
+
+  <nav class="studio-tabs t-ui" role="tablist" aria-label="Studio modes">
+    <button class="studio-tab is-active" type="button" role="tab" aria-selected="true" data-studio-tab="timeline" id="tab-btn-timeline" aria-controls="panel-timeline">
+      1 · Timeline
+    </button>
+    <button class="studio-tab" type="button" role="tab" aria-selected="false" data-studio-tab="research" id="tab-btn-research" aria-controls="panel-research">
+      2 · Search
+    </button>
+    <button class="studio-tab" type="button" role="tab" aria-selected="false" data-studio-tab="image" id="tab-btn-image" aria-controls="panel-image">
+      3 · Image
+    </button>
+    <button class="studio-tab" type="button" role="tab" aria-selected="false" data-studio-tab="video" id="tab-btn-video" aria-controls="panel-video">
+      4 · Video
+    </button>
+    <button class="studio-tab" type="button" role="tab" aria-selected="false" data-studio-tab="chat" id="tab-btn-chat" aria-controls="panel-chat">
+      5 · Chatbot
+    </button>
+  </nav>
+
+  <!-- TAB 1: LEGAL CIRCULATION TIMELINE -->
+  <section class="studio-panel" id="panel-timeline" role="tabpanel" aria-labelledby="tab-btn-timeline">
+    <div class="circulation-timeline" id="legal-circulation-timeline">
+      <div class="circulation-timeline__head">
+        <p class="studio-panel__intro">
+          Compare parallel French and Brazilian milestones across <strong>Montesquieu’s <cite>De l’esprit des lois</cite> (1748)</strong>, <strong>Serge Dauchy’s conference paper</strong>, the 1824 Constitution (Art. 10), Figueiredo’s 1896 canvas, and Ceschiatti’s 1961 sculpture at the STF.
+        </p>
+
+        <div class="circulation-filter-bar" role="group" aria-label="Filter timeline by legal theme">
+          <button class="circulation-filter-btn is-active" type="button" data-timeline-filter="all" aria-pressed="true">
+            All Milestones (5)
+          </button>
+          <button class="circulation-filter-btn" type="button" data-timeline-filter="constitutional" aria-pressed="false">
+            Constitutional (2)
+          </button>
+          <button class="circulation-filter-btn" type="button" data-timeline-filter="iconography" aria-pressed="false">
+            Institutional Images (2)
+          </button>
+          <button class="circulation-filter-btn" type="button" data-timeline-filter="circulation" aria-pressed="false">
+            Author &amp; Context (1)
+          </button>
+        </div>
+      </div>
+
+      <div class="circulation-axis-headers t-meta" aria-hidden="true">
+        <span>FRANCE · MONTESQUIEU &amp; DAUCHY</span>
+        <span>⇄</span>
+        <span>BRAZIL · INSTITUTIONS &amp; IMAGES</span>
+      </div>
+
+      <div class="circulation-rows" id="circulation-timeline-list" role="listbox" aria-label="Parallel French and Brazilian legal dates"></div>
+
+      <article class="circulation-citation-card" id="circulation-citation-card" aria-live="polite">
+        <header class="circulation-citation-card__top">
+          <span class="t-meta circulation-citation-card__code" id="citation-card-code">1748 ⇄ 1824 · REGISTER S1 · S3</span>
+          <button class="text-link-sm" id="timeline-copy-citation-btn" type="button">Copy Citation</button>
+        </header>
+
+        <h3 class="t-display-serif circulation-citation-card__title" id="citation-card-heading"></h3>
+
+        <div class="circulation-citation-card__split">
+          <div class="circulation-citation-card__pole">
+            <span class="t-meta circulation-citation-card__pole-tag" id="citation-fr-tag"></span>
+            <strong id="citation-fr-title"></strong>
+            <p id="citation-fr-summary"></p>
+          </div>
+          <div class="circulation-citation-card__pole">
+            <span class="t-meta circulation-citation-card__pole-tag" id="citation-br-tag"></span>
+            <strong id="citation-br-title"></strong>
+            <p id="citation-br-summary"></p>
+          </div>
+        </div>
+
+        <blockquote class="circulation-citation-card__quote" id="citation-card-quote"></blockquote>
+
+        <div class="circulation-citation-card__meta">
+          <p class="circulation-citation-card__bib">
+            <strong>Source Citation:</strong> <span id="citation-card-bib"></span>
+          </p>
+          <p class="circulation-citation-card__method">
+            <strong>Qualification:</strong> <span id="citation-card-method"></span>
+          </p>
+        </div>
+
+        <div class="circulation-citation-card__links" id="citation-card-links"></div>
+
+        <footer class="circulation-citation-card__actions">
+          <button class="action-btn t-ui workspace-primary-btn" id="timeline-jump-source-btn" type="button">
+            View in Sources ↓
+          </button>
+          <button class="action-btn t-ui" id="timeline-jump-slide-btn" type="button">
+            Go to Slide
+          </button>
+          <button class="action-btn t-ui" id="timeline-research-btn" type="button">
+            Verify in Grounded Search →
+          </button>
+        </footer>
+      </article>
+    </div>
+  </section>
+
+  <!-- TAB 2: GOOGLE SEARCH GROUNDING RESEARCH DRAWER -->
+  <section class="studio-panel" id="panel-research" role="tabpanel" aria-labelledby="tab-btn-research" hidden>
+    <p class="studio-panel__intro">
+      Verify Montesquieu’s magistracy in Bordeaux, Book XI chapter 6 of <cite>De l’esprit des lois</cite>, Article 10 of the 1824 Brazilian Constitution, Articles 15 and 44 of the 1891 Constitution, and provenance for Figueiredo (1896) and Ceschiatti (1961) using live <strong>Google Search grounding</strong>.
+    </p>
+
+    <div class="studio-field">
+      <span class="studio-label t-meta">Quick Verification Prompts</span>
+      <div class="studio-chips">
+        <button class="studio-chip" type="button" data-research-prompt="Examine Montesquieu’s judicial career in the Parlement of Bordeaux and how Book XI, chapter 6 of De l’esprit des lois (1748) relates separating legislative, executive, and judicial functions to political liberty.">Montesquieu · Book XI, ch. 6</button>
+        <button class="studio-chip" type="button" data-research-prompt="Verify Article 10 of the 1824 Imperial Constitution of Brazil enumerating Legislative, Moderating, Executive, and Judicial powers alongside Benjamin Constant’s theory of neutral power.">1824 Constitution · Article 10</button>
+        <button class="studio-chip" type="button" data-research-prompt="Verify the Museu da República catalogue record for Aurélio de Figueiredo’s Compromisso Constitucional (1896, representing the oath of 26 February 1891) alongside Articles 15 and 44 of the 1891 Brazilian Constitution.">Figueiredo (1896) &amp; 1891 Const.</button>
+        <button class="studio-chip" type="button" data-research-prompt="Examine Alfredo Ceschiatti’s 1961 sculpture A Justiça at the Supremo Tribunal Federal in Brasília and Rafael Lazzarotto Simioni’s study on the resting sword and judicial autonomy.">Ceschiatti (1961) &amp; Simioni</button>
+      </div>
+    </div>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="research-query-input">Research Question or Source Verification</label>
+      <textarea
+        id="research-query-input"
+        class="studio-textarea"
+        rows="3"
+        placeholder="Verify editions, constitutional provisions, or institutional provenance..."
+      ></textarea>
+      <label class="studio-checkbox">
+        <input type="checkbox" id="research-include-slide" checked>
+        <span>Include current slide’s text as context</span>
+      </label>
+    </div>
+
+    <div class="studio-actions">
+      <button class="action-btn t-ui workspace-primary-btn" id="research-submit-btn" type="button">
+        Search Grounded Sources
+      </button>
+      <button class="action-btn t-ui" id="research-clear-btn" type="button" hidden>
+        Clear
+      </button>
+    </div>
+
+    <div class="studio-status t-meta" id="research-status" hidden></div>
+
+    <div class="studio-result" id="research-result" hidden>
+      <div class="studio-result__header">
+        <span class="source-tag t-meta">GROUNDED SYNTHESIS</span>
+        <button class="text-link-sm" id="research-copy-btn" type="button">Copy Note &amp; Citations</button>
+      </div>
+      <div class="studio-prose" id="research-output-text"></div>
+      <div class="studio-sources" id="research-sources-box" hidden>
+        <p class="source-tag t-meta">VERIFIED WEB &amp; ARCHIVAL CITATIONS</p>
+        <ul class="studio-sources__list" id="research-sources-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 3: VISUAL STUDY -->
+  <section class="studio-panel" id="panel-image" role="tabpanel" aria-labelledby="tab-btn-image" hidden>
+    <p class="studio-panel__intro">
+      <strong>Note on Presentation Policy:</strong> Active slides display verified archival artworks and photographs. Any study plate generated here is for preparatory exploration and includes one-click restore.
+    </p>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="image-source-select">Starting Reference</label>
+      <select id="image-source-select" class="studio-select">
+        <option value="none">Create preparatory diagram from text prompt</option>
+        <option value="montesquieu-oval">Slide 01 · Montesquieu Portrait Medallion</option>
+        <option value="compromisso">Slide 05 · Compromisso Constitucional (1896)</option>
+        <option value="justica">Slide 06 · A Justiça — Ceschiatti (1961)</option>
+        <option value="upload">Upload a photo from your computer...</option>
+      </select>
+    </div>
+
+    <div class="studio-field" id="image-upload-field" hidden>
+      <label class="studio-label t-meta" for="image-upload-input">Upload Reference Photo</label>
+      <input type="file" id="image-upload-input" class="studio-file-input" accept="image/png,image/jpeg,image/webp">
+      <div class="studio-thumb-preview" id="image-upload-preview" hidden>
+        <img id="image-upload-thumb" src="" alt="Uploaded reference preview">
+        <span class="t-meta" id="image-upload-name"></span>
+      </div>
+    </div>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="image-prompt-input">Study Prompt</label>
+      <textarea
+        id="image-prompt-input"
+        class="studio-textarea"
+        rows="3"
+        placeholder="Describe a preparatory visual study..."
+      ></textarea>
+    </div>
+
+    <div class="studio-row">
+      <div class="studio-field">
+        <label class="studio-label t-meta" for="image-aspect-select">Aspect Ratio</label>
+        <select id="image-aspect-select" class="studio-select">
+          <option value="4:3">4:3</option>
+          <option value="3:4">3:4</option>
+          <option value="16:9">16:9</option>
+          <option value="1:1">1:1</option>
+        </select>
+      </div>
+      <div class="studio-field">
+        <label class="studio-label t-meta" for="image-size-select">Resolution</label>
+        <select id="image-size-select" class="studio-select">
+          <option value="1K">1K Standard</option>
+          <option value="2K">2K High Detail</option>
+        </select>
+      </div>
+    </div>
+
+    <label class="studio-checkbox">
+      <input type="checkbox" id="image-use-search">
+      <span>Ground details with Google Search</span>
+    </label>
+
+    <div class="studio-actions">
+      <button class="action-btn t-ui workspace-primary-btn" id="image-generate-btn" type="button">
+        Generate Preparatory Study
+      </button>
+    </div>
+
+    <div class="studio-status t-meta" id="image-status" hidden></div>
+
+    <div class="studio-result" id="image-result" hidden>
+      <div class="studio-result__header">
+        <span class="source-tag t-meta">PREPARATORY STUDY (NOT AN HISTORICAL ARCHIVAL PHOTO)</span>
+        <a class="text-link-sm" id="image-download-link" href="#" download="montesquieu-study.png">Download PNG ↓</a>
+      </div>
+      <figure class="studio-media-frame">
+        <img id="image-output-preview" src="" alt="Generated preparatory study">
+      </figure>
+      <div class="studio-apply-bar">
+        <label class="studio-label t-meta" for="image-target-slide">Preview in Slide Frame (with one-click restore):</label>
+        <div class="studio-apply-controls">
+          <select id="image-target-slide" class="studio-select">
+            <option value="slide-1">Slide 01 · Montesquieu Oval</option>
+            <option value="slide-5">Slide 05 · Compromisso Constitucional</option>
+            <option value="slide-6">Slide 06 · A Justiça (STF)</option>
+          </select>
+          <button class="action-btn t-ui workspace-primary-btn" id="image-apply-btn" type="button">Preview on Slide</button>
+          <button class="action-btn t-ui" id="image-restore-btn" type="button">Restore Verified Image ↺</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 4: MOTION STUDY -->
+  <section class="studio-panel" id="panel-video" role="tabpanel" aria-labelledby="tab-btn-video" hidden>
+    <p class="studio-panel__intro">
+      Generate a preparatory camera-pan study in the Studio drawer with one-click restore to the verified museum or court photograph.
+    </p>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="video-source-select">Reference Plate</label>
+      <select id="video-source-select" class="studio-select">
+        <option value="compromisso">Slide 05 · Compromisso Constitucional (1896)</option>
+        <option value="justica">Slide 06 · A Justiça — Ceschiatti (1961)</option>
+        <option value="montesquieu-oval">Slide 01 · Montesquieu Portrait Medallion</option>
+        <option value="upload">Upload a photo from your computer...</option>
+      </select>
+    </div>
+
+    <div class="studio-field" id="video-upload-field" hidden>
+      <label class="studio-label t-meta" for="video-upload-input">Upload Photo</label>
+      <input type="file" id="video-upload-input" class="studio-file-input" accept="image/png,image/jpeg,image/webp">
+      <div class="studio-thumb-preview" id="video-upload-preview" hidden>
+        <img id="video-upload-thumb" src="" alt="Uploaded photo">
+        <span class="t-meta" id="video-upload-name"></span>
+      </div>
+    </div>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="video-prompt-input">Camera Motion Prompt</label>
+      <textarea
+        id="video-prompt-input"
+        class="studio-textarea"
+        rows="3"
+      >Slow, dignified museum camera pan preserving historical detail.</textarea>
+    </div>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="video-aspect-select">Aspect Ratio</label>
+      <select id="video-aspect-select" class="studio-select">
+        <option value="16:9">16:9 (Landscape)</option>
+        <option value="9:16">9:16 (Portrait)</option>
+      </select>
+    </div>
+
+    <div class="studio-actions">
+      <button class="action-btn t-ui workspace-primary-btn" id="video-generate-btn" type="button">
+        Generate Motion Study
+      </button>
+    </div>
+
+    <div class="studio-status t-meta" id="video-status" hidden></div>
+
+    <div class="studio-result" id="video-result" hidden>
+      <div class="studio-result__header">
+        <span class="source-tag t-meta">PREPARATORY VIDEO STUDY</span>
+        <a class="text-link-sm" id="video-download-link" href="#" download="montesquieu-study.mp4">Download MP4 ↓</a>
+      </div>
+      <figure class="studio-media-frame">
+        <video id="video-output-player" controls loop playsinline muted></video>
+      </figure>
+      <div class="studio-apply-bar">
+        <label class="studio-label t-meta" for="video-target-slide">Preview on Slide:</label>
+        <div class="studio-apply-controls">
+          <select id="video-target-slide" class="studio-select">
+            <option value="slide-5">Slide 05 · Compromisso Constitucional</option>
+            <option value="slide-6">Slide 06 · A Justiça (STF)</option>
+            <option value="slide-1">Slide 01 · Montesquieu Oval</option>
+          </select>
+          <button class="action-btn t-ui workspace-primary-btn" id="video-apply-btn" type="button">Preview on Slide</button>
+          <button class="action-btn t-ui" id="video-restore-btn" type="button">Restore Verified Image ↺</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 5: GEMINI DISCUSSANT CHATBOT -->
+  <section class="studio-panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-btn-chat" hidden>
+    <p class="studio-panel__intro">
+      Engage in a scholarly multi-turn dialogue with Gemini on Montesquieu, Book XI chapter 6, Brazil’s 1824 and 1891 Constitutions, institutional iconography, and Serge Dauchy’s paper.
+    </p>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="chat-model-select">Reasoning Model</label>
+      <select id="chat-model-select" class="studio-select">
+        <option value="gemini-3.8-flash">gemini-3.8-flash · General Scholarly Tasks (Default)</option>
+        <option value="gemini-4-carbon">gemini-4-carbon · Deep Reasoning &amp; Complex Proofs</option>
+        <option value="gemini-4-argon">gemini-4-argon · Complex Interactive Dialogue</option>
+        <option value="gemini-3.1-flash-lite">gemini-3.1-flash-lite · Fast Direct Responses</option>
+      </select>
+    </div>
+
+    <div class="studio-field">
+      <span class="studio-label t-meta">Quick Discussion Prompts</span>
+      <div class="studio-chips">
+        <button class="studio-chip" type="button" data-chat-prompt="What was lost from Montesquieu’s account of political liberty when De l’esprit des lois came to be read mainly through the separation of powers?">Beyond Separation of Powers</button>
+        <button class="studio-chip" type="button" data-chat-prompt="Why did Brazil’s 1824 Constitution adopt four powers (Legislative, Moderating, Executive, Judicial) drawing on Benjamin Constant instead of a tripartite model?">1824 Moderating Power</button>
+        <button class="studio-chip" type="button" data-chat-prompt="How does Aurélio de Figueiredo’s Compromisso Constitucional (1896) relate to Articles 15 and 44 of the 1891 Constitution without proving de facto institutional independence?">Figueiredo (1896) &amp; 1891 Oath</button>
+        <button class="studio-chip" type="button" data-chat-prompt="How does Ceschiatti’s A Justiça (1961) illustrate the difference between staging judicial autonomy as a visual ideal and sustaining political liberty through laws and practices?">Ceschiatti (1961) &amp; Autonomy</button>
+      </div>
+    </div>
+
+    <div class="chat-thread" id="chat-thread" role="log" aria-live="polite" aria-label="Scholarly conversation thread">
+      <div class="chat-message chat-message--assistant">
+        <div class="chat-message__author t-meta">DISCUSSANT SCHOLARLY ASSISTANT</div>
+        <div class="chat-message__body">
+          Welcome, Ana Vitória. I am ready to explore questions on Montesquieu’s <em>De l’esprit des lois</em>, Brazil’s 1824 and 1891 constitutional arrangements, Figueiredo’s and Ceschiatti’s artworks, and your two closing questions for Serge Dauchy.
+        </div>
+      </div>
+    </div>
+
+    <div class="studio-field">
+      <label class="studio-label t-meta" for="chat-input">Your Question or Argument</label>
+      <div class="chat-input-row">
+        <textarea
+          id="chat-input"
+          class="studio-textarea"
+          rows="2"
+          placeholder="Ask a question or test an argument for the response to Serge Dauchy..."
+        ></textarea>
+        <button class="action-btn t-ui workspace-primary-btn" id="chat-send-btn" type="button">
+          Send
+        </button>
+      </div>
+      <div class="chat-footer-controls">
+        <label class="studio-checkbox">
+          <input type="checkbox" id="chat-include-slide" checked>
+          <span>Include active slide context</span>
+        </label>
+        <button class="text-link-sm" id="chat-clear-btn" type="button">Reset Thread</button>
+      </div>
+    </div>
+
+    <div class="studio-status t-meta" id="chat-status" hidden></div>
+  </section>
+</aside>
+
+<!-- Full-Viewport Three.js 3D Transatlantic Legal Meridian Companion Stage -->
+<section class="meridian-3d-overlay" id="meridian-3d-overlay" aria-label="3D Transatlantic Legal Meridian Stage" hidden>
+  <div class="meridian-canvas-mount" id="meridian-canvas-mount"></div>
+
+  <header class="meridian-top-badge" id="meridian-top-badge">
+    <div class="meridian-top-badge__head">
+      <p class="meridian-top-badge__kicker t-meta" id="meridian-badge-kicker">MONTESQUIEU AND THE THREE POWERS</p>
+      <button class="meridian-close-btn t-meta" id="meridian-3d-close" type="button" aria-label="Close 3D Stage">
+        Return to Slides ×
+      </button>
+    </div>
+    <h2 class="meridian-top-badge__title t-display-serif" id="meridian-badge-title">
+      Transatlantic Meridian of Political Liberty &amp; Legal Images
+    </h2>
+    <p class="meridian-top-badge__note" id="meridian-badge-note">
+      Drag to orbit · Inspect the French Armillary (1748) and the Brazilian Institutional Plinth (1824, 1891/1896, 1961).
+    </p>
+  </header>
+
+  <aside class="meridian-bottom-dock" id="meridian-bottom-dock" aria-label="3D Scene Controls">
+    <div class="meridian-dock__bar">
+      <span class="meridian-dock__label t-meta">3D SPATIAL COMPANION · SEVEN-SLIDE INTERVENTION</span>
+      <button class="meridian-dock__toggle t-meta" id="meridian-dock-toggle" type="button" aria-expanded="true">
+        ▾ Hide Controls (H)
+      </button>
+    </div>
+
+    <div class="meridian-dock__body" id="meridian-dock-body">
+      <div class="meridian-dock__presets" role="group" aria-label="Camera Presets">
+        <button class="meridian-preset-btn is-active t-meta" type="button" data-meridian-preset="overview" aria-pressed="true">
+          Overview · France ⇄ Brasil
+        </button>
+        <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="france1748" aria-pressed="false">
+          01–03 · Montesquieu &amp; Book XI
+        </button>
+        <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="brazil1824" aria-pressed="false">
+          04 · 1824 Four Powers
+        </button>
+        <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="oath1891" aria-pressed="false">
+          05 · 1896 Oath Canvas
+        </button>
+        <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="justica1961" aria-pressed="false">
+          06 · 1961 A Justiça (STF)
+        </button>
+        <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="codigo1916" aria-pressed="false">
+          07 · Questions for Serge
+        </button>
+      </div>
+
+      <div class="meridian-dock__controls">
+        <label class="meridian-slider-group t-meta" for="meridian-voyage-slider">
+          <span>Meridian Traverse</span>
+          <input type="range" id="meridian-voyage-slider" min="4" max="96" value="48">
+        </label>
+
+        <label class="meridian-slider-group t-meta" for="meridian-explode-slider">
+          <span>Architectural Inspection</span>
+          <input type="range" id="meridian-explode-slider" min="0" max="100" value="0">
+        </label>
+
+        <div class="meridian-atmo-group" role="group" aria-label="Studio Lighting Atmosphere">
+          <span class="t-meta">Light:</span>
+          <button class="meridian-atmo-btn is-active t-meta" type="button" data-meridian-atmo="parchment" aria-pressed="true">Museum</button>
+          <button class="meridian-atmo-btn t-meta" type="button" data-meridian-atmo="atlantic" aria-pressed="false">Atlantic</button>
+          <button class="meridian-atmo-btn t-meta" type="button" data-meridian-atmo="brasilia" aria-pressed="false">Brasília</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<script src="./vendor/js/gsap.min.js"></script>
+<script src="./vendor/js/ScrollTrigger.min.js"></script>
+<script type="module" src="./js/report.js"></script>
+<script type="module" src="./js/studio.js"></script>
+<script type="module" src="./js/workspace-firebase.js"></script>
+<script type="module" src="./js/three-meridian.js"></script>
+</body>
+</html>

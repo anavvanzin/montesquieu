@@ -1,0 +1,170 @@
+{
+  "entities": {
+    "SlideDeckState": {
+      "title": "SlideDeckState",
+      "description": "Active cross-device state of inline slide text edits and last exported Google Slides presentation metadata for a user.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the authenticated user who owns this slide deck state.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "deckTitle": {
+          "type": "string",
+          "description": "Title of the presentation deck.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "edits": {
+          "type": "object",
+          "description": "Map of data-editable slide key identifiers to customized HTML/text strings."
+        },
+        "lastExportedSlidesId": {
+          "type": "string",
+          "description": "Google Slides presentation ID from the most recent export.",
+          "maxLength": 160
+        },
+        "lastExportedSlidesUrl": {
+          "type": "string",
+          "description": "URL of the most recently exported Google Slides deck in Google Drive.",
+          "maxLength": 500
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when this slide state was created or last updated."
+        }
+      },
+      "required": [
+        "ownerId",
+        "deckTitle",
+        "edits",
+        "lastExportedSlidesId",
+        "lastExportedSlidesUrl",
+        "updatedAt"
+      ]
+    },
+    "SlideRevision": {
+      "title": "SlideRevision",
+      "description": "Named or timestamped revision snapshot of customized slide text edits and optional Google Slides link.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the authenticated user who owns this revision snapshot.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "label": {
+          "type": "string",
+          "description": "Human-readable label describing the revision snapshot.",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "edits": {
+          "type": "object",
+          "description": "Map of data-editable slide key identifiers to customized HTML/text strings."
+        },
+        "slidesUrl": {
+          "type": "string",
+          "description": "Optional URL of an exported Google Slides presentation associated with this revision.",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Immutable server timestamp when the revision was created."
+        }
+      },
+      "required": [
+        "ownerId",
+        "label",
+        "edits",
+        "slidesUrl",
+        "createdAt"
+      ]
+    },
+    "AudienceSyncSession": {
+      "title": "AudienceSyncSession",
+      "description": "Real-time presenter slide synchronization session linking audience browsers to the presenter's active slide and callout.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the authenticated presenter hosting the sync session.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "sessionCode": {
+          "type": "string",
+          "description": "Normalized room code matching the document/node ID (e.g., UFSC-2026).",
+          "minLength": 4,
+          "maxLength": 32,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "presenterName": {
+          "type": "string",
+          "description": "Display name of the presenter (Ana Vitória Vanzin Mendes · UFSC).",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "currentSlide": {
+          "type": "integer",
+          "description": "Active principal slide number (1 to 7)."
+        },
+        "slideTitle": {
+          "type": "string",
+          "description": "Heading of the currently active slide.",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "activeCallout": {
+          "type": "string",
+          "description": "Optional active visual callout or detail identifier on the current slide.",
+          "maxLength": 64
+        },
+        "status": {
+          "type": "string",
+          "description": "Lifecycle state of the broadcast session.",
+          "enum": ["live", "ended"],
+          "minLength": 4,
+          "maxLength": 8
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the latest slide transition."
+        }
+      },
+      "required": [
+        "ownerId",
+        "sessionCode",
+        "presenterName",
+        "currentSlide",
+        "slideTitle",
+        "activeCallout",
+        "status",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/slideDecks/{deckId}": {
+      "schema": "SlideDeckState",
+      "description": "Stores the user's active cross-device slide edits and latest Google Slides export metadata."
+    },
+    "/users/{userId}/revisions/{revisionId}": {
+      "schema": "SlideRevision",
+      "description": "Stores timestamped revision history snapshots of the user's slide edits."
+    },
+    "/syncSessions/{sessionId}": {
+      "schema": "AudienceSyncSession",
+      "description": "Stores live presenter slide synchronization state so audience browsers can follow the current slide."
+    }
+  }
+}
