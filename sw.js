@@ -1,4 +1,4 @@
-const CACHE_NAME = 'whose-liberty-montesquieu-v7';
+const CACHE_NAME = 'whose-liberty-montesquieu-v9';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -12,16 +12,13 @@ const CORE_ASSETS = [
   './js/remote-controller.js',
   './js/studio.js',
   './js/workspace-firebase.js',
-  './js/three-meridian.js',
   './vendor/fonts/inter-tight.css',
   './vendor/fonts/newsreader.css',
   './vendor/fonts/pinyon-script.css',
   './vendor/js/gsap.min.js',
-  './vendor/js/ScrollTrigger.min.js',
   './assets/report/montesquieu-oval.webp',
   './assets/report/compromisso.jpg',
   './assets/report/justica.jpg',
-  './public/assets/aistudio/7fefb9a6-f0ef-44ce-9981-b65916a5eb01__1__a4e5800a.png',
   './public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png',
   './assets/owl-perched.webp',
   './assets/img/logo-owl.png',

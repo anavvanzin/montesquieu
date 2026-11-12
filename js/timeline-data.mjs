@@ -1,186 +1,186 @@
 /**
- * Parallel Legal Circulation Timeline Data & Pure Lookup Logic
- * Connects Montesquieu (1689–1755; De l’esprit des lois, 1748) and Serge Dauchy’s conference paper
- * with all active slides (02–06) in Ana Vitória Vanzin Mendes’s 7-slide discussant intervention.
+ * Parallel Legal Circulation Timeline Data & Pure Lookup Logic (v3)
+ * Maps Serge Dauchy’s 14-paragraph manuscript (¶6–14) and Montesquieu’s De l’esprit des lois (1777 text)
+ * across Slides 02–06 of Ana Vitória Vanzin Mendes’s discussant intervention.
  */
 
 export const LEGAL_CIRCULATION_TIMELINE = [
   {
-    id: 'milestone-bordeaux-spirit',
-    periodLabel: '1689–1755 · 1748',
+    id: 'milestone-liberty-esprit',
+    periodLabel: '1748 / 1777 · ¶7–10',
     theme: 'circulation',
     slideId: 'slide-2',
     sourceAnchor: '#src-montesquieu',
     sourceCode: 'S1 · S2',
     french: {
-      year: '1689–1755 / 1748',
-      institution: 'Parlement of Bordeaux & De l’esprit des lois',
-      title: 'Who Was Montesquieu: Laws, Circumstances & Liberty',
+      year: '1748 / 1777 · XIX.4',
+      institution: 'Montesquieu XIX.4 & Dauchy ¶7–10',
+      title: 'Liberty Beyond a “Constitutionalist” Formula',
       summary:
-        'Magistrate in the Parlement of Bordeaux (an Ancien Régime court, not a modern legislature); his 1748 treatise relates laws to forms of government, customs, religion, commerce, geography, and history.'
+        '« Enfermer Montesquieu dans une vision purement “constitutionnaliste” serait toutefois réducteur » (Dauchy ¶7); laws interact with climate, religion, maxims, mores, and « manieres » to form an « esprit général » (XIX.4).'
     },
     brazilian: {
-      year: 'Discussant Lens',
-      institution: 'Security Under Laws & Limits on Public Power',
-      title: 'More Than an Abstract Diagram of Government',
+      year: 'Discussant Reading',
+      institution: 'Civil, Criminal & Judicial Guarantees',
+      title: 'Conditions of Political Liberty Below the Line',
       summary:
-        'Frames political liberty as living without fear of arbitrary power—opening the question of how legal contexts shift as ideas and institutions circulate (Dauchy §§ 7, 11–14).'
+        'Constitutional provisions must be seconded by civil and criminal laws and an institutional frame « (surtout judiciaire) »; « système de liberté » stays strictly Dauchy’s attribution.'
     },
     citation: {
-      heading: 'MONTESQUIEU (1689–1755), PARLEMENT OF BORDEAUX & THE SPIRIT OF THE LAWS (1748)',
+      heading: 'LIBERTY BEYOND THE CONSTITUTION & ESPRIT GÉNÉRAL — DAUCHY ¶7–10 & MONTESQUIEU XIX.4',
       primaryQuote:
-        'Political liberty requires security under laws and limits on those who exercise public power—relating laws to customs, religion, commerce, geography, and history.',
+        '« Plusieurs choses gouvernent les hommes, le climat, la religion, les lois, les maximes du gouvernement, les exemples des choses passées, les mœurs, les manieres ; d’où il se forme un esprit général qui en résulte. » (XIX.4)',
       bibliographicRef:
-        'MONTESQUIEU, De l’esprit des lois (1748; 1777 ed.) · DAUCHY, Serge, « Montesquieu, De l’esprit des lois (1748) », PPGD/UFSC, 2026.',
+        'DAUCHY, Serge, manuscript, ¶7–10 · MONTESQUIEU, Esprit des lois (1777), Livre XIX, chap. 4 (Wikisource).',
       methodologicalNote:
-        'Clarify that the Parlement of Bordeaux was a judicial court rather than a modern legislative parliament, and that Montesquieu offers more than a formal diagram of government.',
-      externalUrl: 'https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L11/C6',
-      externalLabel: 'Wikisource · De l’esprit des lois (1777)'
+        'Preserve 1777 spelling « manieres »; keep « système de liberté » as Dauchy’s analytical synthesis rather than a verified Montesquieu quote.',
+      externalUrl: 'https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L19/C4',
+      externalLabel: 'Wikisource · Esprit des lois (1777), XIX.4'
     },
     researchPrompt:
-      'Examine Montesquieu’s judicial role in the Parlement of Bordeaux and how De l’esprit des lois (1748) connects political liberty with societal circumstances and security under laws.'
-  },
-  {
-    id: 'milestone-book-xi-limits',
-    periodLabel: '1748 · Book XI, Ch. 6',
-    theme: 'constitutional',
-    slideId: 'slide-3',
-    sourceAnchor: '#src-montesquieu',
-    sourceCode: 'S2',
-    french: {
-      year: '1748 · Book XI, Ch. 6',
-      institution: 'De l’esprit des lois, Book XI, chapter 6',
-      title: 'Legislative, Executive & Judicial Functions',
-      summary:
-        'Distinguishes making laws, conducting government, and judging crimes and disputes to prevent oppressive concentration of public authority.'
-    },
-    brazilian: {
-      year: 'Historical Distance',
-      institution: 'Relational Restraint vs. Modern Constitutional Courts',
-      title: 'Limits on Power Without Anachronism',
-      summary:
-        'Separating functions does not mean isolated institutions with no relation—and 1748 judging must be distinguished from today’s permanent constitutional courts.'
-    },
-    citation: {
-      heading: 'THREE POWERS & LIMITS ON POWER — DE L’ESPRIT DES LOIS, BOOK XI, CHAPTER 6',
-      primaryQuote:
-        'Legislative (making laws) · Executive (conducting government) · Judicial (judging crimes and disputes) — preventing unchecked accumulation of power.',
-      bibliographicRef:
-        'MONTESQUIEU, Charles-Louis de Secondat, De l’esprit des lois (1748; 1777 ed.), Book XI, chapter 6.',
-      methodologicalNote:
-        'Keep historical distance in view: Montesquieu’s 1748 account of judging is not a description of modern permanent constitutional courts.',
-      externalUrl: 'https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L11/C6',
-      externalLabel: 'Wikisource · Book XI, chapter 6'
-    },
-    researchPrompt:
-      'Analyze Montesquieu’s warning against concentrated legislative, executive, and judicial functions in Book XI, chapter 6 of De l’esprit des lois and its historical distance from modern constitutional courts.'
+      'Examine Serge Dauchy’s critique of a purely constitutionalist reading of Montesquieu alongside Book XIX, chapter 4 of De l’esprit des lois (1777) on the esprit général.'
   },
   {
     id: 'milestone-1748-1824',
-    periodLabel: '1823–1824 · Art. 10',
+    periodLabel: '1789–1824 · ¶6',
     theme: 'constitutional',
-    slideId: 'slide-4',
+    slideId: 'slide-3',
     sourceAnchor: '#src-const-1824',
     sourceCode: 'S1 · S3',
     french: {
-      year: '1748 / 1815',
-      institution: 'Montesquieu & Benjamin Constant (Dauchy § 6)',
-      title: 'Pre-Independence Circulation & Pouvoir Neutre',
+      year: '1789 · 1798 · 1823 (¶6)',
+      institution: 'Dauchy’s Brazilian Circulation Account',
+      title: 'Clandestine Reading & Benjamin Constant',
       summary:
-        'Montesquieu circulated in Brazil before independence and in the 1823 Constituent Assembly debates alongside Benjamin Constant’s constitutional theory.'
+        'Dauchy traces circulation via 1789 (Minas Gerais), 1798 (Cipriano Barata’s confiscated library in Bahia), and the 1823 Constituent Assembly debates prior to the 1949 translation.'
     },
     brazilian: {
-      year: '1824',
-      institution: 'Constitution of 1824 · Article 10',
-      title: 'Four Powers: Legislative · Moderating · Executive · Judicial',
+      year: '1824 · Art. 10',
+      institution: 'Constituição Política do Império do Brazil',
+      title: 'Legislativo · Moderador · Executivo · Judicial',
       summary:
-        'Article 10 explicitly recognised four powers, vesting the Moderating Power in the emperor through choices and adaptation in an independent monarchy.'
+        'Article 10 enumerates four political powers in exact constitutional order—described by Dauchy (¶6) as « une évolution voire une correction » of Montesquieu’s tripartition.'
     },
     citation: {
-      heading: 'MONTESQUIEU IN BRAZIL, 1824 — CONSTITUTION OF 1824, ARTICLE 10 & DAUCHY (§ 6)',
+      heading: 'BRAZIL, 1824: CIRCULATION & FOUR POWERS — DAUCHY ¶6 & CONSTITUIÇÃO DE 1824, ART. 10',
       primaryQuote:
         'Os Poderes Politicos reconhecidos pela Constituição do Imperio do Brazil são quatro: o Poder Legislativo, o Poder Moderador, o Poder Executivo, e o Poder Judicial.',
       bibliographicRef:
-        'BRASIL, Constituição Política do Império do Brazil, 25 mar. 1824, art. 10 · DAUCHY, Serge, conference paper, paragraph 6.',
+        'BRASIL, Constituição Política do Império do Brazil, 25 mar. 1824, art. 10 · DAUCHY, Serge, manuscript, ¶6.',
       methodologicalNote:
-        'The Moderating Power belonged to the emperor under Benjamin Constant’s model; it was not another branch invented by Montesquieu.',
+        'Show Dauchy’s 1789 / 1798 / 1823 / 1949 chronology explicitly as his account, and distinguish selective monarchical adaptation from an automatic causal chain.',
       externalUrl:
         'https://www2.camara.leg.br/legin/fed/consti/1824-1899/constituicao-35041-25-marco-1824-532540-publicacaooriginal-14770-pl.html',
       externalLabel: 'Câmara dos Deputados · Constituição de 1824'
     },
     researchPrompt:
-      'Compare the circulation of Montesquieu in the 1823–1824 Brazilian constitutional debates with Article 10 of the 1824 Constitution and Benjamin Constant’s Moderating Power.'
+      'Compare Article 10 of the 1824 Imperial Constitution of Brazil (Legislative, Moderating, Executive, Judicial) with Benjamin Constant’s pouvoir neutre and Montesquieu’s tripartition.'
   },
   {
     id: 'milestone-figueiredo-1896',
-    periodLabel: '1891 / 1896 · Arts. 15 & 44',
+    periodLabel: '1891 / 1896 · ¶6–7',
     theme: 'iconography',
-    slideId: 'slide-5',
+    slideId: 'slide-4',
     sourceAnchor: '#src-figueiredo',
     sourceCode: 'S3 · S4',
     french: {
-      year: 'Republican Constitutionalism',
-      institution: 'Distinct & Related Offices in Ceremony',
-      title: 'Representing Executive Authority Under Obligation',
+      year: 'Constitutional Obligation',
+      institution: 'Dauchy ¶6–7 & Republican Form',
+      title: 'Staging Harmonious & Bound Offices',
       summary:
-        'Tests how historical painting stages the relationship between executive commitment and legislative assembly.'
+        'Tests how ceremonial painting represents the bond between executive power, constitutional text, and legislative assembly.'
     },
     brazilian: {
-      year: '1891 Event / 1896 Canvas',
-      institution: 'Museu da República & Constitution of 1891',
+      year: '1891 Oath / 1896 Canvas',
+      institution: 'Museu da República · Const. 1891 Arts. 15 & 44',
       title: 'Aurélio de Figueiredo, Compromisso Constitucional (1896)',
       summary:
-        'Represents Deodoro da Fonseca’s oath of 26 Feb. 1891 before Prudente de Moraes and the Constituent Congress (cf. 1891 Const., Arts. 15 & 44).'
+        'Oil on canvas, 330 × 257 cm: Deodoro da Fonseca’s oath of 26 Feb. 1891 with Prudente de Moraes presiding at the centre (reproduction: Romulo Fialdini).'
     },
     citation: {
-      heading: 'REPRESENTING DISTINCT AND RELATED INSTITUTIONS — FIGUEIREDO (1896) & 1891 CONSTITUTION',
+      heading: 'COMPROMISSO CONSTITUCIONAL (1896) & CONSTITUTION OF 1891, ARTS. 15 AND 44',
       primaryQuote:
-        'Aurélio de Figueiredo, Compromisso Constitucional, 1896 (oath of 26 Feb. 1891) · Constitution of 1891, Art. 15 (harmonious and independent powers) & Art. 44 (presidential oath).',
+        'Aurélio de Figueiredo, Compromisso Constitucional, 1896 (oath of 26 Feb. 1891) · Constitution of 1891, art. 15 (harmonious and independent powers) & art. 44 (presidential oath).',
       bibliographicRef:
-        'MUSEU DA REPÚBLICA, Compromisso Constitucional, 1896 (Oil on canvas, 330 × 257 cm; Reproduction: Romulo Fialdini) · BRASIL, Constituição de 1891, arts. 15, 44.',
+        'MUSEU DA REPÚBLICA, Compromisso Constitucional, 1896 (330 × 257 cm; Reproduction: Romulo Fialdini) · BRASIL, Constituição de 1891, arts. 15, 44.',
       methodologicalNote:
-        'Reading the canvas as “authority under an obligation” is the discussant’s interpretation; the ceremony cannot prove independence in practice or direct influence from Montesquieu.',
+        'Set below the #1F35FF line as MY READING: makes executive authority under obligation visible, without proving de facto independence or direct reception of Montesquieu.',
       externalUrl: 'https://museudarepublica.acervos.museus.gov.br/acervo-museologico/pintura-historica-4/',
       externalLabel: 'Museu da República · Compromisso Constitucional'
     },
     researchPrompt:
-      'Verify the Museu da República provenance of Aurélio de Figueiredo’s Compromisso Constitucional (1896, representing the oath of 26 February 1891) alongside Articles 15 and 44 of the 1891 Brazilian Constitution.'
+      'Verify the Museu da República catalogue entry for Aurélio de Figueiredo’s Compromisso Constitucional (1896, oath of 26 February 1891) alongside Articles 15 and 44 of the 1891 Brazilian Constitution.'
   },
   {
     id: 'milestone-ceschiatti-1961',
-    periodLabel: '1961 · STF Brasília',
+    periodLabel: '1748 XI.6 / 1961 · ¶7',
     theme: 'iconography',
-    slideId: 'slide-6',
+    slideId: 'slide-5',
     sourceAnchor: '#src-ceschiatti',
-    sourceCode: 'S5 · S6',
+    sourceCode: 'S2 · S5',
     french: {
-      year: 'Judicial Iconography & Liberty',
-      institution: 'Visual Ideal vs. Legal & Institutional Guarantees',
-      title: 'The Sword at Rest & Judicial Autonomy',
+      year: '1748 · XI.6 & ¶7',
+      institution: 'Montesquieu XI.6 & Dauchy ¶7',
+      title: '« En quelque façon nulle » vs. Judicial Frame',
       summary:
-        'Connects Dauchy’s emphasis on civil/criminal laws and judicial institutions (§ 7) with the limits of what an allegory can guarantee.'
+        'Contrasts Montesquieu’s 1748 statement on judging with Dauchy’s emphasis in ¶7 on civil/criminal laws and « un cadre institutionnel (surtout judiciaire) ».'
     },
     brazilian: {
-      year: '1961',
+      year: '1961 · Stone (3.30 m)',
       institution: 'Supremo Tribunal Federal · Praça dos Três Poderes',
-      title: 'Alfredo Ceschiatti, A Justiça (1961) & Simioni’s Reading',
+      title: 'Alfredo Ceschiatti, A Justiça (Stone / Pedra de Petrópolis)',
       summary:
-        'Seated granite figure holding a resting sword across her lap before the STF in Brasília; read with Arno’s prompt and Rafael Simioni’s study on autonomy.'
+        'Seated stone sculpture holding a resting sword across her lap before the STF in Brasília (photo: Fellipe Sampaio / STF; cf. Simioni 2021).'
     },
     citation: {
-      heading: 'CESCHIATTI’S JUSTICE (1961): THE SWORD, AUTONOMY & INSTITUTIONAL PRACTICE',
+      heading: 'A JUSTIÇA (1961, STONE), MONTESQUIEU XI.6 & DAUCHY’S JUDICIAL FRAME (¶7)',
       primaryQuote:
-        'Alfredo Ceschiatti, A Justiça, 1961 (STF, Praça dos Três Poderes) — An image can make institutional independence visible as an ideal; sustaining it depends on laws and practices.',
+        '« Des trois puissances dont nous avons parlé, celle de juger est en quelque façon nulle. » (Montesquieu, XI.6) · Alfredo Ceschiatti, A Justiça, 1961, stone (“pedra de Petrópolis”), 3.30 m, STF.',
       bibliographicRef:
-        'STF, A Justiça, 1961 (Granite, 3.30 m; Photograph: Fellipe Sampaio / STF) · SIMIONI, Rafael Lazzarotto (study on Ceschiatti’s sculpture and judicial autonomy).',
+        'MONTESQUIEU, Esprit des lois (1777), XI.6 · STF, A Justiça, 1961 (Stone / pedra de Petrópolis, 3.30 m; Photo: Fellipe Sampaio / STF).',
       methodologicalNote:
-        'Treat the sword as a contextual hypothesis about this sculpture in the Praça dos Três Poderes rather than a universal symbol or proof that judges are protected from interference in practice.',
+        'Material verified as stone (“pedra de Petrópolis”), correcting v2’s “granite”. Neither artwork is offered as evidence of a direct reception of Montesquieu.',
       externalUrl:
         'https://noticias.stf.jus.br/postsnoticias/130-anos-conheca-os-destaques-do-acervo-cultural-stf/',
       externalLabel: 'STF · Acervo Cultural (A Justiça)'
     },
     researchPrompt:
-      'Examine Alfredo Ceschiatti’s 1961 granite sculpture A Justiça before the Supremo Tribunal Federal in Brasília and Rafael Simioni’s interpretation of the resting sword and judicial autonomy.'
+      'Examine Alfredo Ceschiatti’s 1961 stone (“pedra de Petrópolis”) sculpture A Justiça before the Supremo Tribunal Federal in Brasília alongside Montesquieu XI.6 and Rafael Simioni’s reading of judicial autonomy.'
+  },
+  {
+    id: 'milestone-transplants-1916',
+    periodLabel: '1916 / 1974 / 1997 · ¶11–14',
+    theme: 'circulation',
+    slideId: 'slide-6',
+    sourceAnchor: '#src-transplants',
+    sourceCode: 'S1 · S6',
+    french: {
+      year: '1748 I.3 · 1974 · 1997',
+      institution: 'Montesquieu I.3 · Watson · Legrand (¶10–12)',
+      title: 'Rootedness, Transplants & Contextualité',
+      summary:
+        'Moves from Montesquieu I.3 (« un très-grand hasard ») to Watson’s rules that “grow in its new body” (1974) and Legrand’s « impossibles » transplants (1997, MJ 4(2): 111–124).'
+    },
+    brazilian: {
+      year: '1916 · ¶13–14',
+      institution: 'Código Civil de 1916 · Clóvis Beviláqua',
+      title: 'Historical Hybridity & Renegotiated Boundaries',
+      summary:
+        'Dauchy highlights « transplantations imposées, … réceptions assumées » and asks how Beviláqua’s 1916 Civil Code illustrates renegotiated legal boundaries.'
+    },
+    citation: {
+      heading: 'TRANSPLANTS, HYBRIDITY & THE CODE OF 1916 — DAUCHY ¶10–14, WATSON (1974) & LEGRAND (1997)',
+      primaryQuote:
+        '« Elles doivent être tellement propres au peuple pour lequel elles sont faites, que c’est un très-grand hasard si celles d’une nation peuvent convenir à une autre. » (Montesquieu, I.3, quoted in Dauchy ¶10)',
+      bibliographicRef:
+        'DAUCHY, Serge, manuscript, ¶10–14 · WATSON, Legal Transplants (1974) · LEGRAND, MJ 4(2): 111–124 (1997).',
+      methodologicalNote:
+        'My reading: context is also made through contact. On Beviláqua’s 1916 Code, the slides ask rather than overclaiming prior to inspecting the drafting record.',
+      externalUrl: 'https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L1/C3',
+      externalLabel: 'Wikisource · Esprit des lois (1777), I.3'
+    },
+    researchPrompt:
+      'Analyze Alan Watson (1974) and Pierre Legrand (1997, Maastricht Journal 4(2): 111–124) on legal transplants in relation to Montesquieu I.3 and Clóvis Beviláqua’s 1916 Brazilian Civil Code.'
   }
 ];
 

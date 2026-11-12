@@ -65,7 +65,7 @@
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -138,7 +138,8 @@ body.is-editing [data-editable]:focus {
   z-index: 1;
   pointer-events: none;
   opacity: 0;
-  will-change: opacity;
+  visibility: hidden;
+  transition: opacity 0.55s ease, visibility 0.55s ease;
 }
 
 .bg img {
@@ -146,7 +147,6 @@ body.is-editing [data-editable]:focus {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: sepia(0.18) contrast(0.95);
 }
 
 .bg::after {
@@ -157,8 +157,9 @@ body.is-editing [data-editable]:focus {
   transition: background 0.25s ease;
 }
 
-.bg--storm {
+.bg.is-active-bg {
   opacity: 1;
+  visibility: visible;
 }
 
 #report {
@@ -295,8 +296,7 @@ body.is-editing [data-editable]:focus {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: var(--bg-header);
-  backdrop-filter: blur(12px);
+  background: var(--panel-solid);
   border-bottom: 1px solid var(--line);
 }
 
@@ -437,29 +437,19 @@ body.is-editing [data-editable]:focus {
 /* ==========================================================================
    FULL-VIEWPORT SLIDE CANVASES (01 / 07 TO 07 / 07) & SECTION FADE-IN
    ========================================================================== */
-@keyframes section-soft-fade-in {
-  from {
-    opacity: 0.22;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 html.js main > section {
-  opacity: 0.22;
-  transform: translateY(10px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
-html.js main > section.is-in-view {
-  opacity: 1;
-  transform: translateY(0);
-  animation: section-soft-fade-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+/* Pause continuous ambient animations when a slide is offscreen or behind the opening poster */
+.slide-canvas:not(.is-active-slide) .hero-drapery,
+.slide-canvas:not(.is-active-slide) .medallion-filigree,
+.slide-canvas:not(.is-active-slide) .moonlight-shimmer,
+html:not([data-curtain-bypassed="true"]) .slide-canvas .hero-drapery,
+html:not([data-curtain-bypassed="true"]) .slide-canvas .medallion-filigree,
+html:not([data-curtain-bypassed="true"]) .slide-canvas .moonlight-shimmer {
+  animation-play-state: paused !important;
 }
 
 .slide-canvas {
@@ -468,7 +458,7 @@ html.js main > section.is-in-view {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 44px 4vw;
+  padding: 36px 4vw 76px;
   border-bottom: 1px solid var(--line);
   overflow: hidden;
 }
@@ -540,7 +530,6 @@ html.js main > section.is-in-view {
   z-index: 2;
   pointer-events: none;
   opacity: 0.92;
-  animation: drapery-sway 9s ease-in-out infinite alternate;
   transform-origin: top left;
 }
 
@@ -632,7 +621,6 @@ html.js main > section.is-in-view {
   border: 2px solid rgba(23, 25, 28, 0.45);
   box-shadow: 0 28px 60px rgba(0, 0, 0, 0.22);
   overflow: hidden;
-  animation: portrait-float 7s ease-in-out infinite alternate;
 }
 
 .oval-medallion img {
@@ -1177,7 +1165,7 @@ html.js main > section.is-in-view {
   inset: 0;
   background: radial-gradient(circle at 49% 43%, rgba(255, 245, 214, 0.14), transparent 36%),
               linear-gradient(180deg, rgba(6, 11, 20, 0.45) 0%, rgba(6, 11, 20, 0.62) 100%);
-  animation: shimmer-pulse 6s ease-in-out infinite alternate;
+  opacity: 0.92;
 }
 
 @keyframes shimmer-pulse {
@@ -1233,8 +1221,7 @@ html.js main > section.is-in-view {
   gap: 20px;
   align-items: start;
   padding: 20px 24px;
-  background: rgba(11, 18, 30, 0.66);
-  backdrop-filter: blur(8px);
+  background: rgba(11, 18, 30, 0.84);
   border: 1px solid rgba(244, 241, 233, 0.18);
   border-radius: 4px;
 }
@@ -1265,6 +1252,8 @@ html.js main > section.is-in-view {
   z-index: 5;
   padding: 64px 4vw 88px;
   background: var(--bg-sources);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 .sources__inner {
@@ -1392,15 +1381,15 @@ html.js main > section.is-in-view {
    ========================================================================== */
 .slide-stepper {
   position: fixed;
-  bottom: 20px;
-  right: 24px;
+  bottom: 14px;
+  right: 20px;
   z-index: 35;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: var(--panel-solid);
   border: 1px solid var(--line-strong);
-  padding: 6px 10px;
+  padding: 5px 9px;
   border-radius: 999px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
@@ -2769,7 +2758,6 @@ body.is-presenting .studio-backdrop {
   width: min(13vw, 185px);
   opacity: 0.84;
   transform-origin: top right;
-  animation: drapery-sway-right 10.5s ease-in-out infinite alternate;
 }
 
 .hero-drapery--right img {
@@ -2888,11 +2876,11 @@ body.is-presenting .studio-backdrop {
 }
 
 .s2-quote[data-scale-state="laws"] {
-  border-left: 3px solid var(--accent);
+  border-color: var(--accent);
 }
 
 .s2-quote[data-scale-state="mores"] {
-  border-right: 3px solid var(--accent);
+  border-color: var(--accent);
   transform: translateY(3px);
 }
 
@@ -2935,24 +2923,18 @@ body.is-presenting .studio-backdrop {
   color: var(--accent);
   font-weight: 700;
   padding: 0 2px;
-  animation: sep-pulse 2.8s ease-in-out infinite alternate;
-}
-
-@keyframes sep-pulse {
-  0% { opacity: 0.45; transform: scale(0.94); }
-  100% { opacity: 1; transform: scale(1.08); }
 }
 
 .s3-chain__readout {
   margin-top: 8px;
   padding: 7px 11px;
   background: var(--accent-soft);
-  border-left: 2px solid var(--accent);
+  border: 1px solid var(--line-strong);
   color: var(--ink);
   font-size: 0.72rem;
   text-transform: none;
   letter-spacing: 0.01em;
-  border-radius: 0 3px 3px 0;
+  border-radius: 3px;
   transition: opacity 0.2s ease;
 }
 
@@ -2982,12 +2964,6 @@ body.is-presenting .studio-backdrop {
   border-radius: 3px;
   vertical-align: middle;
   letter-spacing: 0.06em;
-  animation: seal-glow 3.4s ease-in-out infinite alternate;
-}
-
-@keyframes seal-glow {
-  0% { box-shadow: 0 0 0 0 rgba(29, 60, 150, 0.28); }
-  100% { box-shadow: 0 0 0 6px rgba(29, 60, 150, 0); }
 }
 
 /* Slide 04: Living Painting Camera Pan & Zoom on Spotlight Selection */
@@ -3006,14 +2982,14 @@ body.is-presenting .studio-backdrop {
 /* Slide 05: Interactive 1961 / 1962 Date Cards */
 .s5-date-row {
   cursor: pointer;
-  border-left: 3px solid transparent;
+  border: 1px solid transparent;
   transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
 }
 
 .s5-date-row:hover,
 .s5-date-row.is-active {
   transform: translateX(5px);
-  border-left-color: var(--accent);
+  border-color: var(--accent);
   background: var(--panel-hi);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
 }
@@ -3499,8 +3475,7 @@ html[data-projector="high"] .obs-en {
   width: min(460px, calc(100vw - 48px));
   padding: 14px 16px;
   background: rgba(14, 18, 26, 0.94);
-  border: 1px solid rgba(244, 240, 230, 0.20);
-  border-left: 3px solid #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.55);
   border-radius: 5px;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
 }
@@ -4471,10 +4446,20 @@ html[data-curtain-bypassed="true"] .podium-curtain {
   max-width: 600px;
 }
 
+.poster-hero__flags-img,
 .poster-hero__flags-svg {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.poster-hero__flags-img {
+  -webkit-mask-image:
+    radial-gradient(ellipse 35% 44% at 34% 64%, #000 54%, rgba(0, 0, 0, 0.65) 74%, transparent 94%),
+    radial-gradient(ellipse 43% 52% at 60% 42%, #000 56%, rgba(0, 0, 0, 0.68) 76%, transparent 95%);
+  mask-image:
+    radial-gradient(ellipse 35% 44% at 34% 64%, #000 54%, rgba(0, 0, 0, 0.65) 74%, transparent 94%),
+    radial-gradient(ellipse 43% 52% at 60% 42%, #000 56%, rgba(0, 0, 0, 0.68) 76%, transparent 95%);
 }
 
 .poster-hero__ufsc-foot {
@@ -4529,10 +4514,28 @@ html[data-curtain-bypassed="true"] .podium-curtain {
   gap: 0.15rem;
 }
 
-.header__nav a {
+.header__nav a,
+.header__landing-btn {
   font-size: 0.73rem;
   padding: 5px 7px;
   border-radius: 3px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.header__nav a:hover,
+.header__landing-btn:hover {
+  background: var(--surface-2);
+  color: var(--fg);
+  border-color: var(--border-soft);
 }
 
 .header__right-group {
@@ -4723,23 +4726,24 @@ body.is-presenting .slide-stepper__exit {
 .constellation-dial {
   position: fixed;
   left: 20px;
-  bottom: 20px;
+  bottom: 14px;
   z-index: 38;
   display: inline-flex;
-  align-items: stretch;
-  gap: 8px;
+  align-items: center;
+  gap: 6px;
 }
 
 .constellation-dial__btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 12px 6px 8px;
+  gap: 8px;
+  min-height: 38px;
+  padding: 4px 10px 4px 6px;
   background: var(--panel-solid);
   color: var(--ink);
   border: 1px solid var(--line-strong);
-  border-radius: 4px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   text-align: left;
   transition: border-color 0.2s ease, transform 0.2s ease;
@@ -4753,14 +4757,14 @@ body.is-presenting .slide-stepper__exit {
 .floating-music-btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 6px 12px;
-  min-height: 44px;
+  gap: 6px;
+  padding: 4px 11px;
+  min-height: 38px;
   background: var(--panel-solid);
   color: var(--ink);
   border: 1px solid var(--line-strong);
-  border-radius: 4px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -4778,56 +4782,54 @@ body.is-presenting .slide-stepper__exit {
 }
 
 .floating-music-btn__glyph {
-  font-size: 0.96rem;
+  font-size: 0.92rem;
   line-height: 1;
 }
 
 .floating-music-btn__text {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.05em;
 }
 
 .constellation-dial__svg {
-  width: 38px;
-  height: 38px;
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
   color: var(--ink-md);
 }
 
 .constellation-dial__svg circle,
 .constellation-dial__svg line {
-  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .constellation-dial__meta {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 1px;
   max-width: 220px;
 }
 
+.constellation-dial:hover .constellation-dial__meta,
+.constellation-dial:focus-within .constellation-dial__meta,
+.constellation-dial.is-expanded .constellation-dial__meta {
+  display: flex;
+}
+
 .constellation-dial__meta strong {
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   color: var(--accent);
   letter-spacing: 0.08em;
 }
 
 .constellation-dial__meta span {
-  font-size: 0.75rem;
-  line-height: 1.25;
+  font-size: 0.72rem;
+  line-height: 1.22;
   color: var(--ink-md);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.constellation-dial.is-expanded .constellation-dial__meta {
-  max-width: 320px;
-}
-
-.constellation-dial.is-expanded .constellation-dial__meta span {
-  white-space: normal;
 }
 
 @media (max-width: 860px) {
@@ -4941,7 +4943,11 @@ body.is-presenting .slide-stepper__exit {
   color: var(--gilt);
   pointer-events: none;
   opacity: 0.78;
-  animation: astrolabe-spin 84s linear infinite;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.medallion-orbit:hover .medallion-filigree {
+  transform: rotate(8deg);
 }
 
 .oval-medallion {
@@ -5445,7 +5451,7 @@ body.is-presenting .slide-stepper__exit {
 }
 
 .visual-pause-badge.is-counting .visual-pause-ring__bar {
-  animation: pause-ring-drain 5s linear forwards;
+  animation: pause-ring-drain 10s linear forwards;
 }
 
 @keyframes pause-ring-drain {
@@ -5574,8 +5580,7 @@ body.is-presenting .slide-stepper__exit {
 .s6-reading-card {
   padding: 16px 18px;
   background: var(--panel);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--accent);
+  border: 1px solid var(--line-strong);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -5985,8 +5990,7 @@ body.is-presenting .slide-stepper__exit {
   margin-top: 12px;
   padding: 14px 18px;
   background: var(--panel-solid);
-  border: 1px solid var(--line-strong);
-  border-left: 4px solid var(--accent);
+  border: 1px solid var(--accent);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -6144,8 +6148,7 @@ body.is-presenting .slide-stepper__exit {
   margin-top: 12px;
   padding: 10px 14px;
   background: rgba(185, 28, 28, 0.1);
-  border: 1px solid rgba(185, 28, 28, 0.45);
-  border-left: 4px solid #b91c1c;
+  border: 1px solid #b91c1c;
   color: var(--ink);
   border-radius: 4px;
   font-size: 0.78rem;
@@ -6807,7 +6810,7 @@ body.is-phone-remote .print-lecture-header {
 .remote-guardrail-card {
   margin-top: 10px;
   background: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.55);
   padding: 8px 10px;
   border-radius: 4px;
 }
@@ -7066,7 +7069,8 @@ html[data-theme="dark"] .lectern-page-card {
 }
 
 .lectern-page-card.is-current-slide {
-  border-left: 4px solid var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 10px 28px rgba(15, 23, 42, 0.08);
 }
 
 .lectern-page__running-head {
@@ -7205,7 +7209,8 @@ html[data-theme="dark"] .lectern-page__footer {
   body.is-printing-script .studio-backdrop,
   body.is-printing-script .studio-drawer,
   body.is-printing-script .meridian-3d-overlay,
-  body.is-printing-script dialog {
+  body.is-printing-script dialog,
+  #lectern-private-notes {
     display: none !important;
   }
 
@@ -7295,3 +7300,824 @@ html[data-theme="dark"] .lectern-page__footer {
     font-size: 8.5pt !important;
   }
 }
+
+/* ==========================================================================
+   DISCUSSING DAUCHY’S MONTESQUIEU · V3 ARCHITECTURE
+   (Voice Code Key, #1F35FF Horizontal Rule, Right-Margin Paragraph Map,
+    Slide 6 Three-Card Scale, Slide 7 Dual Source + Questions, Citation Check)
+   ========================================================================== */
+
+:root {
+  --dauchy-blue: #1F35FF;
+  --dauchy-blue-ink: #1F35FF;
+  --dauchy-blue-soft: rgba(31, 53, 255, 0.08);
+  --font-condensed: 'Archivo', 'Inter Tight', sans-serif;
+  --font-mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+}
+
+html[data-theme="dark"] {
+  --dauchy-blue-ink: #8fa6ff;
+  --dauchy-blue-soft: rgba(143, 166, 255, 0.12);
+}
+
+.t-condensed {
+  font-family: var(--font-condensed);
+  font-stretch: 82%;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+/* 2-Column Slide Stage: Main Argument + Dauchy Paragraph Map Strip */
+.v3-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 232px;
+  gap: 28px;
+  align-items: start;
+  margin-top: 14px;
+}
+
+.v3-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.v3-split-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.v3-above-line,
+.v3-below-line {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* 2px Solid #1F35FF Horizontal Rule Separating Source Text (Above) from My Reading (Below) */
+.v3-blue-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  border-top: 2px solid var(--dauchy-blue);
+}
+
+.v3-blue-line__tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dauchy-blue-ink);
+}
+
+/* Voice Code Rectangular Chips (0px border-radius, strict anti-pill discipline) */
+.voice-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 0;
+  line-height: 1.25;
+}
+
+.voice-chip--dauchy {
+  background: var(--dauchy-blue);
+  color: #ffffff;
+  border: 1px solid var(--dauchy-blue);
+}
+
+.voice-chip--montesquieu {
+  background: #111622;
+  color: #f8f5ec;
+  border: 1px solid #111622;
+}
+
+html[data-theme="dark"] .voice-chip--montesquieu {
+  background: #232b3d;
+  color: #f8f5ec;
+  border-color: rgba(248, 245, 236, 0.35);
+}
+
+.voice-chip--other {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+
+.voice-chip--reading {
+  background: var(--dauchy-blue-soft);
+  color: var(--dauchy-blue-ink);
+  border: 1px solid var(--dauchy-blue-ink);
+}
+
+/* Source Blocks Above the #1F35FF Line */
+.v3-source-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.v3-source-block {
+  padding: 14px 18px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.v3-source-block--compact {
+  padding: 12px 15px;
+  gap: 6px;
+}
+
+.v3-quote-fr {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.08rem, 1.55vw, 1.34rem);
+  line-height: 1.44;
+  color: var(--ink);
+}
+
+.v3-quote-tr {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--ink-md);
+}
+
+.tr-tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--dauchy-blue-ink);
+  border: 1px solid var(--line-strong);
+  background: var(--panel-solid);
+}
+
+.v3-source-summary {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.54;
+  color: var(--ink);
+}
+
+.v3-attribution-guard {
+  margin: 2px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.48;
+  color: var(--ink-md);
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.v3-chronology-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.v3-chronology-node {
+  padding: 4px 9px;
+  background: var(--panel-solid);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink);
+}
+
+.v3-chronology-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--dauchy-blue-ink);
+  font-weight: 600;
+}
+
+/* My Reading Section Below the #1F35FF Line */
+.v3-reading-lead {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.24rem, 1.9vw, 1.62rem);
+  line-height: 1.28;
+  color: var(--ink);
+}
+
+.v3-reading-prose {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.58;
+  color: var(--ink-md);
+  max-width: 72ch;
+}
+
+/* Slide 1: How the Slides Speak (Voice Code Key) */
+.voice-key-panel {
+  margin-top: 6px;
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.voice-key-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.voice-key-panel__title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.voice-key-panel__rule-note {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--dauchy-blue-ink);
+}
+
+.voice-key-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.voice-key-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+}
+
+.voice-key-item p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.44;
+  color: var(--ink-md);
+}
+
+/* Right-Margin Dauchy Paragraph Map Strip (¶1–14) */
+.dauchy-strip {
+  padding: 14px 14px 12px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dauchy-strip__head {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink-md);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dauchy-strip__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dauchy-strip__item {
+  padding: 7px 9px;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+button.dauchy-strip__item {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
+}
+
+button.dauchy-strip__item:hover {
+  border-color: var(--dauchy-blue-ink);
+  transform: translateY(-1px);
+}
+
+.dauchy-strip__item.is-answered {
+  border-color: var(--dauchy-blue);
+  background: var(--dauchy-blue-soft);
+  box-shadow: inset 0 2px 0 var(--dauchy-blue);
+}
+
+.dauchy-strip__para {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--dauchy-blue-ink);
+}
+
+.dauchy-strip__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.dauchy-strip__tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-lo);
+}
+
+.dauchy-strip__item.is-answered .dauchy-strip__tag {
+  color: var(--dauchy-blue-ink);
+  font-weight: 600;
+}
+
+/* Slide 4 & 5 Artwork Stage Adjustments in v3 */
+#s4-artwork-box[data-active-spot="deodoro"] #s4-artwork-stage img {
+  transform: scale(1.24) translate(11%, -4%);
+}
+
+#s4-artwork-box[data-active-spot="prudente"] #s4-artwork-stage img {
+  transform: scale(1.26) translate(-3%, -2%);
+}
+
+#s4-artwork-box[data-active-spot="gallery"] #s4-artwork-stage img {
+  transform: scale(1.24) translate(-4%, 16%);
+}
+
+.s5-photo-stage {
+  position: relative;
+  overflow: hidden;
+  background: #0e1218;
+  aspect-ratio: 4 / 3;
+  max-height: 52dvh;
+}
+
+.s5-photo-stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#s5-photo-box[data-focus-mode="sword-detail"] #s5-photo-stage img {
+  transform: scale(1.48) translate(0%, -14%);
+}
+
+/* Slide 6: Three-Card Scale (Watson 1974 · Legrand 1997 · Dauchy ¶13–14 / 1916 Code) */
+.s6-transplants-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.s6-card {
+  padding: 14px 16px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.s6-card:hover,
+.s6-card.is-active {
+  border-color: var(--dauchy-blue);
+  background: var(--panel-solid);
+  box-shadow: inset 0 2px 0 var(--dauchy-blue);
+  transform: translateY(-2px);
+}
+
+.s6-card__title {
+  margin: 0;
+  font-size: 1.18rem;
+  line-height: 1.22;
+  color: var(--ink);
+}
+
+.s6-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-md);
+}
+
+/* Slide 7: Dual Source Pair + Numbered Questions */
+.s7-source-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.s7-q__num {
+  display: inline-block;
+  padding: 3px 9px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--dauchy-blue-ink);
+  background: var(--dauchy-blue-soft);
+  border: 1px solid var(--dauchy-blue-ink);
+}
+
+.s7-q__context {
+  margin: 6px 0 0;
+  font-size: 0.94rem;
+  line-height: 1.54;
+  color: var(--ink-md);
+}
+
+/* Citation Verification Table (#sources) */
+.citation-check-box {
+  margin: 22px 0;
+  padding: 18px 20px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.citation-check-box__head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.citation-check-title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.citation-check-table-wrap {
+  overflow-x: auto;
+}
+
+.citation-check-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  line-height: 1.46;
+}
+
+.citation-check-table th,
+.citation-check-table td {
+  padding: 9px 11px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.citation-check-table th {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-md);
+  background: var(--panel-solid);
+}
+
+/* Lectern Script Modal v3 Controls: Spoken Word Count, Cut XI.6 Toggle & Private Prep Notes */
+.lectern-dialog__metrics {
+  margin: 4px 0 0;
+  color: var(--dauchy-blue-ink);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.lectern-tab-group {
+  display: inline-flex;
+  border: 1px solid var(--line-strong);
+}
+
+.lectern-cuttable-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.lectern-private-notes {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lectern-private-notes[hidden] {
+  display: none !important;
+}
+
+.lectern-private-notes__banner {
+  padding: 12px 16px;
+  background: var(--dauchy-blue-soft);
+  border: 1px solid var(--dauchy-blue-ink);
+  font-size: 0.86rem;
+  line-height: 1.48;
+  color: var(--ink);
+}
+
+.lectern-private-notes__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.private-note-card {
+  padding: 16px 18px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.private-note-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.private-note-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+
+.private-note-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.52;
+  color: var(--ink-md);
+}
+
+.private-note-card__handling {
+  padding-top: 8px;
+  border-top: 1px dashed var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--dauchy-blue-ink) !important;
+}
+
+@media (max-width: 1080px) {
+  .v3-stage {
+    grid-template-columns: 1fr;
+  }
+  .voice-key-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .s6-transplants-grid,
+  .s7-source-pair,
+  .lectern-private-notes__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stories Video Preview Modal (9:16 Vertical Mobile Player) */
+.stories-dialog {
+  width: min(520px, 94vw);
+  max-height: 92vh;
+  padding: 24px;
+}
+
+.stories-player-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.stories-phone-mockup {
+  position: relative;
+  width: min(340px, 80vw);
+  aspect-ratio: 9 / 16;
+  background: #090c12;
+  border-radius: 28px;
+  border: 4px solid #232b3d;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stories-phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 14px;
+  background: #1a202c;
+  border-radius: 8px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.stories-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #06080d;
+}
+
+/* Stories Social Media Sharing Strip */
+.stories-share-strip {
+  margin: 16px 0 10px;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stories-share-strip__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stories-share-strip__hint {
+  font-size: 0.68rem;
+  color: var(--fg-muted);
+}
+
+.stories-share-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+}
+
+.stories-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 11px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--fg);
+  transition: all 0.16s ease;
+  white-space: nowrap;
+}
+
+.stories-share-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.stories-share-icon {
+  flex-shrink: 0;
+  transition: transform 0.16s ease;
+}
+
+.stories-share-btn:hover .stories-share-icon {
+  transform: scale(1.1);
+}
+
+/* Platform specific branding */
+.stories-share-btn--whatsapp {
+  border-color: rgba(37, 211, 102, 0.4);
+  color: #128c7e;
+}
+
+.stories-share-btn--whatsapp:hover {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #25d366;
+}
+
+.stories-share-btn--instagram {
+  border-color: rgba(225, 48, 108, 0.4);
+  color: #c13584;
+}
+
+.stories-share-btn--instagram:hover {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.stories-share-btn--linkedin {
+  border-color: rgba(0, 119, 181, 0.4);
+  color: #0077b5;
+}
+
+.stories-share-btn--linkedin:hover {
+  background: #0077b5;
+  color: #ffffff;
+  border-color: #0077b5;
+}
+
+.stories-share-btn--native {
+  border-color: var(--line);
+  color: var(--fg);
+}
+
+.stories-share-btn--native:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.stories-share-feedback {
+  padding: 6px 10px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  border-radius: 4px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  text-align: center;
+  animation: fadeIn 0.2s ease;
+}
+
+[data-theme="dark"] .stories-share-feedback {
+  background: #064e3b;
+  color: #a7f3d0;
+  border-color: #047857;
+}
+
+.stories-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.action-btn--stories {
+  border-color: var(--dauchy-blue);
+  color: var(--dauchy-blue-ink);
+}
+
+.action-btn--stories:hover {
+  background: var(--dauchy-blue);
+  color: #ffffff;
+}
+
+

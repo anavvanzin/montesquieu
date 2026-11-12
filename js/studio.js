@@ -35,23 +35,23 @@ import {
       presetKey: 'montesquieu-oval',
       scrollSlideId: 'slide-1',
     },
-    'slide-5': {
-      stageSelector: '#s5-artwork-stage',
+    'slide-4': {
+      stageSelector: '#s4-artwork-stage',
       imgSelector: '#compromisso-image',
-      fullBtnSelector: '#s5-oath-full-btn',
-      restoreSelector: '[data-restore-plate="slide-5"]',
+      fullBtnSelector: '#s4-oath-full-btn',
+      restoreSelector: '[data-restore-plate="slide-4"]',
       defaultAspect: '4:3',
       presetKey: 'compromisso',
-      scrollSlideId: 'slide-5',
+      scrollSlideId: 'slide-4',
     },
-    'slide-6': {
-      stageSelector: '#s6-photo-stage',
+    'slide-5': {
+      stageSelector: '#s5-photo-stage',
       imgSelector: '#justica-image',
-      fullBtnSelector: '#s6-justica-full-btn',
-      restoreSelector: '[data-restore-plate="slide-6"]',
+      fullBtnSelector: '#s5-justica-full-btn',
+      restoreSelector: '[data-restore-plate="slide-5"]',
       defaultAspect: '4:3',
       presetKey: 'justica',
-      scrollSlideId: 'slide-6',
+      scrollSlideId: 'slide-5',
     },
   };
 

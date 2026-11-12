@@ -37,7 +37,7 @@ test('buildValidatedSyncPayload maps slide number to verified presentation metad
 
   assert.equal(payload.sessionCode, 'UFSC-2026');
   assert.equal(payload.currentSlide, 5);
-  assert.equal(payload.slideTitle, 'Representing distinct and related institutions');
+  assert.equal(payload.slideTitle, 'A Justiça: the « null » power and the judicial frame');
   assert.equal(payload.activeCallout, 'gallery');
   assert.equal(payload.rtdbPath, 'syncSessions/UFSC-2026');
   assert.equal(payload.status, 'live');
@@ -48,7 +48,7 @@ test('buildValidatedSyncPayload maps slide number to verified presentation metad
     activeCallout: 'q2'
   });
   assert.equal(slide7.currentSlide, 7);
-  assert.equal(slide7.slideTitle, 'Questions for Serge');
+  assert.equal(slide7.slideTitle, 'Two questions for Serge');
 
   assert.throws(
     () => buildValidatedSyncPayload({ sessionCode: 'UFSC-2026', currentSlide: 9 }),

@@ -284,21 +284,21 @@ export class RemoteController {
         <!-- Contextual Stage Interaction Buttons -->
         <section class="remote-actions-bar" aria-label="Stage interactions">
           ${
-            this.currentSlide === 4
+            this.currentSlide === 3
               ? `<button type="button" class="remote-action-btn remote-action-btn--highlight" data-remote-action="toggle-powers">
                    ⚖️ Toggle Four Powers
                  </button>`
               : ''
           }
           ${
-            this.currentSlide === 5
+            this.currentSlide === 4 || this.currentSlide === 5
               ? `<button type="button" class="remote-action-btn remote-action-btn--highlight" data-remote-action="pause-5s">
-                   ⚡ Trigger 5s Visual Look
+                   ⚡ Trigger 10s Visual Look
                  </button>`
               : ''
           }
           ${
-            this.currentSlide === 6
+            this.currentSlide === 5
               ? `<button type="button" class="remote-action-btn remote-action-btn--highlight" data-remote-action="toggle-sword">
                    🗡️ Toggle Sword Detail
                  </button>`

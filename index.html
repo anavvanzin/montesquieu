@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Interactive 7-slide discussant presentation by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026) on Montesquieu, reception, context, and the conditions of liberty.">
   <meta property="og:title" content="Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC">
-  <meta property="og:description" content="Montesquieu and the three powers: Political liberty, legal images, and institutional autonomy in Brazil — Seven-slide discussant response by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026).">
+  <meta property="og:description" content="Discussing Dauchy’s Montesquieu: Context, reception and the representation of powers — Seven-slide discussant response by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026).">
   <title>Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC</title>
   <link rel="icon" href="./assets/img/logo-owl.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+  </noscript>
   <link rel="stylesheet" href="./vendor/fonts/inter-tight.css">
   <link rel="stylesheet" href="./vendor/fonts/newsreader.css">
   <link rel="stylesheet" href="./vendor/fonts/pinyon-script.css">
@@ -65,7 +71,6 @@
 <section class="podium-curtain" id="podium-curtain" role="region" aria-labelledby="curtain-title">
   <!-- TOP BAND: DEEP MIDNIGHT NAVY SKY (FAITHFUL TO OFFICIAL PPGD-UFSC POSTER) -->
   <div class="poster-hero__navy">
-    <!-- Poster Geometric Tricolor/Gold Wheel & Orbital Arcs at the Right Seam -->
     <svg class="poster-hero__sky-art" viewBox="0 0 1440 340" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
       <path d="M 960 340 C 1025 190, 1175 88, 1420 34" fill="none" stroke="#e2ba52" stroke-width="1.35" opacity="0.72" />
       <path d="M 850 340 C 980 235, 1155 178, 1440 148" fill="none" stroke="#e2ba52" stroke-width="1.05" opacity="0.48" />
@@ -74,7 +79,7 @@
       <path d="M 970 340 A 118 118 0 0 1 1196 290 L 1085 340 Z" fill="#1d569e" opacity="0.9" />
       <circle cx="998" cy="318" r="56" fill="#e3b341" opacity="0.94" />
       <path d="M 1052 340 A 92 92 0 0 1 1144 248 A 92 92 0 0 1 1218 340 Z" fill="#1b4d8c" opacity="0.92" />
-      <path d="M 1110 340 L 1168 268 A 96 96 0 0 1 1226 340 Z" fill="#be1e2d" opacity="0.94" />
+      <path d="M 1110 340 L 1168 268 A 96 96 0 0 1 1226 340 Z" fill="#be1e1d" opacity="0.94" />
       <path d="M 906 340 A 58 58 0 0 1 964 288 L 964 340 Z" fill="#15803d" opacity="0.82" />
     </svg>
 
@@ -154,9 +159,9 @@
         <!-- Presentation Entry Strip -->
         <div class="poster-hero__podium-bar">
           <p class="poster-hero__intervention-line" id="curtain-title">
-            <span class="t-meta poster-hero__int-tag">INTERVENTION</span>
-            <strong class="t-display-serif">Montesquieu and the three powers</strong>
-            <span class="poster-hero__int-sub">— Political liberty, legal images, and institutional autonomy in Brazil</span>
+            <span class="t-meta poster-hero__int-tag">INTERVENTION · V3</span>
+            <strong class="t-display-serif">Discussing Dauchy’s Montesquieu</strong>
+            <span class="poster-hero__int-sub">— Context, reception and the representation of powers</span>
           </p>
 
           <div class="podium-curtain__actions">
@@ -170,6 +175,18 @@
             <button class="podium-curtain__browse t-ui" id="curtain-script-btn" type="button" title="Open 7-page Lectern Script &amp; Lecture Notes (L)">
               Lectern Script (L)
             </button>
+            <button class="podium-curtain__browse t-ui" id="curtain-stories-btn" type="button" title="Watch 9:16 vertical mobile stories preview with music">
+              🎬 Stories (9:16)
+            </button>
+            <a
+              class="podium-curtain__browse t-ui"
+              href="./public/assets/aistudio/Discussing-Dauchy-handout_b097f5ac.pdf"
+              target="_blank"
+              rel="noopener"
+              title="Open 1-page Discussing Dauchy’s Montesquieu Handout PDF"
+            >
+              1-Page Handout (PDF) ↗
+            </a>
             <button
               class="podium-curtain__music t-ui"
               id="curtain-music-btn"
@@ -188,48 +205,15 @@
       <div class="poster-hero__right">
         <figure class="poster-hero__flags-art">
           <div class="poster-hero__flags-blend">
-            <svg
-              class="poster-hero__flags-svg"
-              viewBox="0 0 1760 1060"
-              role="img"
-              aria-label="Oil-impasto painted map silhouettes of France in blue, white, and red tricolor beside Brazil in green, yellow, and celestial blue"
+            <img
+              class="poster-hero__flags-img"
+              src="./public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png"
+              width="1600"
+              height="900"
+              decoding="async"
+              fetchpriority="high"
+              alt="Oil-impasto painted map silhouettes of France in blue, white, and red tricolor beside Brazil in green, yellow, and celestial blue"
             >
-              <defs>
-                <filter id="poster-flags-feather" x="-15%" y="-15%" width="130%" height="130%">
-                  <feGaussianBlur stdDeviation="34" />
-                </filter>
-                <filter id="poster-flags-rim" x="-10%" y="-10%" width="120%" height="120%">
-                  <feGaussianBlur stdDeviation="16" />
-                </filter>
-                <mask id="poster-flags-mask">
-                  <rect width="1760" height="1060" fill="#000" />
-                  <g filter="url(#poster-flags-feather)" fill="#fff">
-                    <ellipse cx="615" cy="665" rx="285" ry="270" />
-                    <ellipse cx="882" cy="912" rx="74" ry="68" />
-                    <ellipse cx="1028" cy="436" rx="382" ry="368" />
-                  </g>
-                  <rect
-                    x="40"
-                    y="40"
-                    width="1680"
-                    height="980"
-                    fill="none"
-                    stroke="#000"
-                    stroke-width="84"
-                    filter="url(#poster-flags-rim)"
-                  />
-                </mask>
-              </defs>
-              <image
-                href="./public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png"
-                x="80"
-                y="80"
-                width="1600"
-                height="900"
-                preserveAspectRatio="xMidYMid slice"
-                mask="url(#poster-flags-mask)"
-              />
-            </svg>
           </div>
           <figcaption class="poster-hero__ufsc-foot">
             <div class="flag-mix-bar flag-mix-bar--compact" aria-hidden="true">
@@ -241,7 +225,7 @@
               <span class="flag-mix-bar__seg flag-mix-bar__seg--br-gold"></span>
               <span class="flag-mix-bar__seg flag-mix-bar__seg--br-blue"></span>
             </div>
-            <span class="t-meta poster-hero__ufsc-name">UNIVERSIDADE FEDERAL DE SANTA CATARINA · CCJ / PPGD</span>
+            <span class="t-meta poster-hero__ufsc-name">UNIVERSIDADE FEDERAL DE SANTA CATINA · CCJ / PPGD</span>
           </figcaption>
         </figure>
       </div>
@@ -254,23 +238,30 @@
      ========================================================================= -->
 <header class="header" id="top-header">
   <div class="header__bar">
-    <a class="header__brand" href="#slide-1">
+    <a class="header__brand" href="#landing" id="header-brand-link" title="Display Event Landing Poster &amp; PPGD-UFSC Program (C)">
       <img class="header__owl-mark" src="./assets/img/logo-owl.png" alt="" width="20" height="20">
-      <span class="header__wordmark">Montesquieu and the three powers</span>
+      <span class="header__wordmark">Discussing Dauchy’s Montesquieu</span>
     </a>
 
     <nav class="header__nav t-ui" aria-label="Slide navigation">
-      <a href="#slide-1" data-slide-link="1" class="is-current">01 · Cover</a>
-      <a href="#slide-2" data-slide-link="2">02 · Montesquieu</a>
-      <a href="#slide-3" data-slide-link="3">03 · Three Powers</a>
-      <a href="#slide-4" data-slide-link="4">04 · Brazil 1824</a>
-      <a href="#slide-5" data-slide-link="5">05 · 1896 Oath</a>
-      <a href="#slide-6" data-slide-link="6">06 · 1961 Justice</a>
+      <button type="button" class="header__landing-btn" id="header-landing-btn" title="Display Opening Event Poster &amp; Landing Screen (C)">
+        🏛️ Landing
+      </button>
+      <a href="#slide-1" data-slide-link="1" class="is-current">01 · Opening</a>
+      <a href="#slide-2" data-slide-link="2">02 · Liberty (¶7–10)</a>
+      <a href="#slide-3" data-slide-link="3">03 · Brazil 1824 (¶6)</a>
+      <a href="#slide-4" data-slide-link="4">04 · 1896 Oath</a>
+      <a href="#slide-5" data-slide-link="5">05 · 1961 Justice</a>
+      <a href="#slide-6" data-slide-link="6">06 · Transplants (¶11–14)</a>
       <a href="#slide-7" data-slide-link="7">07 · Questions</a>
       <a href="#sources">Sources</a>
     </nav>
 
     <div class="header__right-group">
+      <button class="action-btn action-btn--stories t-ui" id="header-stories-btn" type="button" title="Open 9:16 vertical stories video preview with music">
+        <span>🎬 Stories</span>
+      </button>
+
       <button class="action-btn action-btn--script t-ui" id="header-script-btn" type="button" title="Open 7-page Lectern Script &amp; Lecture Notes (L)">
         <span>📄 Script</span>
       </button>
@@ -294,7 +285,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="prep-popover"
-          title="Backstage tools: Lectern Script, Audience Sync, 3D Meridian, Studio, Timer, Projector &amp; Presenter Tips"
+          title="Backstage tools: Lectern Script, Handout PDF, Audience Sync, 3D Meridian, Studio, Timer, Projector &amp; Presenter Tips"
         >
           <span>Prep ▾</span>
         </button>
@@ -329,6 +320,9 @@
               <button class="action-btn t-ui" id="draw-curtain-btn" type="button" title="Show the opening PPGD-UFSC event poster screen (C)">
                 <span>Event Poster (C)</span>
               </button>
+              <button class="action-btn t-ui" id="prep-stories-btn" type="button" title="Watch 9:16 vertical mobile stories video preview">
+                <span>🎬 Stories (9:16)</span>
+              </button>
             </div>
 
             <div class="prep-music-box" aria-label="Background music controls">
@@ -359,8 +353,17 @@
             </div>
 
             <button class="action-btn prep-popover__tip-btn t-ui" id="prep-script-btn" type="button">
-              <span>📄 Open 7-Page Lectern Script &amp; Print (L)</span>
+              <span>📄 Open 7-Page Lectern Script &amp; Prep Notes (L)</span>
             </button>
+
+            <a
+              class="action-btn prep-popover__tip-btn t-ui"
+              href="./public/assets/aistudio/Discussing-Dauchy-handout_b097f5ac.pdf"
+              target="_blank"
+              rel="noopener"
+            >
+              <span>📑 Open 1-Page Handout PDF ↗</span>
+            </a>
 
             <button class="action-btn prep-popover__tip-btn t-ui" id="prep-tip-toggle" type="button">
               <span>Show Current Slide Presenter Tip (N)</span>
@@ -383,7 +386,7 @@
                 <span id="prep-voice-label">🎙️ Voice: OFF (V)</span>
               </button>
 
-              <button class="action-btn t-ui" id="prep-auto-pace-btn" type="button" aria-pressed="false" title="Toggle ~9m30s auto-paced rehearsal delivery (T)">
+              <button class="action-btn t-ui" id="prep-auto-pace-btn" type="button" aria-pressed="false" title="Toggle ~9m28s auto-paced rehearsal delivery (T)">
                 <span id="prep-auto-pace-label">⏱️ Auto-Pace: OFF (T)</span>
               </button>
 
@@ -443,7 +446,7 @@
     <div class="audience-follow-bar__inner">
       <div class="audience-follow-bar__info">
         <span class="audience-follow-bar__badge t-meta" id="follow-bar-badge">LIVE AUDIENCE SYNC · UFSC-2026</span>
-        <span class="audience-follow-bar__slide" id="follow-bar-slide">Slide 01 / 07 · Montesquieu and the three powers</span>
+        <span class="audience-follow-bar__slide" id="follow-bar-slide">Slide 01 / 07 · Discussing Dauchy’s Montesquieu</span>
       </div>
       <div class="audience-follow-bar__actions">
         <button type="button" class="text-link-sm" id="follow-bar-jump-btn">Jump to Presenter Slide</button>
@@ -455,14 +458,15 @@
   </div>
 
   <nav class="mobile-contents" id="mobile-contents" aria-label="Slide contents and settings" hidden>
-    <a href="#slide-1">01 · Cover — Montesquieu and the three powers</a>
-    <a href="#slide-2">02 · Montesquieu — Who was Montesquieu (1689–1755)</a>
-    <a href="#slide-3">03 · Three Powers — Book XI, chapter 6 &amp; limits on power</a>
-    <a href="#slide-4">04 · Brazil 1824 — Montesquieu in Brazil, 1824 (Four powers)</a>
-    <a href="#slide-5">05 · 1896 Oath — Representing distinct and related institutions</a>
-    <a href="#slide-6">06 · 1961 Justice — Ceschiatti’s Justice: the sword and autonomy</a>
-    <a href="#slide-7">07 · Questions — Questions for Serge</a>
-    <a href="#sources">Sources &amp; Verification Notes</a>
+    <a href="#landing" id="mobile-landing-link">🏛️ Event Landing Poster (PPGD-UFSC)</a>
+    <a href="#slide-1">01 · Opening — Discussing Dauchy’s Montesquieu</a>
+    <a href="#slide-2">02 · Liberty (¶7–10) — Political liberty beyond the constitutional formula</a>
+    <a href="#slide-3">03 · Brazil 1824 (¶6) — Circulation, correction, and four powers</a>
+    <a href="#slide-4">04 · 1896 Oath — Compromisso Constitucional &amp; 1891 Const.</a>
+    <a href="#slide-5">05 · 1961 Justice — A Justiça (stone), XI.6 &amp; Dauchy ¶7</a>
+    <a href="#slide-6">06 · Transplants (¶11–14) — Watson, Legrand, hybridity &amp; 1916 Code</a>
+    <a href="#slide-7">07 · Questions — Two questions for Serge</a>
+    <a href="#sources">Sources &amp; Citation Check</a>
     <button class="mobile-theme-toggle t-ui" id="mobile-script-toggle" type="button">
       <span>Lectern Script (7 Pages):</span>
       <strong>Open Notes (L)</strong>
@@ -495,10 +499,10 @@
 </header>
 
 <!-- Layered restrained archival background scenes -->
-<div class="bg bg--storm" aria-hidden="true"><img src="./assets/img/bgs/storm.webp" alt=""></div>
-<div class="bg bg--palace" aria-hidden="true"><img src="./assets/img/bgs/palace.webp" alt=""></div>
-<div class="bg bg--lake" aria-hidden="true"><img src="./assets/img/bgs/lake.webp" alt=""></div>
-<div class="bg bg--nightsea" aria-hidden="true"><img src="./assets/img/bgs/nightsea.webp" alt=""></div>
+<div class="bg bg--storm is-active-bg" aria-hidden="true"><img src="./assets/img/bgs/storm.webp" alt="" decoding="async"></div>
+<div class="bg bg--palace" aria-hidden="true"><img src="./assets/img/bgs/palace.webp" alt="" loading="lazy" decoding="async"></div>
+<div class="bg bg--lake" aria-hidden="true"><img src="./assets/img/bgs/lake.webp" alt="" loading="lazy" decoding="async"></div>
+<div class="bg bg--nightsea" aria-hidden="true"><img src="./assets/img/bgs/nightsea.webp" alt="" loading="lazy" decoding="async"></div>
 
 <main id="report">
   <!-- Print-only masthead for the UFSC panel slide deck handout -->
@@ -507,10 +511,10 @@
       <div class="print-lecture-header__inst">
         <p class="print-lecture-header__kicker">UFSC · FLORIANÓPOLIS</p>
         <p class="print-lecture-header__univ">Universidade Federal de Santa Catarina · PPGD</p>
-        <p class="print-lecture-header__dates">11 November 2026 · Panel on Montesquieu (~10-minute intervention)</p>
+        <p class="print-lecture-header__dates">11 November 2026 · Panel on Montesquieu (~10-minute intervention · v3)</p>
       </div>
       <div class="print-lecture-header__stamp">
-        <span class="print-lecture-header__badge">Discussant Intervention</span>
+        <span class="print-lecture-header__badge">Discussant Intervention · v3</span>
         <span class="print-lecture-header__session">11 Nov. 2026</span>
       </div>
     </div>
@@ -520,22 +524,22 @@
     </div>
     <div class="print-lecture-header__paper">
       <span class="print-lecture-header__label">Presentation Title &amp; Subtitle</span>
-      <h2 class="print-lecture-header__paper-title">Montesquieu and the three powers</h2>
-      <p class="print-lecture-header__paper-subtitle">Political liberty, legal images, and institutional autonomy in Brazil</p>
+      <h2 class="print-lecture-header__paper-title">Discussing Dauchy’s Montesquieu</h2>
+      <p class="print-lecture-header__paper-subtitle">Context, reception and the representation of powers</p>
       <p class="print-lecture-header__author"><strong>Ana Vitória Vanzin Mendes · Discussant (PPGD/UFSC)</strong></p>
     </div>
   </header>
 
   <!-- =====================================================================
-       SLIDE 01 · MONTESQUIEU AND THE THREE POWERS (0:00–0:50)
-       Stage 1: the author and his problem
+       SLIDE 01 · OPENING: DISCUSSING DAUCHY’S MONTESQUIEU (0:00–1:07)
+       Engages Dauchy ¶7 & ¶13–14 · Voice Code Key + Right Paragraph Strip
        ===================================================================== -->
   <section class="slide-canvas slide-canvas--hero" id="slide-1" data-slide="1" aria-labelledby="s1-title">
     <div class="hero-drapery" aria-hidden="true">
-      <img src="./assets/img/hero/front-l.webp" alt="" fetchpriority="high">
+      <img src="./assets/img/hero/front-l.webp" alt="" decoding="async">
     </div>
     <div class="hero-drapery hero-drapery--right" aria-hidden="true">
-      <img src="./assets/img/hero/front-r.webp" alt="">
+      <img src="./assets/img/hero/front-r.webp" alt="" decoding="async">
     </div>
 
     <article class="slide-frame slide-frame--s1" data-reveal>
@@ -545,7 +549,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="presenter-tip-panel-1"
-          aria-label="Presenter Tip · Slide 01: Opening &amp; Research Question (hover or click, shortcut N)"
+          aria-label="Presenter Tip · Slide 01: Opening &amp; Voice Code Key (hover or click, shortcut N)"
           title="Presenter Tip · Hover or click for podium cues (N)"
         >
           <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -558,76 +562,173 @@
         <div class="presenter-tip__panel" id="presenter-tip-panel-1" role="region" aria-label="Presenter Tip for Slide 01" hidden></div>
       </div>
 
-      <div class="s1-grid">
-        <div class="s1-copy">
-          <div class="s1-flag-meridian" aria-hidden="true">
-            <span class="flag-mix-bar flag-mix-bar--compact">
-              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-blue"></span>
-              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-white"></span>
-              <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-red"></span>
-              <span class="flag-mix-bar__bridge"></span>
-              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-green"></span>
-              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-gold"></span>
-              <span class="flag-mix-bar__seg flag-mix-bar__seg--br-blue"></span>
-            </span>
-            <span class="t-meta s1-flag-meridian__caption">BORDEAUX 1748 ⇄ BRAZIL 1824 · 1896 · 1961</span>
+      <div class="v3-stage" style="--split-ratio: 52%;">
+        <div class="v3-main">
+          <!-- ABOVE THE #1F35FF LINE: SOURCES (DAUCHY ¶7 & ¶10→¶14) -->
+          <div class="v3-above-line">
+            <div class="s1-grid">
+              <div class="s1-copy">
+                <div class="s1-flag-meridian" aria-hidden="true">
+                  <span class="flag-mix-bar flag-mix-bar--compact">
+                    <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-blue"></span>
+                    <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-white"></span>
+                    <span class="flag-mix-bar__seg flag-mix-bar__seg--fr-red"></span>
+                    <span class="flag-mix-bar__bridge"></span>
+                    <span class="flag-mix-bar__seg flag-mix-bar__seg--br-green"></span>
+                    <span class="flag-mix-bar__seg flag-mix-bar__seg--br-gold"></span>
+                    <span class="flag-mix-bar__seg flag-mix-bar__seg--br-blue"></span>
+                  </span>
+                  <span class="t-meta s1-flag-meridian__caption">DISCUSSANT NOTES FOR SERGE DAUCHY · PPGD/UFSC · 11 NOV 2026</span>
+                </div>
+
+                <p class="slide-kicker t-meta" data-editable="s1-kicker">01 / 07 · DISCUSSING DAUCHY’S MONTESQUIEU · V3</p>
+
+                <h1 class="s1-title t-condensed" id="s1-title" data-editable="s1-title">
+                  DISCUSSING DAUCHY’S MONTESQUIEU
+                </h1>
+
+                <h2 class="s1-subtitle t-display-serif" data-editable="s1-subtitle">
+                  Context, reception and the representation of powers
+                </h2>
+
+                <footer class="s1-byline">
+                  <strong data-editable="s1-author">Ana Vitória Vanzin Mendes · Discussant</strong>
+                  <span class="t-meta" data-editable="s1-affil">PPGD/UFSC · Florianópolis · 11 November 2026 · Conferencista: Serge Dauchy (CNRS/Université de Lille)</span>
+                </footer>
+
+                <!-- Two Verbatim Anchors from Serge Dauchy’s Manuscript -->
+                <div class="v3-source-stack">
+                  <article class="v3-source-block">
+                    <div class="v3-chip-row">
+                      <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶7 · THE SENTENCE I BUILD ON</span>
+                    </div>
+                    <blockquote class="v3-quote-fr t-display-serif" lang="fr" data-editable="s1-dauchy-p7-fr">
+                      « Enfermer Montesquieu dans une vision purement “constitutionnaliste” serait toutefois réducteur. »
+                    </blockquote>
+                    <p class="v3-quote-tr" data-editable="s1-dauchy-p7-tr">
+                      To confine Montesquieu within a purely ‘constitutionalist’ vision would, however, be reductive. <span class="tr-tag">[tr. AVVM]</span>
+                    </p>
+                  </article>
+
+                  <article class="v3-source-block">
+                    <div class="v3-chip-row">
+                      <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶10 → ¶14 · FROM ROOTEDNESS TO HYBRIDITY</span>
+                    </div>
+                    <p class="v3-source-summary" data-editable="s1-dauchy-p14">
+                      Moves from laws rooted in a particular history (<span lang="fr">« l’esprit général d’une nation »</span>, ¶10) to hybrid systems where <span lang="fr">« leurs frontières sont constamment renégociées »</span> and your closing question on Clóvis Beviláqua’s 1916 Brazilian Civil Code (¶13–14).
+                    </p>
+                  </article>
+                </div>
+              </div>
+
+              <figure class="s1-portrait-wrap" id="s1-portrait-box" aria-label="Oval portrait of Montesquieu with constitutional orbit filigree">
+                <div class="medallion-orbit" id="s1-medallion-orbit">
+                  <svg class="medallion-filigree" viewBox="0 0 420 490" aria-hidden="true">
+                    <ellipse cx="210" cy="245" rx="200" ry="235" fill="none" stroke="currentColor" stroke-width="1.1" stroke-dasharray="5 9" />
+                    <ellipse cx="210" cy="245" rx="188" ry="222" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.5" />
+                    <circle cx="210" cy="10" r="4" fill="currentColor" />
+                    <circle cx="386" cy="356" r="3.5" fill="currentColor" />
+                    <circle cx="34" cy="356" r="3.5" fill="currentColor" />
+                  </svg>
+                  <div class="oval-medallion" id="s1-medallion-stage">
+                    <img id="montesquieu-image" src="./assets/report/montesquieu-oval.webp" data-original-src="./assets/report/montesquieu-oval.webp" alt="Oval portrait of Charles-Louis de Secondat, Baron de Montesquieu" width="1365" height="1615" decoding="async" fetchpriority="high" referrerpolicy="no-referrer">
+                    <span class="medallion-sheen" aria-hidden="true"></span>
+                  </div>
+                  <img class="s1-owl-vignette" src="./assets/owl-perched.webp" alt="" aria-hidden="true" decoding="async">
+                </div>
+                <figcaption class="s1-portrait-caption t-meta">
+                  Charles-Louis de Secondat, Baron de Montesquieu (1689–1755) · <cite lang="fr">De l’esprit des lois</cite> (1748)
+                </figcaption>
+                <div class="s1-portrait-bar">
+                  <button class="text-link-sm" type="button" data-open-meridian-3d="france1748">3D Meridian ↗</button>
+                  <button class="text-link-sm" type="button" data-open-studio="timeline">Circulation Timeline ↗</button>
+                  <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-1" hidden>Restore Original ↺</button>
+                </div>
+              </figure>
+            </div>
           </div>
 
-          <p class="slide-kicker t-meta" data-editable="s1-kicker">01 · STAGE 1: THE AUTHOR AND HIS PROBLEM · PPGD-UFSC · 11 NOVEMBER 2026</p>
-          <p class="s1-event-line" data-editable="s1-event">
-            Temática: Montesquieu · <span lang="pt"><em>A circulação das ideias e saberes franceses na ciência jurídica brasileira</em></span>
-          </p>
+          <!-- SIGNATURE #1F35FF DIVIDING LINE (AT 48% HEIGHT ON SLIDE 1) -->
+          <div class="v3-blue-line" data-line-label="SOURCES ABOVE · MY READING BELOW (¶7 &amp; ¶13–14)" role="separator" aria-label="Blue dividing line between verbatim sources above and my reading below">
+            <span class="v3-blue-line__tag">SOURCES ABOVE · MY READING BELOW</span>
+          </div>
 
-          <h1 class="s1-title t-display-serif" id="s1-title" data-editable="s1-title">
-            Montesquieu and the three powers
-          </h1>
+          <!-- BELOW THE #1F35FF LINE: MY READING & VOICE CODE KEY -->
+          <div class="v3-below-line">
+            <div class="v3-reading-lead">
+              <span class="voice-chip voice-chip--reading">MY READING</span>
+              <p class="v3-reading-prose" data-editable="s1-my-reading">
+                Engaging Serge’s manuscript along its two main axes: why political liberty requires civil, criminal, and judicial guarantees beyond a written constitutional diagram (¶7), and how legal reception in Brazil forces us to rethink context when legal boundaries are renegotiated (¶6, ¶10–14).
+              </p>
+            </div>
 
-          <h2 class="s1-subtitle t-display-serif" data-editable="s1-subtitle">
-            Political liberty, legal images, and institutional autonomy in Brazil
-          </h2>
-
-          <footer class="s1-byline">
-            <strong data-editable="s1-author">Ana Vitória Vanzin Mendes · Discussant</strong>
-            <span class="t-meta" data-editable="s1-affil">Doctoral Researcher in Law · UFSC · Conferencista: Serge Dauchy (CNRS/Université de Lille)</span>
-          </footer>
+            <div class="voice-key-panel" aria-label="How the slides speak: Voice Code Key">
+              <p class="voice-key-panel__heading">HOW THE SLIDES SPEAK</p>
+              <div class="voice-key-grid">
+                <div class="voice-key-item">
+                  <span class="voice-chip voice-chip--dauchy">DAUCHY</span>
+                  <p>Your manuscript, quoted verbatim; ¶ numbers follow its order (¶1–14).</p>
+                </div>
+                <div class="voice-key-item">
+                  <span class="voice-chip voice-chip--montesquieu">MONTESQUIEU</span>
+                  <p><cite lang="fr">De l’esprit des lois</cite>, 1777 text, quoted verbatim.</p>
+                </div>
+                <div class="voice-key-item">
+                  <span class="voice-chip voice-chip--other">OTHER SOURCE</span>
+                  <p>Constitutions of 1824 and 1891; Watson and Legrand as you present them.</p>
+                </div>
+                <div class="voice-key-item">
+                  <span class="voice-chip voice-chip--reading">MY READING</span>
+                  <p>My interpretation, set below the blue line on every slide. Translations marked <span class="tr-tag">[tr. AVVM]</span>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <figure class="s1-portrait-wrap" id="s1-portrait-box" aria-label="Oval portrait of Montesquieu with constitutional orbit filigree">
-          <div class="medallion-orbit" id="s1-medallion-orbit">
-            <svg class="medallion-filigree" viewBox="0 0 420 490" aria-hidden="true">
-              <ellipse cx="210" cy="245" rx="200" ry="235" fill="none" stroke="currentColor" stroke-width="1.1" stroke-dasharray="5 9" />
-              <ellipse cx="210" cy="245" rx="188" ry="222" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.5" />
-              <circle cx="210" cy="10" r="4" fill="currentColor" />
-              <circle cx="386" cy="356" r="3.5" fill="currentColor" />
-              <circle cx="34" cy="356" r="3.5" fill="currentColor" />
-            </svg>
-            <div class="oval-medallion" id="s1-medallion-stage">
-              <img id="montesquieu-image" src="./assets/report/montesquieu-oval.webp" data-original-src="./assets/report/montesquieu-oval.webp" alt="Oval portrait of Charles-Louis de Secondat, Baron de Montesquieu" width="1365" height="1615" fetchpriority="high">
-              <span class="medallion-sheen" aria-hidden="true"></span>
-            </div>
-            <img class="s1-owl-vignette" src="./assets/owl-perched.webp" alt="" aria-hidden="true">
+        <!-- RIGHT STRIP: YOUR PAPER, AS I MAP IT (ANSWERS ¶7 & ¶13–14 ON SLIDE 1) -->
+        <aside class="dauchy-strip" aria-label="Serge Dauchy’s paper mapped by paragraph">
+          <p class="dauchy-strip__head">YOUR PAPER, AS I MAP IT</p>
+          <div class="dauchy-strip__list">
+            <button type="button" class="dauchy-strip__item" data-jump-slide="3" data-para-id="p6">
+              <span class="dauchy-strip__ref">¶6 · slides 3–4</span>
+              <strong class="dauchy-strip__title">BRAZIL · 1824</strong>
+              <span class="dauchy-strip__desc">Circulation, 1823 Assembly, four powers « une évolution voire une correction ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="2" data-para-id="p7">
+              <span class="dauchy-strip__ref">¶7 · slides 1–2, 4–5</span>
+              <strong class="dauchy-strip__title">LIBERTY BEYOND THE CONSTITUTION</strong>
+              <span class="dauchy-strip__desc">Civil and criminal laws, and an institutional frame « (surtout judiciaire) ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p8-10">
+              <span class="dauchy-strip__ref">¶8–10 · slide 2</span>
+              <strong class="dauchy-strip__title">THE SPIRIT OF THE LAWS</strong>
+              <span class="dauchy-strip__desc">Natural and historical determinants; the « esprit général ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p11-12">
+              <span class="dauchy-strip__ref">¶11–12 · slide 6</span>
+              <strong class="dauchy-strip__title">WATSON · LEGRAND</strong>
+              <span class="dauchy-strip__desc">Transplants that “grow in a new body”; transplants as « impossibles ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="6" data-para-id="p13-14">
+              <span class="dauchy-strip__ref">¶13–14 · slides 1, 6–7</span>
+              <strong class="dauchy-strip__title">HYBRIDITY · CODE OF 1916</strong>
+              <span class="dauchy-strip__desc">« transplantations imposées, … réceptions assumées »; Beviláqua’s Code.</span>
+            </button>
           </div>
-          <figcaption class="s1-portrait-caption t-meta">
-            Charles-Louis de Secondat, Baron de Montesquieu (1689–1755) · <cite lang="fr">De l’esprit des lois</cite> (1748)
-          </figcaption>
-          <div class="s1-portrait-bar">
-            <button class="text-link-sm" type="button" data-open-meridian-3d="france1748">3D Meridian ↗</button>
-            <button class="text-link-sm" type="button" data-open-studio="timeline">Circulation Timeline ↗</button>
-            <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-1" hidden>Restore Original ↺</button>
-          </div>
-        </figure>
+        </aside>
       </div>
 
       <div class="slide-footer-meta">
-        <span class="t-meta"><a href="#src-dauchy">Serge Dauchy, Conference Paper</a> · <a href="#src-montesquieu">Montesquieu, De l’esprit des lois (1748)</a></span>
-        <span class="slide-num t-meta">01 / 07</span>
+        <span class="t-meta"><a href="#src-dauchy">Serge Dauchy, Manuscript (¶7, ¶10–14)</a> · <a href="#src-montesquieu">Montesquieu, Esprit des lois (1777)</a></span>
+        <span class="slide-num t-meta">01 / 07 · Target 1:05</span>
       </div>
     </article>
   </section>
 
   <!-- =====================================================================
-       SLIDE 02 · WHO WAS MONTESQUIEU (0:50–2:05)
-       Charles-Louis de Secondat (1689–1755) · Parlement of Bordeaux · 1748
+       SLIDE 02 · POLITICAL LIBERTY BEYOND THE CONSTITUTIONAL FORMULA (1:07–2:30)
+       Answers Dauchy ¶7 & ¶8–10 · Montesquieu XIX.4 (1777 text)
        ===================================================================== -->
   <section class="slide-canvas" id="slide-2" data-scene="palace" data-slide="2" aria-labelledby="s2-title">
     <article class="slide-frame" data-reveal>
@@ -637,7 +738,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="presenter-tip-panel-2"
-          aria-label="Presenter Tip · Slide 02: Who was Montesquieu (hover or click, shortcut N)"
+          aria-label="Presenter Tip · Slide 02: Political Liberty Beyond the Constitutional Formula (hover or click, shortcut N)"
           title="Presenter Tip · Hover or click for podium cues (N)"
         >
           <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -650,86 +751,160 @@
         <div class="presenter-tip__panel" id="presenter-tip-panel-2" role="region" aria-label="Presenter Tip for Slide 02" hidden></div>
       </div>
 
-      <p class="slide-kicker t-meta" data-editable="s2-kicker">02 · STAGE 1: THE AUTHOR AND HIS PROBLEM · 1689–1755</p>
+      <p class="slide-kicker t-meta" data-editable="s2-kicker">02 / 07 · ANSWERING DAUCHY ¶7 &amp; ¶8–10 · MONTESQUIEU XIX.4 (1777)</p>
 
-      <div class="s2-grid">
-        <div class="s2-left" data-pole-panel="court">
-          <h2 class="s2-display t-display-serif" id="s2-title" data-editable="s2-title">
-            Who was Montesquieu
-          </h2>
+      <div class="v3-stage" style="--split-ratio: 64%;">
+        <div class="v3-main">
+          <!-- ABOVE THE #1F35FF LINE: DAUCHY ¶7 + MONTESQUIEU XIX.4 -->
+          <div class="v3-above-line">
+            <h2 class="slide-main-heading t-condensed" id="s2-title" data-editable="s2-title">
+              Political liberty beyond the constitutional formula
+            </h2>
 
-          <div class="s2-block">
-            <p class="source-tag t-meta" data-editable="s2-source-line">Charles-Louis de Secondat (1689–1755) · The Spirit of the Laws (1748)</p>
-            <p class="s2-framing-note" data-editable="s2-framing-note">
-              More than a diagram of government: asking how power operates, what restrains it, and under what conditions people can live without fearing its arbitrary exercise.
-            </p>
+            <div class="s2-grid">
+              <div class="s2-left" data-pole-panel="court">
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶7 · BEYOND CONSTITUTIONALISM</span>
+                  </div>
+                  <blockquote class="v3-quote-fr t-display-serif" lang="fr" data-editable="s2-dauchy-fr">
+                    « … les dispositions constitutionnelles capables d’assurer la liberté politique doivent être secondées par l’établissement de lois civiles et criminelles et par un cadre institutionnel (surtout judiciaire) … »
+                  </blockquote>
+                  <p class="v3-quote-tr" data-editable="s2-dauchy-tr">
+                    Constitutional dispositions capable of ensuring political liberty must be seconded by the establishment of civil and criminal laws and by an institutional (above all judicial) frame. <span class="tr-tag">[tr. AVVM]</span>
+                  </p>
+                  <p class="v3-attribution-guard t-meta" data-editable="s2-syst-note">
+                    Note on attribution: Dauchy’s phrase « système de liberté » (¶7) is treated here strictly as his analytical synthesis rather than a verified phrase from <cite lang="fr">De l’esprit des lois</cite>.
+                  </p>
+                </article>
+
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--montesquieu">MONTESQUIEU · XIX.4 · SLIDE 2 (1777 TEXT)</span>
+                  </div>
+                  <blockquote class="v3-quote-fr t-display-serif" lang="fr" data-editable="s2-mont-fr">
+                    « Plusieurs choses gouvernent les hommes, le climat, la religion, les lois, les maximes du gouvernement, les exemples des choses passées, les mœurs, les manieres ; d’où il se forme un esprit général qui en résulte. »
+                  </blockquote>
+                  <p class="v3-quote-tr" data-editable="s2-mont-tr">
+                    Many things govern men: climate, religion, laws, the maxims of government, examples of past things, mores, manners; from which a general spirit is formed as a result. <span class="tr-tag">[tr. AVVM]</span>
+                  </p>
+                </article>
+              </div>
+
+              <div class="s2-right">
+                <ul class="s2-elements-list" aria-label="Three complementary dimensions in Dauchy ¶7 and ¶8–10">
+                  <li class="s2-element-item" tabindex="0" data-pole-panel="court" data-eq-select="court">
+                    <span class="t-meta s2-element-item__num">¶7a</span>
+                    <div class="s2-element-item__body">
+                      <span class="t-display-serif s2-element-item__label" data-editable="s2-el-1">Constitutional arrangements (« dispositif constitutionnel »)</span>
+                      <span class="s2-element-item__sub" data-editable="s2-el-1-sub">Necessary to prevent the abuse of power, yet reductive if read in isolation as a self-sufficient written formula.</span>
+                    </div>
+                  </li>
+                  <li class="s2-element-item" tabindex="0" data-pole-panel="spirit" data-eq-select="spirit">
+                    <span class="t-meta s2-element-item__num">¶7b</span>
+                    <div class="s2-element-item__body">
+                      <span class="t-display-serif s2-element-item__label" data-editable="s2-el-2">Civil &amp; criminal laws + judicial frame (« surtout judiciaire »)</span>
+                      <span class="s2-element-item__sub" data-editable="s2-el-2-sub">Citizen security depends directly on criminal procedure, civil rules, and judicial institutions that second the constitution.</span>
+                    </div>
+                  </li>
+                  <li class="s2-element-item" tabindex="0" data-pole-panel="liberty" data-eq-select="liberty">
+                    <span class="t-meta s2-element-item__num">¶8–10</span>
+                    <div class="s2-element-item__body">
+                      <span class="t-display-serif s2-element-item__label" data-editable="s2-el-3">Natural &amp; historical determinants (« esprit général », XIX.4)</span>
+                      <span class="s2-element-item__sub" data-editable="s2-el-3-sub">Climate, religion, laws, maxims of government, past examples, mores, and manners (« manieres ») shape whether liberty can take root.</span>
+                    </div>
+                  </li>
+                </ul>
+
+                <!-- Interactive Equilibrium Balance Across Dauchy ¶7 & XIX.4 -->
+                <div class="equilibrium-bridge" id="s2-equilibrium-bridge" data-active-pole="balanced" aria-label="Constitutional formula, civil/criminal/judicial guarantees, and general spirit">
+                  <button class="eq-pole-btn t-meta" type="button" data-eq-pole="court" aria-pressed="false">
+                    <span>Constitutional (¶7)</span>
+                  </button>
+
+                  <svg class="equilibrium-bridge__svg" viewBox="0 0 560 64" aria-hidden="true">
+                    <line x1="36" y1="32" x2="524" y2="32" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.35" />
+                    <g class="equilibrium-bridge__beam">
+                      <line x1="74" y1="32" x2="486" y2="32" stroke="currentColor" stroke-width="1.8" />
+                      <circle cx="74" cy="32" r="6" fill="var(--dauchy-blue)" />
+                      <circle cx="280" cy="32" r="5.5" fill="var(--ink-md)" />
+                      <circle cx="486" cy="32" r="6" fill="var(--gilt)" />
+                    </g>
+                    <polygon points="280,28 287,44 273,44" fill="currentColor" opacity="0.7" />
+                  </svg>
+
+                  <div class="eq-pole-pair">
+                    <button class="eq-pole-btn t-meta" type="button" data-eq-pole="spirit" aria-pressed="false">
+                      <span>Civil · Criminal · Judicial</span>
+                    </button>
+                    <button class="eq-pole-btn t-meta" type="button" data-eq-pole="liberty" aria-pressed="false">
+                      <span>Esprit général (XIX.4)</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SIGNATURE #1F35FF DIVIDING LINE (AT 62% HEIGHT ON SLIDE 2) -->
+          <div class="v3-blue-line" data-line-label="ANSWERING ¶7 &amp; ¶8–10" role="separator">
+            <span class="v3-blue-line__tag">ANSWERING DAUCHY ¶7 &amp; ¶8–10</span>
+          </div>
+
+          <!-- BELOW THE #1F35FF LINE: MY READING -->
+          <div class="v3-below-line">
+            <div class="v3-reading-lead">
+              <span class="voice-chip voice-chip--reading">MY READING</span>
+              <p class="v3-reading-prose" data-editable="s2-my-reading">
+                Political liberty is not a self-executing constitutional diagram: its concrete conditions lie in ordinary civil, criminal, and judicial protections working within the historical and social relations that Montesquieu calls the <em lang="fr">esprit général</em>.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div class="s2-right">
-          <ul class="s2-elements-list" aria-label="Montesquieu’s judicial background, 1748 treatise, and account of political liberty">
-            <li class="s2-element-item" tabindex="0" data-pole-panel="court" data-eq-select="court">
-              <span class="t-meta s2-element-item__num">I</span>
-              <div class="s2-element-item__body">
-                <span class="t-display-serif s2-element-item__label" data-editable="s2-el-1">Magistrate in the Parlement of Bordeaux</span>
-                <span class="s2-element-item__sub" data-editable="s2-el-1-sub">A judicial court (1689–1755), not a parliament in the modern legislative sense.</span>
-              </div>
-            </li>
-            <li class="s2-element-item" tabindex="0" data-pole-panel="spirit" data-eq-select="spirit">
-              <span class="t-meta s2-element-item__num">II</span>
-              <div class="s2-element-item__body">
-                <span class="t-display-serif s2-element-item__label" data-editable="s2-el-2">The Spirit of the Laws (1748)</span>
-                <span class="s2-element-item__sub" data-editable="s2-el-2-sub">Relates laws to forms of government and societal circumstances: customs, religion, commerce, geography, and history.</span>
-              </div>
-            </li>
-            <li class="s2-element-item" tabindex="0" data-pole-panel="liberty" data-eq-select="liberty">
-              <span class="t-meta s2-element-item__num">III</span>
-              <div class="s2-element-item__body">
-                <span class="t-display-serif s2-element-item__label" data-editable="s2-el-3">Political liberty as security under laws</span>
-                <span class="s2-element-item__sub" data-editable="s2-el-3-sub">Requires security under laws and limits on those who exercise public power—distribution of powers is one essential part.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Interactive Equilibrium Balance Across Montesquieu’s Problem of Power -->
-      <div class="equilibrium-bridge" id="s2-equilibrium-bridge" data-active-pole="balanced" aria-label="Magistracy, societal context, and security under laws">
-        <button class="eq-pole-btn t-meta" type="button" data-eq-pole="court" aria-pressed="false">
-          <span>Parlement of Bordeaux (Court)</span>
-        </button>
-
-        <svg class="equilibrium-bridge__svg" viewBox="0 0 560 64" aria-hidden="true">
-          <line x1="36" y1="32" x2="524" y2="32" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.35" />
-          <g class="equilibrium-bridge__beam">
-            <line x1="74" y1="32" x2="486" y2="32" stroke="currentColor" stroke-width="1.8" />
-            <circle cx="74" cy="32" r="6" fill="var(--accent)" />
-            <circle cx="280" cy="32" r="5.5" fill="var(--ink-md)" />
-            <circle cx="486" cy="32" r="6" fill="var(--gilt)" />
-          </g>
-          <polygon points="280,28 287,44 273,44" fill="currentColor" opacity="0.7" />
-        </svg>
-
-        <div class="eq-pole-pair">
-          <button class="eq-pole-btn t-meta" type="button" data-eq-pole="spirit" aria-pressed="false">
-            <span>Societal circumstances</span>
-          </button>
-          <button class="eq-pole-btn t-meta" type="button" data-eq-pole="liberty" aria-pressed="false">
-            <span>Security under laws</span>
-          </button>
-        </div>
+        <!-- RIGHT STRIP: ANSWERS ¶7 & ¶8–10 -->
+        <aside class="dauchy-strip" aria-label="Serge Dauchy’s paper mapped by paragraph">
+          <p class="dauchy-strip__head">YOUR PAPER, AS I MAP IT</p>
+          <div class="dauchy-strip__list">
+            <button type="button" class="dauchy-strip__item" data-jump-slide="3" data-para-id="p6">
+              <span class="dauchy-strip__ref">¶6 · slides 3–4</span>
+              <strong class="dauchy-strip__title">BRAZIL · 1824</strong>
+              <span class="dauchy-strip__desc">Circulation, 1823 Assembly, four powers.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="2" data-para-id="p7">
+              <span class="dauchy-strip__ref">¶7 · slides 1–2, 4–5</span>
+              <strong class="dauchy-strip__title">LIBERTY BEYOND THE CONSTITUTION</strong>
+              <span class="dauchy-strip__desc">Civil and criminal laws, and an institutional frame « (surtout judiciaire) ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="2" data-para-id="p8-10">
+              <span class="dauchy-strip__ref">¶8–10 · slide 2</span>
+              <strong class="dauchy-strip__title">THE SPIRIT OF THE LAWS</strong>
+              <span class="dauchy-strip__desc">Natural and historical determinants; the « esprit général ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p11-12">
+              <span class="dauchy-strip__ref">¶11–12 · slide 6</span>
+              <strong class="dauchy-strip__title">WATSON · LEGRAND</strong>
+              <span class="dauchy-strip__desc">Transplants that “grow in a new body”; « impossibles ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p13-14">
+              <span class="dauchy-strip__ref">¶13–14 · slides 1, 6–7</span>
+              <strong class="dauchy-strip__title">HYBRIDITY · CODE OF 1916</strong>
+              <span class="dauchy-strip__desc">Renegotiated boundaries; Beviláqua’s Code.</span>
+            </button>
+          </div>
+        </aside>
       </div>
 
       <div class="slide-footer-meta">
-        <span class="t-meta"><a href="#src-montesquieu">Montesquieu, De l’esprit des lois (1748)</a> · <a href="#src-dauchy">Serge Dauchy, Conference Paper</a></span>
-        <span class="slide-num t-meta">02 / 07</span>
+        <span class="t-meta"><a href="#src-dauchy">Serge Dauchy, ¶7 &amp; ¶8–10</a> · <a href="#src-montesquieu">Montesquieu, Esprit des lois (1777), Livre XIX, chap. 4</a></span>
+        <span class="slide-num t-meta">02 / 07 · Target 1:30</span>
       </div>
     </article>
   </section>
 
   <!-- =====================================================================
-       SLIDE 03 · THREE POWERS, LIMITS ON POWER (2:05–3:35)
-       Book XI, chapter 6 · Dangers of concentration & historical distance
+       SLIDE 03 · BRAZIL, 1824: CIRCULATION, CORRECTION, AND FOUR POWERS (2:30–3:41)
+       Answers Dauchy ¶6 · Constituição de 1824, art. 10
        ===================================================================== -->
   <section class="slide-canvas" id="slide-3" data-scene="palace" data-slide="3" aria-labelledby="s3-title">
     <article class="slide-frame" data-reveal>
@@ -739,7 +914,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="presenter-tip-panel-3"
-          aria-label="Presenter Tip · Slide 03: Book XI, Ch. 6 &amp; Historical Distance (hover or click, shortcut N)"
+          aria-label="Presenter Tip · Slide 03: Brazil, 1824 &amp; Dauchy ¶6 (hover or click, shortcut N)"
           title="Presenter Tip · Hover or click for podium cues (N)"
         >
           <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -752,73 +927,165 @@
         <div class="presenter-tip__panel" id="presenter-tip-panel-3" role="region" aria-label="Presenter Tip for Slide 03" hidden></div>
       </div>
 
-      <header class="slide-top">
-        <p class="slide-kicker t-meta" data-editable="s3-kicker">03 · DE L’ESPRIT DES LOIS (1748), BOOK XI, CHAPTER 6</p>
-        <h2 class="slide-main-heading t-display-serif" id="s3-title" data-editable="s3-title">
-          Three powers, limits on power
-        </h2>
-      </header>
+      <p class="slide-kicker t-meta" data-editable="s3-kicker">03 / 07 · ANSWERING DAUCHY ¶6 · CONSTITUIÇÃO POLÍTICA DO IMPÉRIO DO BRAZIL (1824), ART. 10</p>
 
-      <!-- Interactive Scale Arm Across the Three Functions -->
-      <div class="drafting-scale-bar" id="s3-functions-scale" data-step="judicial" aria-hidden="true">
-        <svg class="drafting-scale-svg" viewBox="0 0 760 54">
-          <line x1="60" y1="27" x2="700" y2="27" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.3" />
-          <g class="drafting-scale-svg__arm">
-            <line x1="120" y1="27" x2="640" y2="27" stroke="currentColor" stroke-width="1.8" />
-            <circle cx="120" cy="27" r="5.5" fill="var(--accent)" />
-            <circle cx="380" cy="27" r="6.5" fill="var(--gilt)" />
-            <circle cx="640" cy="27" r="5.5" fill="var(--accent)" />
-          </g>
-        </svg>
-      </div>
+      <div class="v3-stage" style="--split-ratio: 60%;">
+        <div class="v3-main">
+          <!-- ABOVE THE #1F35FF LINE: DAUCHY ¶6 + CONSTITUIÇÃO DE 1824, ART. 10 -->
+          <div class="v3-above-line">
+            <div class="s3-grid">
+              <div class="s3-left">
+                <div class="s3-year t-display-serif" aria-hidden="true">1824</div>
+                <h2 class="s3-title t-condensed" id="s3-title" data-editable="s3-title">
+                  Brazil, 1824: circulation, correction, and four powers
+                </h2>
 
-      <div class="s6-timeline s3-functions-grid" role="group" aria-label="Three powers in Book XI, chapter 6 and risks of concentration">
-        <article class="s6-step" tabindex="0" data-s3-fn="legislative">
-          <span class="source-tag t-meta">I · LEGISLATIVE</span>
-          <h3 class="t-display-serif" data-editable="s3-fn1-title">Making laws</h3>
-          <p class="s3-fn-risk" data-editable="s3-fn1-risk">
-            Joined with execution: the same authority can enact oppressive laws and enforce them.
-          </p>
-        </article>
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶6 · YOUR ACCOUNT OF BRAZILIAN CIRCULATION</span>
+                  </div>
+                  <div class="v3-chronology-strip" aria-label="Serge Dauchy’s account of circulation in Brazil (paragraph 6)">
+                    <span class="v3-chrono-step"><strong>1789</strong> Conjuração Mineira</span>
+                    <span aria-hidden="true">·</span>
+                    <span class="v3-chrono-step"><strong>1798</strong> Cipriano Barata’s confiscated library (Bahia)</span>
+                    <span aria-hidden="true">·</span>
+                    <span class="v3-chrono-step"><strong>1823</strong> Constituent Assembly debates</span>
+                    <span aria-hidden="true">·</span>
+                    <span class="v3-chrono-step"><strong>1949</strong> 1st complete Portuguese translation</span>
+                  </div>
+                  <blockquote class="v3-quote-fr t-display-serif" lang="fr" data-editable="s3-dauchy-fr">
+                    « La première Constitution brésilienne de 1824 adoptera certes une organisation originale inspirée du modèle théorique de Benjamin Constant et organisée en quatre pouvoirs … elle se présente néanmoins comme une évolution voire une correction de la tripartition des pouvoirs proposés par Montesquieu. »
+                  </blockquote>
+                  <p class="v3-quote-tr" data-editable="s3-dauchy-tr">
+                    Brazil’s first Constitution of 1824 adopted an original organisation inspired by Benjamin Constant in four powers, presented as an evolution, or even a correction, of Montesquieu’s tripartition. <span class="tr-tag">[tr. AVVM · Chronology shown as Dauchy’s account, ¶6]</span>
+                  </p>
+                </article>
+              </div>
 
-        <article class="s6-step" tabindex="0" data-s3-fn="executive">
-          <span class="source-tag t-meta">II · EXECUTIVE</span>
-          <h3 class="t-display-serif" data-editable="s3-fn2-title">Conducting government</h3>
-          <p class="s3-fn-risk" data-editable="s3-fn2-risk">
-            Joined with judging: judging can acquire the force of an oppressor.
-          </p>
-        </article>
+              <div class="s3-right">
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--other">OTHER SOURCE · CONSTITUIÇÃO DE 1824, ART. 10</span>
+                  </div>
+                  <p class="v3-source-summary" lang="pt" data-editable="s3-art10-pt">
+                    « Art. 10. Os Poderes Politicos reconhecidos pela Constituição do Imperio do Brazil são quatro: o Poder Legislativo, o Poder Moderador, o Poder Executivo, e o Poder Judicial. »
+                  </p>
+                  <div class="s3-powers t-display-serif" aria-label="Four powers in exact 1824 Article 10 order: Legislative, Moderating, Executive, Judicial">
+                    <span data-editable="s3-p1">1. Legislative (<em lang="pt">Legislativo</em>)</span>
+                    <span class="power-highlight" data-editable="s3-p2">2. Moderating (<em lang="pt">Moderador</em>)</span>
+                    <span data-editable="s3-p3">3. Executive (<em lang="pt">Executivo</em>)</span>
+                    <span data-editable="s3-p4">4. Judicial (<em lang="pt">Judicial</em>)</span>
+                  </div>
+                </article>
 
-        <article class="s6-step is-active" tabindex="0" data-s3-fn="judicial">
-          <span class="source-tag t-meta">III · JUDICIAL</span>
-          <h3 class="t-display-serif" data-editable="s3-fn3-title">Judging crimes and disputes</h3>
-          <p class="s3-fn-risk" data-editable="s3-fn3-risk">
-            Joined with legislation: the judge can become the lawmaker.
-          </p>
-        </article>
-      </div>
+                <!-- Interactive Three Powers vs. Four Powers Orbital Diagram -->
+                <div class="powers-orbit-box" id="s3-powers-orbit" data-mode="four-powers">
+                  <div class="powers-orbit-box__head">
+                    <span class="t-meta">CONSTITUTIONAL GEOMETRY (¶6)</span>
+                    <div class="powers-orbit-box__switches" role="group" aria-label="Compare tripartite formula and 1824 four powers">
+                      <button class="text-link-sm" type="button" data-powers-mode="three-powers" aria-pressed="false">
+                        Tripartite · Three Powers
+                      </button>
+                      <button class="text-link-sm is-active" type="button" data-powers-mode="four-powers" aria-pressed="true">
+                        1824 Art. 10 · Four Powers
+                      </button>
+                    </div>
+                  </div>
 
-      <div class="slide-bottom-claim s3-distance-box">
-        <p class="claim-blue t-display-serif" data-editable="s3-claim">
-          Relational arrangements prevent unchecked accumulation — not three isolated institutions with no relationship.
-        </p>
-        <p class="s3-distance-note" data-editable="s3-distance">
-          <strong>Historical distance:</strong> Montesquieu’s account of judging is not a description of today’s permanent constitutional courts.
-        </p>
+                  <svg class="powers-orbit-svg" viewBox="0 0 460 165" role="img" aria-label="Orbital diagram showing Legislative, Moderating, Executive, and Judicial powers in Article 10 of the 1824 Brazilian Constitution">
+                    <ellipse cx="230" cy="92" rx="164" ry="52" fill="none" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.35" />
+                    <line class="orbit-link orbit-link--triad" x1="102" y1="112" x2="358" y2="112" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
+                    <line class="orbit-link orbit-link--triad" x1="102" y1="112" x2="230" y2="140" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
+                    <line class="orbit-link orbit-link--triad" x1="358" y1="112" x2="230" y2="140" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
+                    <g class="orbit-moderador-links">
+                      <line x1="230" y1="28" x2="102" y2="112" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
+                      <line x1="230" y1="28" x2="358" y2="112" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
+                      <line x1="230" y1="28" x2="230" y2="140" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
+                    </g>
+                    <g class="orbit-node orbit-node--leg">
+                      <circle cx="102" cy="112" r="7" fill="var(--dauchy-blue)" />
+                      <text x="102" y="95" text-anchor="middle">Legislative</text>
+                    </g>
+                    <g class="orbit-node orbit-node--exec">
+                      <circle cx="358" cy="112" r="7" fill="var(--dauchy-blue)" />
+                      <text x="358" y="95" text-anchor="middle">Executive</text>
+                    </g>
+                    <g class="orbit-node orbit-node--jud">
+                      <circle cx="230" cy="140" r="7" fill="var(--dauchy-blue)" />
+                      <text x="230" y="160" text-anchor="middle">Judicial</text>
+                    </g>
+                    <g class="orbit-node orbit-node--mod">
+                      <circle cx="230" cy="28" r="9" fill="var(--gilt)" />
+                      <text x="230" y="14" text-anchor="middle" class="orbit-mod-label">Moderating · Art. 10</text>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SIGNATURE #1F35FF DIVIDING LINE (AT 58% HEIGHT ON SLIDE 3) -->
+          <div class="v3-blue-line" data-line-label="ANSWERING DAUCHY ¶6" role="separator">
+            <span class="v3-blue-line__tag">ANSWERING DAUCHY ¶6 · CIRCULATION ≠ AUTOMATIC CAUSAL CHAIN</span>
+          </div>
+
+          <!-- BELOW THE #1F35FF LINE: MY READING -->
+          <div class="v3-below-line">
+            <div class="v3-reading-lead">
+              <span class="voice-chip voice-chip--reading">MY READING</span>
+              <p class="v3-reading-prose" data-editable="s3-my-reading">
+                <strong>Circulation → argument → institution</strong> are distinct historical steps, not an automatic chain: Brazilian actors selectively combined Montesquieu and Benjamin Constant to build an independent imperial monarchy rather than adding a fourth Montesquieuan branch.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT STRIP: ANSWERS ¶6 -->
+        <aside class="dauchy-strip" aria-label="Serge Dauchy’s paper mapped by paragraph">
+          <p class="dauchy-strip__head">YOUR PAPER, AS I MAP IT</p>
+          <div class="dauchy-strip__list">
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="3" data-para-id="p6">
+              <span class="dauchy-strip__ref">¶6 · slides 3–4</span>
+              <strong class="dauchy-strip__title">BRAZIL · 1824</strong>
+              <span class="dauchy-strip__desc">Circulation, the 1823 Assembly, four powers « une évolution voire une correction » of the tripartition.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p7">
+              <span class="dauchy-strip__ref">¶7 · slides 1–2, 4–5</span>
+              <strong class="dauchy-strip__title">LIBERTY BEYOND THE CONSTITUTION</strong>
+              <span class="dauchy-strip__desc">Civil and criminal laws, and an institutional frame « (surtout judiciaire) ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p8-10">
+              <span class="dauchy-strip__ref">¶8–10 · slide 2</span>
+              <strong class="dauchy-strip__title">THE SPIRIT OF THE LAWS</strong>
+              <span class="dauchy-strip__desc">Natural and historical determinants; the « esprit général ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p11-12">
+              <span class="dauchy-strip__ref">¶11–12 · slide 6</span>
+              <strong class="dauchy-strip__title">WATSON · LEGRAND</strong>
+              <span class="dauchy-strip__desc">Transplants that “grow in a new body”; « impossibles ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p13-14">
+              <span class="dauchy-strip__ref">¶13–14 · slides 1, 6–7</span>
+              <strong class="dauchy-strip__title">HYBRIDITY · CODE OF 1916</strong>
+              <span class="dauchy-strip__desc">Renegotiated boundaries; Beviláqua’s Code.</span>
+            </button>
+          </div>
+        </aside>
       </div>
 
       <div class="slide-footer-meta">
-        <span class="t-meta"><a href="#src-montesquieu">Montesquieu, De l’esprit des lois (1748), Book XI, ch. 6</a></span>
-        <span class="slide-num t-meta">03 / 07</span>
+        <span class="t-meta"><a href="#src-const-1824">Constitution of 1824, article 10</a> · <a href="#src-dauchy">Serge Dauchy, paragraph 6</a></span>
+        <span class="slide-num t-meta">03 / 07 · Target 1:15</span>
       </div>
     </article>
   </section>
 
   <!-- =====================================================================
-       SLIDE 04 · MONTESQUIEU IN BRAZIL, 1824 (3:35–4:45)
-       Stage 2: institutions and their images · Constitution of 1824, Art. 10
+       SLIDE 04 · COMPROMISSO CONSTITUCIONAL (3:41–5:15)
+       Image-led left composition · Engages Dauchy ¶6–7 & 1891 Const. arts. 15, 44
+       Preserves verified Museu da República artwork and Romulo Fialdini credit
        ===================================================================== -->
-  <section class="slide-canvas" id="slide-4" data-scene="palace" data-slide="4" aria-labelledby="s4-title">
+  <section class="slide-canvas" id="slide-4" data-scene="lake" data-slide="4" aria-labelledby="s4-title">
     <article class="slide-frame" data-reveal>
       <div class="presenter-tip" data-presenter-tip-slide="4" data-tip-mode="closed">
         <button
@@ -826,7 +1093,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="presenter-tip-panel-4"
-          aria-label="Presenter Tip · Slide 04: 1824 Four Powers &amp; Adaptation (hover or click, shortcut N)"
+          aria-label="Presenter Tip · Slide 04: Compromisso Constitucional (1896) &amp; 1891 Const. (hover or click, shortcut N)"
           title="Presenter Tip · Hover or click for podium cues (N)"
         >
           <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -839,98 +1106,162 @@
         <div class="presenter-tip__panel" id="presenter-tip-panel-4" role="region" aria-label="Presenter Tip for Slide 04" hidden></div>
       </div>
 
-      <p class="slide-kicker t-meta" data-editable="s4-kicker">04 · STAGE 2: INSTITUTIONS AND THEIR IMAGES · CONSTITUTION OF 1824</p>
-
-      <div class="s3-grid">
-        <div class="s3-left">
-          <div class="s3-year t-display-serif" aria-hidden="true">1824</div>
-          <h2 class="s3-title t-display-serif" id="s4-title" data-editable="s4-title">
-            Montesquieu in Brazil, 1824
+      <header class="slide-top s4-header-row">
+        <div>
+          <p class="slide-kicker t-meta" data-editable="s4-kicker">04 / 07 · ENGAGING DAUCHY ¶6–7 · CONSTITUIÇÃO DE 1891, ARTS. 15 &amp; 44</p>
+          <h2 class="slide-main-heading t-condensed" id="s4-title" data-editable="s4-title">
+            Compromisso Constitucional: executive authority under obligation
           </h2>
+        </div>
+        <button class="text-link-sm text-link-sm--pause" type="button" data-visual-pause="4" title="Dim labels for 10 seconds to give the audience a moment to examine the 1896 canvas">
+          ◎ 10s Look
+        </button>
+      </header>
 
-          <div class="s3-chain-line" data-editable="s4-chain" aria-label="Pre-independence circulation, 1823 debates, and 1824 adaptation">
-            <span>1823 debates</span>
-            <span class="s3-chain-neq" aria-hidden="true">&rarr;</span>
-            <span>choices &amp; adaptation</span>
-            <span class="s3-chain-neq" aria-hidden="true">&rarr;</span>
-            <span>imperial monarchy</span>
-          </div>
+      <div class="v3-stage" style="--split-ratio: 54%;">
+        <div class="v3-main">
+          <div class="s4-layout s5-museum-layout">
+            <!-- LEFT: Verified Museum Plate: Aurélio de Figueiredo, Compromisso Constitucional, 1896 -->
+            <figure class="s4-artwork" id="s4-artwork-box" data-active-spot="" aria-labelledby="s4-caption-text">
+              <div class="s4-artwork__stage" id="s4-artwork-stage">
+                <img id="compromisso-image" src="./assets/report/compromisso.jpg" data-original-src="./assets/report/compromisso.jpg" alt="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents Deodoro da Fonseca taking the constitutional oath of 26 February 1891 before Prudente de Moraes presiding at the centre" decoding="async" referrerpolicy="no-referrer">
 
-          <!-- Interactive Three Powers vs. Four Powers Orbital Diagram -->
-          <div class="powers-orbit-box" id="s4-powers-orbit" data-mode="four-powers">
-            <div class="powers-orbit-box__head">
-              <span class="t-meta">CONSTITUTIONAL GEOMETRY</span>
-              <div class="powers-orbit-box__switches" role="group" aria-label="Compare tripartite formula and 1824 four powers">
-                <button class="text-link-sm" type="button" data-powers-mode="three-powers" aria-pressed="false">
-                  Tripartite · Three Powers
-                </button>
-                <button class="text-link-sm is-active" type="button" data-powers-mode="four-powers" aria-pressed="true">
-                  1824 Art. 10 · Four Powers
-                </button>
+                <div class="painting-hotspot painting-hotspot--deodoro" aria-hidden="true">
+                  <span>Deodoro · Constitutional Book</span>
+                </div>
+                <div class="painting-hotspot painting-hotspot--prudente" aria-hidden="true">
+                  <span>Prudente de Moraes · Centre</span>
+                </div>
+                <div class="painting-hotspot painting-hotspot--gallery" aria-hidden="true">
+                  <span>Oath of 26 Feb. 1891</span>
+                </div>
+
+                <div class="visual-pause-badge" id="s4-pause-badge" hidden aria-hidden="true">
+                  <svg class="visual-pause-ring" viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2.2" />
+                    <circle class="visual-pause-ring__bar" cx="18" cy="18" r="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="94.25" stroke-dashoffset="0" />
+                  </svg>
+                  <span class="t-meta">10s Visual Look</span>
+                </div>
+              </div>
+
+              <figcaption class="artwork-official-caption s4-diptych__caption" id="s4-caption-text">
+                <strong class="s4-diptych__artist" data-editable="s4-artist">Aurélio de Figueiredo</strong>
+                <span class="s4-diptych__work" data-editable="s4-work"><cite lang="pt">Compromisso Constitucional</cite>, 1896 (oil on canvas, 330 × 257 cm)</span>
+                <span class="s4-diptych__sub" data-editable="s4-sub">Represents the oath of 26 February 1891 · Prudente de Moraes presiding at the centre</span>
+              </figcaption>
+
+              <div class="s4-artwork__bar">
+                <span class="t-meta">Museu da República · Oil on canvas, 330 × 257 cm · Reproduction: Romulo Fialdini</span>
+                <div class="s4-artwork__actions">
+                  <button class="text-link-sm" type="button" id="s4-oath-full-btn" data-image="./assets/report/compromisso.jpg" data-alt="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents the oath of 26 February 1891." data-caption="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents the oath of 26 February 1891; Prudente de Moraes presiding at the centre. (Museu da República · Oil on canvas, 330 × 257 cm · Reproduction: Romulo Fialdini)">Full painting ↗</button>
+                  <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-4" hidden>Restore Original ↺</button>
+                </div>
+              </div>
+            </figure>
+
+            <!-- RIGHT: ABOVE THE #1F35FF LINE (SOURCES) + BELOW THE LINE (MY READING) -->
+            <div class="s5-reading-col v3-split-col">
+              <div class="v3-above-line">
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶6–7 · WRITTEN CONSTITUTION &amp; INSTITUTIONS</span>
+                  </div>
+                  <p class="v3-source-summary" data-editable="s4-dauchy-ref">
+                    Engages Dauchy’s contrast between separating powers in a written « dispositif constitutionnel » and the institutional guarantees needed to restrain public power in practice (¶6–7).
+                  </p>
+                </article>
+
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--other">OTHER SOURCE · CONSTITUIÇÃO DE 1891, ARTS. 15 &amp; 44</span>
+                  </div>
+                  <ul class="s4-observations" aria-label="Interactive composition callouts and 1891 constitutional articles">
+                    <li tabindex="0" data-spot-select="deodoro">
+                      <span class="source-tag t-meta">ART. 44 · PRESIDENTIAL OATH (26 FEB. 1891)</span>
+                      <p class="obs-en t-display-serif" data-editable="s4-obs-1">
+                        Deodoro da Fonseca holds the constitutional book to affirm: <em lang="pt">« Prometto manter e cumprir com perfeita lealdade a Constituição Federal … »</em>
+                      </p>
+                    </li>
+                    <li tabindex="0" data-spot-select="prudente">
+                      <span class="source-tag t-meta">CENTRE OF THE CANVAS · CONSTITUENT CONGRESS</span>
+                      <p class="obs-en t-display-serif" data-editable="s4-obs-2">
+                        Prudente de Moraes presides at the centre over the assembled Congress receiving the commitment.
+                      </p>
+                    </li>
+                    <li tabindex="0" data-spot-select="gallery">
+                      <span class="source-tag t-meta">ART. 15 · HARMONIOUS &amp; INDEPENDENT POWERS</span>
+                      <p class="obs-en t-display-serif" data-editable="s4-obs-3">
+                        <em lang="pt">« São orgãos da soberania nacional o Poder Legislativo, o Executivo e o Judiciario, harmonicos e independentes entre si. »</em>
+                      </p>
+                    </li>
+                  </ul>
+                </article>
+              </div>
+
+              <!-- SIGNATURE #1F35FF DIVIDING LINE (AT 54% HEIGHT ON SLIDE 4) -->
+              <div class="v3-blue-line" data-line-label="ENGAGING DAUCHY ¶6–7" role="separator">
+                <span class="v3-blue-line__tag">SOURCES ABOVE · MY READING BELOW</span>
+              </div>
+
+              <div class="v3-below-line">
+                <div class="v3-reading-lead">
+                  <span class="voice-chip voice-chip--reading">MY READING</span>
+                  <p class="v3-reading-prose" data-editable="s4-reading">
+                    The 1896 canvas makes executive authority <strong>under a constitutional obligation</strong> visible before Congress—yet a ceremony cannot prove that those institutions were independent in practice, and neither image is offered as evidence of a direct reception of Montesquieu.
+                  </p>
+                </div>
               </div>
             </div>
-
-            <svg class="powers-orbit-svg" viewBox="0 0 460 175" role="img" aria-label="Orbital diagram showing Legislative, Moderating, Executive, and Judicial powers in Article 10 of the 1824 Brazilian Constitution">
-              <ellipse cx="230" cy="96" rx="164" ry="56" fill="none" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.35" />
-              <line class="orbit-link orbit-link--triad" x1="102" y1="118" x2="358" y2="118" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
-              <line class="orbit-link orbit-link--triad" x1="102" y1="118" x2="230" y2="146" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
-              <line class="orbit-link orbit-link--triad" x1="358" y1="118" x2="230" y2="146" stroke="currentColor" stroke-width="1.2" opacity="0.45" />
-              <g class="orbit-moderador-links">
-                <line x1="230" y1="30" x2="102" y2="118" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
-                <line x1="230" y1="30" x2="358" y2="118" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
-                <line x1="230" y1="30" x2="230" y2="146" stroke="var(--gilt)" stroke-width="1.5" stroke-dasharray="3 3" />
-              </g>
-              <g class="orbit-node orbit-node--leg">
-                <circle cx="102" cy="118" r="7" fill="var(--accent)" />
-                <text x="102" y="99" text-anchor="middle">Legislative</text>
-              </g>
-              <g class="orbit-node orbit-node--exec">
-                <circle cx="358" cy="118" r="7" fill="var(--accent)" />
-                <text x="358" y="99" text-anchor="middle">Executive</text>
-              </g>
-              <g class="orbit-node orbit-node--jud">
-                <circle cx="230" cy="146" r="7" fill="var(--accent)" />
-                <text x="230" y="168" text-anchor="middle">Judicial</text>
-              </g>
-              <g class="orbit-node orbit-node--mod">
-                <circle cx="230" cy="30" r="9" fill="var(--gilt)" />
-                <text x="230" y="15" text-anchor="middle" class="orbit-mod-label">Moderating · Art. 10</text>
-              </g>
-            </svg>
           </div>
         </div>
 
-        <div class="s3-right">
-          <p class="source-tag t-meta" data-editable="s4-const-tag">Article 10 · Four powers:</p>
-          <div class="s3-powers t-display-serif" aria-label="Legislative, Moderating, Executive, Judicial">
-            <span data-editable="s4-p1">Legislative</span>
-            <span class="power-highlight" data-editable="s4-p2">Moderating</span>
-            <span data-editable="s4-p3">Executive</span>
-            <span data-editable="s4-p4">Judicial</span>
+        <!-- RIGHT STRIP: ANSWERS ¶6 & ¶7 -->
+        <aside class="dauchy-strip" aria-label="Serge Dauchy’s paper mapped by paragraph">
+          <p class="dauchy-strip__head">YOUR PAPER, AS I MAP IT</p>
+          <div class="dauchy-strip__list">
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="3" data-para-id="p6">
+              <span class="dauchy-strip__ref">¶6 · slides 3–4</span>
+              <strong class="dauchy-strip__title">BRAZIL · 1824</strong>
+              <span class="dauchy-strip__desc">Circulation, 1823 Assembly, four powers.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="2" data-para-id="p7">
+              <span class="dauchy-strip__ref">¶7 · slides 1–2, 4–5</span>
+              <strong class="dauchy-strip__title">LIBERTY BEYOND THE CONSTITUTION</strong>
+              <span class="dauchy-strip__desc">Civil and criminal laws, and an institutional frame « (surtout judiciaire) ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p8-10">
+              <span class="dauchy-strip__ref">¶8–10 · slide 2</span>
+              <strong class="dauchy-strip__title">THE SPIRIT OF THE LAWS</strong>
+              <span class="dauchy-strip__desc">Natural and historical determinants; « esprit général ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p11-12">
+              <span class="dauchy-strip__ref">¶11–12 · slide 6</span>
+              <strong class="dauchy-strip__title">WATSON · LEGRAND</strong>
+              <span class="dauchy-strip__desc">Transplants that “grow in a new body”; « impossibles ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p13-14">
+              <span class="dauchy-strip__ref">¶13–14 · slides 1, 6–7</span>
+              <strong class="dauchy-strip__title">HYBRIDITY · CODE OF 1916</strong>
+              <span class="dauchy-strip__desc">Renegotiated boundaries; Beviláqua’s Code.</span>
+            </button>
           </div>
-          <p class="s3-inline-powers" data-editable="s4-constant-note">
-            The <strong>Moderating Power</strong> belonged to the emperor under <strong>Benjamin Constant’s</strong> model — not another branch invented by Montesquieu.
-          </p>
-
-          <p class="s3-source-citation t-meta" data-editable="s4-source-line">
-            Source: Constitution of 1824, article 10; Serge Dauchy, conference text (§ 6)
-          </p>
-        </div>
+        </aside>
       </div>
 
       <div class="slide-footer-meta">
-        <span class="t-meta"><a href="#src-const-1824">Constitution of 1824, article 10</a> · <a href="#src-dauchy">Dauchy, paragraph 6</a></span>
-        <span class="slide-num t-meta">04 / 07</span>
+        <span class="t-meta"><a href="#src-figueiredo">Museu da República · Reproduction: Romulo Fialdini</a> · <a href="#src-const-1824">Constitution of 1891, arts. 15 &amp; 44</a></span>
+        <span class="slide-num t-meta">04 / 07 · Target 1:45</span>
       </div>
     </article>
   </section>
 
   <!-- =====================================================================
-       SLIDE 05 · REPRESENTING DISTINCT AND RELATED INSTITUTIONS (4:45–6:15)
-       Aurélio de Figueiredo, Compromisso Constitucional (1896; oath of 1891)
-       Preserves verified Museu da República artwork and Romulo Fialdini credit
+       SLIDE 05 · A JUSTIÇA: THE « NULL » POWER AND THE JUDICIAL FRAME (5:15–6:55)
+       Image-led left composition · Alfredo Ceschiatti, 1961, stone (“pedra de Petrópolis”)
+       Engages Montesquieu XI.6 (1777) & Serge Dauchy ¶7
        ===================================================================== -->
-  <section class="slide-canvas" id="slide-5" data-scene="lake" data-slide="5" aria-labelledby="s5-title">
+  <section class="slide-canvas" id="slide-5" data-scene="storm" data-slide="5" aria-labelledby="s5-title">
     <article class="slide-frame" data-reveal>
       <div class="presenter-tip" data-presenter-tip-slide="5" data-tip-mode="closed">
         <button
@@ -938,7 +1269,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="presenter-tip-panel-5"
-          aria-label="Presenter Tip · Slide 05: Figueiredo (1896) &amp; 1891 Oath (hover or click, shortcut N)"
+          aria-label="Presenter Tip · Slide 05: Ceschiatti’s A Justiça (1961, stone), XI.6 &amp; Dauchy ¶7 (hover or click, shortcut N)"
           title="Presenter Tip · Hover or click for podium cues (N)"
         >
           <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -953,99 +1284,148 @@
 
       <header class="slide-top s4-header-row">
         <div>
-          <p class="slide-kicker t-meta" data-editable="s5-kicker">05 · INSTITUTIONAL CEREMONY &amp; OBLIGATION · 1891 / 1896</p>
-          <h2 class="slide-main-heading t-display-serif" id="s5-title" data-editable="s5-title">
-            Representing distinct and related institutions
+          <p class="slide-kicker t-meta" data-editable="s5-kicker">05 / 07 · ENGAGING DAUCHY ¶7 &amp; MONTESQUIEU XI.6 · STF, BRASÍLIA, 1961</p>
+          <h2 class="slide-main-heading t-condensed" id="s5-title" data-editable="s5-title">
+            A Justiça: the « null » power and the judicial frame
           </h2>
         </div>
-        <button class="text-link-sm text-link-sm--pause" type="button" data-visual-pause="5" title="Dim labels for 5 seconds to give the audience a moment to look">
-          ◎ 5s Look
+        <button class="text-link-sm text-link-sm--pause" type="button" data-visual-pause="5" title="Dim labels for 10 seconds to let the audience examine the sculpture and XI.6">
+          ◎ 10s Look
         </button>
       </header>
 
-      <div class="s4-layout s5-museum-layout">
-        <!-- Verified Museum Plate: Aurélio de Figueiredo, Compromisso Constitucional, 1896 -->
-        <figure class="s4-artwork" id="s5-artwork-box" data-active-spot="" aria-labelledby="s5-caption-text">
-          <div class="s4-artwork__stage" id="s5-artwork-stage">
-            <img id="compromisso-image" src="./assets/report/compromisso.jpg" data-original-src="./assets/report/compromisso.jpg" alt="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents Deodoro da Fonseca taking the constitutional oath of 26 February 1891 before Prudente de Moraes and the Constituent Congress" decoding="async">
+      <div class="v3-stage" style="--split-ratio: 56%;">
+        <div class="v3-main">
+          <div class="s5-layout s6-justica-layout">
+            <!-- LEFT: Verified STF Sculpture Plate: Alfredo Ceschiatti, A Justiça, 1961 (stone / “pedra de Petrópolis”) -->
+            <figure class="s5-photo-wrap" id="s5-photo-box" aria-labelledby="s5-caption-text">
+              <div class="s5-photo-stage s6-photo-stage" id="s5-photo-stage">
+                <img id="justica-image" src="./assets/report/justica.jpg" data-original-src="./assets/report/justica.jpg" alt="Alfredo Ceschiatti, A Justiça, 1961. Seated stone figure (“pedra de Petrópolis”, 3.30 m) holding a sword at rest across her lap in front of the Supremo Tribunal Federal, Brasília" decoding="async" referrerpolicy="no-referrer">
 
-            <div class="painting-hotspot painting-hotspot--deodoro" aria-hidden="true">
-              <span>Deodoro · Constitutional Book</span>
+                <div class="visual-pause-badge" id="s5-pause-badge" hidden aria-hidden="true">
+                  <svg class="visual-pause-ring" viewBox="0 0 36 36">
+                    <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2.2" />
+                    <circle class="visual-pause-ring__bar" cx="18" cy="18" r="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="94.25" stroke-dashoffset="0" />
+                  </svg>
+                  <span class="t-meta">10s Visual Look</span>
+                </div>
+              </div>
+
+              <figcaption class="artwork-official-caption s4-diptych__caption" id="s5-caption-text">
+                <strong class="s4-diptych__artist" data-editable="s5-artist">Alfredo Ceschiatti</strong>
+                <span class="s4-diptych__work" data-editable="s5-work"><cite lang="pt">A Justiça</cite>, 1961 · Stone (“pedra de Petrópolis”), 3.30 m</span>
+                <span class="s4-diptych__sub" data-editable="s5-sub">Supremo Tribunal Federal · Praça dos Três Poderes, Brasília</span>
+              </figcaption>
+
+              <div class="s5-photo-bar">
+                <span class="t-meta">Stone (“pedra de Petrópolis”), 3.30 m · Photograph: Fellipe Sampaio / STF</span>
+                <div class="s5-photo-actions">
+                  <button class="text-link-sm" type="button" id="toggle-sword-focus" aria-pressed="false">Detail: Sword on lap</button>
+                  <button class="text-link-sm" type="button" id="s5-justica-full-btn" data-image="./assets/report/justica.jpg" data-alt="Alfredo Ceschiatti, A Justiça, 1961. Supremo Tribunal Federal." data-caption="Alfredo Ceschiatti, A Justiça, 1961, stone (“pedra de Petrópolis”), 3.30 m, Supremo Tribunal Federal, Praça dos Três Poderes, Brasília. (Photograph: Fellipe Sampaio / STF)">Full photo ↗</button>
+                  <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-5" hidden>Restore Original ↺</button>
+                </div>
+              </div>
+            </figure>
+
+            <!-- RIGHT: ABOVE THE #1F35FF LINE (MONTESQUIEU XI.6 + DAUCHY ¶7) + BELOW THE LINE (MY READING) -->
+            <div class="s6-analysis-col v3-split-col">
+              <div class="v3-above-line">
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--montesquieu">MONTESQUIEU · XI.6 · SLIDE 5 (1777 TEXT)</span>
+                  </div>
+                  <blockquote class="v3-quote-fr t-display-serif" lang="fr" data-editable="s5-xi6-fr">
+                    « Des trois puissances dont nous avons parlé, celle de juger est en quelque façon nulle. »
+                  </blockquote>
+                  <p class="v3-quote-tr" data-editable="s5-xi6-tr">
+                    Of the three powers we have spoken of, that of judging is in some fashion null. <span class="tr-tag">[tr. AVVM]</span>
+                  </p>
+                </article>
+
+                <article class="v3-source-block">
+                  <div class="v3-chip-row">
+                    <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶7 · INSTITUTIONAL &amp; JUDICIAL FRAME</span>
+                  </div>
+                  <p class="v3-source-summary" data-editable="s5-dauchy-frame">
+                    Dauchy stresses that constitutional provisions must be seconded by <span lang="fr">« l’établissement de lois civiles et criminelles et par un cadre institutionnel (surtout judiciaire) »</span> (¶7).
+                  </p>
+                </article>
+
+                <div class="praca-triad-locus" id="s5-praca-triad" role="group" aria-label="Distinct buildings within the Praça dos Três Poderes">
+                  <span class="source-tag t-meta">PRAÇA DOS TRÊS PODERES · CIVIC SETTING</span>
+                  <div class="s6-triad-pills">
+                    <button type="button" class="text-link-sm is-active" data-praca-node="stf" aria-pressed="true">Supreme Federal Court (STF)</button>
+                    <button type="button" class="text-link-sm" data-praca-node="congress" aria-pressed="false">National Congress</button>
+                    <button type="button" class="text-link-sm" data-praca-node="planalto" aria-pressed="false">Presidential Palace</button>
+                  </div>
+                  <p class="s6-triad-caption" id="s5-triad-caption" data-editable="s5-setting-note">
+                    Positioned before the Supreme Federal Court, sharing a modernist civic square with Congress and the presidential palace.
+                  </p>
+                </div>
+              </div>
+
+              <!-- SIGNATURE #1F35FF DIVIDING LINE (AT 56% HEIGHT ON SLIDE 5) -->
+              <div class="v3-blue-line" data-line-label="ENGAGING DAUCHY ¶7 &amp; XI.6" role="separator">
+                <span class="v3-blue-line__tag">SOURCES ABOVE · MY READING BELOW</span>
+              </div>
+
+              <div class="v3-below-line">
+                <div class="v3-reading-lead">
+                  <span class="voice-chip voice-chip--reading">MY READING</span>
+                  <p class="v3-reading-prose" data-editable="s5-reading">
+                    The sword resting across Justice’s lap is treated here as a contextual hypothesis about judicial autonomy without brandishing force—yet stone stages an ideal, whereas citizens’ security depends on whether judges are shielded from interference and whether civil and criminal laws protect them (¶7). Neither artwork proves direct reception of Montesquieu.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="painting-hotspot painting-hotspot--prudente" aria-hidden="true">
-              <span>Prudente de Moraes · Congress</span>
-            </div>
-            <div class="painting-hotspot painting-hotspot--gallery" aria-hidden="true">
-              <span>Shared Ceremony · 26 Feb. 1891</span>
-            </div>
-
-            <div class="visual-pause-badge" id="s5-pause-badge" hidden aria-hidden="true">
-              <svg class="visual-pause-ring" viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="2.2" />
-                <circle class="visual-pause-ring__bar" cx="18" cy="18" r="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="94.25" stroke-dashoffset="0" />
-              </svg>
-              <span class="t-meta">5s Visual Pause</span>
-            </div>
-          </div>
-
-          <figcaption class="artwork-official-caption s4-diptych__caption" id="s5-caption-text">
-            <strong class="s4-diptych__artist" data-editable="s5-artist">Aurélio de Figueiredo</strong>
-            <span class="s4-diptych__work" data-editable="s5-work"><cite lang="pt">Compromisso Constitucional</cite>, painted in 1896</span>
-            <span class="s4-diptych__sub" data-editable="s5-sub">Represents Deodoro da Fonseca’s constitutional oath of 26 February 1891 (painting date ≠ event date)</span>
-          </figcaption>
-
-          <div class="s4-artwork__bar">
-            <span class="t-meta">Museu da República · Oil on canvas, 330 × 257 cm · Reproduction: Romulo Fialdini</span>
-            <div class="s4-artwork__actions">
-              <button class="text-link-sm" type="button" id="s5-oath-full-btn" data-image="./assets/report/compromisso.jpg" data-alt="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents the oath of 26 February 1891." data-caption="Aurélio de Figueiredo, Compromisso Constitucional, 1896. Represents the oath of 26 February 1891. (Museu da República · Oil on canvas, 330 × 257 cm · Reproduction: Romulo Fialdini)">Full painting ↗</button>
-              <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-5" hidden>Restore Original ↺</button>
-            </div>
-          </div>
-        </figure>
-
-        <div class="s5-reading-col">
-          <ul class="s4-observations" aria-label="Interactive composition callouts and constitutional comparison">
-            <li tabindex="0" data-spot-select="deodoro">
-              <span class="source-tag t-meta">EXECUTIVE COMMITMENT</span>
-              <p class="obs-en t-display-serif" data-editable="s5-obs-1">
-                Deodoro da Fonseca holds the constitutional book in a shared ceremony.
-              </p>
-            </li>
-            <li tabindex="0" data-spot-select="prudente">
-              <span class="source-tag t-meta">CONSTITUENT CONGRESS</span>
-              <p class="obs-en t-display-serif" data-editable="s5-obs-2">
-                Prudente de Moraes presides over the Congress receiving the commitment.
-              </p>
-            </li>
-            <li tabindex="0" data-spot-select="gallery">
-              <span class="source-tag t-meta">CONSTITUTION OF 1891 · ARTICLES 15 &amp; 44</span>
-              <p class="obs-en t-display-serif" data-editable="s5-obs-3">
-                Art. 15: harmonious and independent powers · Art. 44: presidential oath to uphold the Constitution.
-              </p>
-            </li>
-          </ul>
-
-          <div class="s5-retention">
-            <p class="s5-retention__en" data-editable="s5-reading">
-              <strong>My reading:</strong> makes executive authority under an obligation visible—yet this is an interpretation of the image, not proof of independence in practice or direct influence from Montesquieu.
-            </p>
           </div>
         </div>
+
+        <!-- RIGHT STRIP: ANSWERS ¶7 -->
+        <aside class="dauchy-strip" aria-label="Serge Dauchy’s paper mapped by paragraph">
+          <p class="dauchy-strip__head">YOUR PAPER, AS I MAP IT</p>
+          <div class="dauchy-strip__list">
+            <button type="button" class="dauchy-strip__item" data-jump-slide="3" data-para-id="p6">
+              <span class="dauchy-strip__ref">¶6 · slides 3–4</span>
+              <strong class="dauchy-strip__title">BRAZIL · 1824</strong>
+              <span class="dauchy-strip__desc">Circulation, 1823 Assembly, four powers.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="2" data-para-id="p7">
+              <span class="dauchy-strip__ref">¶7 · slides 1–2, 4–5</span>
+              <strong class="dauchy-strip__title">LIBERTY BEYOND THE CONSTITUTION</strong>
+              <span class="dauchy-strip__desc">Civil and criminal laws, and an institutional frame « (surtout judiciaire) ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p8-10">
+              <span class="dauchy-strip__ref">¶8–10 · slide 2</span>
+              <strong class="dauchy-strip__title">THE SPIRIT OF THE LAWS</strong>
+              <span class="dauchy-strip__desc">Natural and historical determinants; « esprit général ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p11-12">
+              <span class="dauchy-strip__ref">¶11–12 · slide 6</span>
+              <strong class="dauchy-strip__title">WATSON · LEGRAND</strong>
+              <span class="dauchy-strip__desc">Transplants that “grow in a new body”; « impossibles ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="6" data-para-id="p13-14">
+              <span class="dauchy-strip__ref">¶13–14 · slides 1, 6–7</span>
+              <strong class="dauchy-strip__title">HYBRIDITY · CODE OF 1916</strong>
+              <span class="dauchy-strip__desc">Renegotiated boundaries; Beviláqua’s Code.</span>
+            </button>
+          </div>
+        </aside>
       </div>
 
       <div class="slide-footer-meta">
-        <span class="t-meta"><a href="#src-figueiredo">Museu da República · Reproduction: Romulo Fialdini</a> · <a href="#src-const-1824">Constitution of 1891, arts. 15 &amp; 44</a></span>
-        <span class="slide-num t-meta">05 / 07</span>
+        <span class="t-meta"><a href="#src-ceschiatti">STF · Stone (“pedra de Petrópolis”) · Photo: Fellipe Sampaio / STF</a> · <a href="#src-montesquieu">Montesquieu, XI.6 (1777)</a> · <a href="#src-dauchy">Dauchy, ¶7</a></span>
+        <span class="slide-num t-meta">05 / 07 · Target 1:35</span>
       </div>
     </article>
   </section>
 
   <!-- =====================================================================
-       SLIDE 06 · CESCHIATTI’S JUSTICE: THE SWORD AND AUTONOMY (6:15–8:20)
-       Alfredo Ceschiatti, A Justiça, 1961 · Supremo Tribunal Federal, Brasília
-       Preserves verified STF photograph and Fellipe Sampaio / STF credit
+       SLIDE 06 · TRANSPLANTS, HYBRIDITY, AND THE CODE OF 1916 (6:55–8:10)
+       Answers Dauchy ¶10 (Montesquieu I.3), ¶11–12 (Watson & Legrand) & ¶13–14 (Hybridity & 1916 Code)
        ===================================================================== -->
-  <section class="slide-canvas" id="slide-6" data-scene="storm" data-slide="6" aria-labelledby="s6-title">
+  <section class="slide-canvas" id="slide-6" data-scene="palace" data-slide="6" aria-labelledby="s6-title">
     <article class="slide-frame" data-reveal>
       <div class="presenter-tip" data-presenter-tip-slide="6" data-tip-mode="closed">
         <button
@@ -1053,7 +1433,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="presenter-tip-panel-6"
-          aria-label="Presenter Tip · Slide 06: Ceschiatti (1961), Sword &amp; Autonomy (hover or click, shortcut N)"
+          aria-label="Presenter Tip · Slide 06: Transplants, Hybridity &amp; 1916 Code (hover or click, shortcut N)"
           title="Presenter Tip · Hover or click for podium cues (N)"
         >
           <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -1067,81 +1447,142 @@
       </div>
 
       <header class="slide-top">
-        <p class="slide-kicker t-meta" data-editable="s6-kicker">06 · PRAÇA DOS TRÊS PODERES · BRASÍLIA, 1961</p>
-        <h2 class="slide-main-heading t-display-serif" id="s6-title" data-editable="s6-title">
-          Ceschiatti’s Justice: the sword and autonomy
+        <p class="slide-kicker t-meta" data-editable="s6-kicker">06 / 07 · ANSWERING DAUCHY ¶10, ¶11–12 &amp; ¶13–14 · MONTESQUIEU I.3 · WATSON &amp; LEGRAND · 1916 CODE</p>
+        <h2 class="slide-main-heading t-condensed" id="s6-title" data-editable="s6-title">
+          Transplants, hybridity, and the Code of 1916
         </h2>
       </header>
 
-      <div class="s5-layout s6-justica-layout">
-        <!-- Verified STF Sculpture Plate: Alfredo Ceschiatti, A Justiça, 1961 -->
-        <figure class="s5-photo-wrap" id="s6-photo-box" aria-labelledby="s6-caption-text">
-          <div class="s5-photo-stage s6-photo-stage" id="s6-photo-stage">
-            <img id="justica-image" src="./assets/report/justica.jpg" data-original-src="./assets/report/justica.jpg" alt="Alfredo Ceschiatti, A Justiça, 1961. Seated granite figure holding a sword at rest across her lap in front of the Supremo Tribunal Federal, Brasília" decoding="async">
-          </div>
+      <div class="v3-stage" style="--split-ratio: 66%;">
+        <div class="v3-main">
+          <!-- ABOVE THE #1F35FF LINE: MONTESQUIEU I.3 (IN ¶10) + WATSON/LEGRAND (¶11–12) + HYBRIDITY & 1916 CODE (¶13–14) -->
+          <div class="v3-above-line">
+            <article class="v3-source-block">
+              <div class="v3-chip-row">
+                <span class="voice-chip voice-chip--montesquieu">MONTESQUIEU · I.3 · SLIDE 6 · QUOTED IN YOUR ¶10</span>
+              </div>
+              <blockquote class="v3-quote-fr t-display-serif" lang="fr" data-editable="s6-i3-fr">
+                « Elles doivent être tellement propres au peuple pour lequel elles sont faites, que c’est un très-grand hasard si celles d’une nation peuvent convenir à une autre. »
+              </blockquote>
+              <p class="v3-quote-tr" data-editable="s6-i3-tr">
+                They must be so proper to the people for whom they are made that it is a very great chance if those of one nation can suit another. <span class="tr-tag">[tr. AVVM]</span>
+              </p>
+            </article>
 
-          <figcaption class="artwork-official-caption s4-diptych__caption" id="s6-caption-text">
-            <strong class="s4-diptych__artist" data-editable="s6-artist">Alfredo Ceschiatti</strong>
-            <span class="s4-diptych__work" data-editable="s6-work"><cite lang="pt">A Justiça</cite>, 1961</span>
-            <span class="s4-diptych__sub" data-editable="s6-sub">Supremo Tribunal Federal · Praça dos Três Poderes, Brasília</span>
-          </figcaption>
+            <!-- Interactive Scale Arm Across the Three Comparative Stages -->
+            <div class="drafting-scale-bar" id="s6-transplants-scale" data-step="deliberate" aria-hidden="true">
+              <svg class="drafting-scale-svg" viewBox="0 0 760 46">
+                <line x1="60" y1="23" x2="700" y2="23" stroke="currentColor" stroke-width="0.9" stroke-dasharray="4 6" opacity="0.3" />
+                <g class="drafting-scale-svg__arm">
+                  <line x1="120" y1="23" x2="640" y2="23" stroke="currentColor" stroke-width="1.8" />
+                  <circle cx="120" cy="23" r="5.5" fill="var(--dauchy-blue)" />
+                  <circle cx="380" cy="23" r="6.5" fill="var(--gilt)" />
+                  <circle cx="640" cy="23" r="5.5" fill="var(--dauchy-blue)" />
+                </g>
+              </svg>
+            </div>
 
-          <div class="s5-photo-bar">
-            <span class="t-meta">Granite, 3.30 m · Photograph: Fellipe Sampaio / STF</span>
-            <div class="s5-photo-actions">
-              <button class="text-link-sm" type="button" id="toggle-sword-focus" aria-pressed="false">Detail: Sword on lap</button>
-              <button class="text-link-sm" type="button" id="s6-justica-full-btn" data-image="./assets/report/justica.jpg" data-alt="Alfredo Ceschiatti, A Justiça, 1961. Supremo Tribunal Federal." data-caption="Alfredo Ceschiatti, A Justiça, 1961. Supremo Tribunal Federal, Praça dos Três Poderes, Brasília. (Granite, 3.30 m · Photograph: Fellipe Sampaio / STF)">Full photo ↗</button>
-              <button class="text-link-sm text-link-sm--restore" type="button" data-restore-plate="slide-6" hidden>Restore Original ↺</button>
+            <div class="s6-timeline s3-functions-grid" role="group" aria-label="Watson (1974), Legrand (1997), and Dauchy on hybridity and the 1916 Civil Code">
+              <article class="s6-step" tabindex="0" data-s6-card="watson">
+                <div class="v3-chip-row">
+                  <span class="voice-chip voice-chip--other">OTHER SOURCE · WATSON 1974 (IN ¶11)</span>
+                </div>
+                <h3 class="t-display-serif" data-editable="s6-c1-title">Alan Watson: rules move &amp; grow</h3>
+                <p class="s3-fn-risk" data-editable="s6-c1-body">
+                  Spatial transfers: a transplanted rule <span lang="fr">« se développera dans son nouveau corps »</span> (“will grow in its new body”) and continue to evolve in the receiving system.
+                </p>
+              </article>
+
+              <article class="s6-step is-active" tabindex="0" data-s6-card="legrand">
+                <div class="v3-chip-row">
+                  <span class="voice-chip voice-chip--other">OTHER SOURCE · LEGRAND 1997 (IN ¶11–12)</span>
+                </div>
+                <h3 class="t-display-serif" data-editable="s6-c2-title">Pierre Legrand: « contextualité »</h3>
+                <p class="s3-fn-risk" data-editable="s6-c2-body">
+                  Legal meaning depends on cultural context (<cite>MJ</cite> 4(2): 111–124); crossing borders alters meaning, so transplants are declared <span lang="fr">« impossibles »</span>.
+                </p>
+              </article>
+
+              <article class="s6-step" tabindex="0" data-s6-card="code1916">
+                <div class="v3-chip-row">
+                  <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶13–14 · HYBRIDITY &amp; 1916 CODE</span>
+                </div>
+                <h3 class="t-display-serif" data-editable="s6-c3-title">Historical hybridity &amp; Beviláqua</h3>
+                <p class="s3-fn-risk" data-editable="s6-c3-body">
+                  <span lang="fr">« transplantations imposées, de réceptions assumées, de souverainetés changeantes … leurs frontières sont constamment renégociées »</span> — closing with Clóvis Beviláqua’s 1916 Brazilian Civil Code.
+                </p>
+              </article>
             </div>
           </div>
-        </figure>
 
-        <div class="s6-analysis-col">
-          <div class="praca-triad-locus" id="s6-praca-triad" role="group" aria-label="Distinct buildings within the Praça dos Três Poderes">
-            <span class="source-tag t-meta">COMMON CIVIC SPACE · PRAÇA DOS TRÊS PODERES</span>
-            <div class="s6-triad-pills">
-              <button type="button" class="text-link-sm is-active" data-praca-node="stf" aria-pressed="true">Supreme Federal Court (STF)</button>
-              <button type="button" class="text-link-sm" data-praca-node="congress" aria-pressed="false">National Congress</button>
-              <button type="button" class="text-link-sm" data-praca-node="planalto" aria-pressed="false">Presidential Palace</button>
-            </div>
-            <p class="s6-triad-caption" id="s6-triad-caption" data-editable="s6-setting-note">
-              Positioned before the Supreme Federal Court, alongside Congress and the presidential palace within a shared civic space.
-            </p>
+          <!-- SIGNATURE #1F35FF DIVIDING LINE (AT 66% HEIGHT ON SLIDE 6) -->
+          <div class="v3-blue-line" data-line-label="ANSWERING ¶10, ¶11–12 &amp; ¶13–14" role="separator">
+            <span class="v3-blue-line__tag">ANSWERING DAUCHY ¶10–14 · CONTEXT IS ALSO MADE THROUGH CONTACT</span>
           </div>
 
-          <article class="s6-reading-card">
-            <span class="source-tag t-meta">CONTEXTUAL HYPOTHESIS · ARNO &amp; RAFAEL SIMIONI</span>
-            <p class="t-display-serif s6-reading-card__lead" data-editable="s6-sword-hypothesis">
-              The sword is at rest across Justice’s lap — treated as a hypothesis about this sculpture in this place, and interpreted by Rafael Simioni in terms of judicial autonomy.
-            </p>
-          </article>
-
-          <div class="s5-retention">
-            <p class="s5-retention__en" data-editable="s6-distinction">
-              <strong>Visual ideal vs. actual guarantees:</strong> a sword cannot show whether judges are protected from interference or their decisions enforced. Sustaining that ideal depends on the laws and practices through which public power is exercised.
-            </p>
+          <!-- BELOW THE #1F35FF LINE: MY READING -->
+          <div class="v3-below-line">
+            <div class="v3-reading-lead">
+              <span class="voice-chip voice-chip--reading">MY READING</span>
+              <p class="v3-reading-prose" data-editable="s6-my-reading">
+                Context is not only a prior barrier inside a closed national society: <strong>context is also made and renegotiated through contact</strong> between legal orders. The historical question is therefore: <em>what moves as legal form, and what changes in legal meaning?</em>
+              </p>
+            </div>
           </div>
         </div>
+
+        <!-- RIGHT STRIP: ANSWERS ¶11–12 & ¶13–14 -->
+        <aside class="dauchy-strip" aria-label="Serge Dauchy’s paper mapped by paragraph">
+          <p class="dauchy-strip__head">YOUR PAPER, AS I MAP IT</p>
+          <div class="dauchy-strip__list">
+            <button type="button" class="dauchy-strip__item" data-jump-slide="3" data-para-id="p6">
+              <span class="dauchy-strip__ref">¶6 · slides 3–4</span>
+              <strong class="dauchy-strip__title">BRAZIL · 1824</strong>
+              <span class="dauchy-strip__desc">Circulation, 1823 Assembly, four powers.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p7">
+              <span class="dauchy-strip__ref">¶7 · slides 1–2, 4–5</span>
+              <strong class="dauchy-strip__title">LIBERTY BEYOND THE CONSTITUTION</strong>
+              <span class="dauchy-strip__desc">Civil and criminal laws, judicial frame.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p8-10">
+              <span class="dauchy-strip__ref">¶8–10 · slide 2</span>
+              <strong class="dauchy-strip__title">THE SPIRIT OF THE LAWS</strong>
+              <span class="dauchy-strip__desc">Natural and historical determinants; « esprit général ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="6" data-para-id="p11-12">
+              <span class="dauchy-strip__ref">¶11–12 · slide 6</span>
+              <strong class="dauchy-strip__title">WATSON · LEGRAND</strong>
+              <span class="dauchy-strip__desc">Transplants that “grow in a new body”; transplants as « impossibles ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="6" data-para-id="p13-14">
+              <span class="dauchy-strip__ref">¶13–14 · slides 1, 6–7</span>
+              <strong class="dauchy-strip__title">HYBRIDITY · CODE OF 1916</strong>
+              <span class="dauchy-strip__desc">« transplantations imposées, … réceptions assumées »; Beviláqua’s Code.</span>
+            </button>
+          </div>
+        </aside>
       </div>
 
       <div class="slide-footer-meta">
-        <span class="t-meta"><a href="#src-ceschiatti">Supremo Tribunal Federal · Photograph: Fellipe Sampaio / STF</a> · <a href="#src-simioni">Rafael Simioni (Judicial Autonomy)</a></span>
-        <span class="slide-num t-meta">06 / 07</span>
+        <span class="t-meta"><a href="#src-montesquieu">Montesquieu, I.3 (in ¶10)</a> · <a href="#src-transplants">Watson (1974) &amp; Legrand (1997) (¶11–12)</a> · <a href="#src-dauchy">Dauchy, ¶13–14</a></span>
+        <span class="slide-num t-meta">06 / 07 · Target 1:25</span>
       </div>
     </article>
   </section>
 
   <!-- =====================================================================
-       SLIDE 07 · QUESTIONS FOR SERGE (8:20–9:30)
-       Stage 3: the discussion — Preserves BOTH closing questions verbatim
+       SLIDE 07 · TWO QUESTIONS FOR SERGE (8:10–9:28)
+       Engages Dauchy ¶6–14 · Question 1 reflects Dauchy's insights on the
+       renegotiation of legal boundaries (¶10–14); Question 2 engages ¶6–7
        ===================================================================== -->
   <section class="slide-canvas slide-canvas--nightsea" id="slide-7" data-scene="nightsea" data-slide="7" aria-labelledby="s7-title">
     <div class="nightsea-backdrop" aria-hidden="true">
-      <img src="./assets/img/bgs/nightsea.webp" alt="">
+      <img src="./assets/img/bgs/nightsea.webp" alt="" loading="lazy" decoding="async">
       <div class="moonlight-shimmer"></div>
     </div>
 
-    <img class="s7-owl-silhouette" src="./assets/owl-perched.webp" alt="" aria-hidden="true">
+    <img class="s7-owl-silhouette" src="./assets/owl-perched.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
     <article class="slide-frame slide-frame--dark" data-reveal>
       <div class="presenter-tip presenter-tip--dark" data-presenter-tip-slide="7" data-tip-mode="closed">
@@ -1150,7 +1591,7 @@
           type="button"
           aria-expanded="false"
           aria-controls="presenter-tip-panel-7"
-          aria-label="Presenter Tip · Slide 07: Questions for Serge Dauchy (hover or click, shortcut N)"
+          aria-label="Presenter Tip · Slide 07: Two Questions for Serge Dauchy (hover or click, shortcut N)"
           title="Presenter Tip · Hover or click for podium cues (N)"
         >
           <svg class="presenter-tip__icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -1164,88 +1605,143 @@
       </div>
 
       <header class="slide-top">
-        <p class="slide-kicker t-meta" data-editable="s7-kicker">07 · STAGE 3: THE DISCUSSION · DIALOGUE WITH SERGE DAUCHY</p>
-        <h2 class="s7-title t-display-serif" id="s7-title" data-editable="s7-title">
-          Questions for Serge
+        <p class="slide-kicker t-meta" data-editable="s7-kicker">07 / 07 · TWO QUESTIONS FOR THE DISCUSSION · ENGAGING DAUCHY ¶6–14</p>
+        <h2 class="s7-title t-condensed" id="s7-title" data-editable="s7-title">
+          Two questions for Serge
         </h2>
       </header>
 
-      <!-- Compact Three-Stage Arc Synthesis -->
-      <div class="s7-constellation-strip" aria-label="Three stages across the intervention">
-        <div class="s7-constellation-item">
-          <span class="t-meta">I · MONTESQUIEU &amp; BOOK XI (1748)</span>
-          <p>Security under laws, societal circumstances &amp; preventing concentrated power</p>
-        </div>
-        <div class="s7-constellation-item">
-          <span class="t-meta">II · 1824 &amp; LEGAL IMAGES (1896, 1961)</span>
-          <p>Constitutional adaptation, obligation under oath &amp; judicial autonomy as ideal</p>
-        </div>
-        <div class="s7-constellation-item">
-          <span class="t-meta">III · BEYOND A FORMULA</span>
-          <p>Civil and criminal laws, judicial institutions &amp; renegotiated legal boundaries</p>
-        </div>
-      </div>
+      <div class="v3-stage" style="--split-ratio: 34%;">
+        <div class="v3-main">
+          <!-- ABOVE THE #1F35FF LINE: DAUCHY ¶13–14 (RENEGOTIATED BOUNDARIES) & ¶7 (BEYOND CONSTITUTIONALISM) -->
+          <div class="v3-above-line">
+            <div class="s7-source-pair">
+              <article class="v3-source-block v3-source-block--dark">
+                <div class="v3-chip-row">
+                  <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶13–14 · RENEGOTIATION OF LEGAL BOUNDARIES</span>
+                </div>
+                <p class="v3-source-summary" data-editable="s7-dauchy-p14">
+                  <span lang="fr">« … conséquences de transplantations imposées, de réceptions assumées, de souverainetés changeantes et donc de superpositions de systèmes juridiques successifs … leurs frontières sont constamment renégociées. »</span> — occurring through <span lang="fr">« un contact direct entre les ordres juridiques au sein d’un discours juridique mondial »</span> (Teubner, cited in ¶14; 1916 Civil Code).
+                </p>
+              </article>
 
-      <div class="s7-questions">
-        <article class="s7-q is-active" tabindex="0" data-q-spot="q1">
-          <span class="s7-q__num t-display-serif" aria-hidden="true">1</span>
-          <div>
-            <h3 class="t-display-serif" data-editable="s7-q1">
-              “You begin with Montesquieu’s insistence that laws belong to a particular society, and end with legal systems whose boundaries are constantly being renegotiated. What changes in our understanding of context when we move from the first picture to the second?”
-            </h3>
-            <p class="s7-q__elaboration" data-editable="s7-q1-sub">
-              What evidence distinguishes borrowing from a change of legal meaning?
-            </p>
+              <article class="v3-source-block v3-source-block--dark">
+                <div class="v3-chip-row">
+                  <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶6–7 · LIBERTY BEYOND THE CONSTITUTIONAL FORMULA</span>
+                </div>
+                <p class="v3-source-summary" data-editable="s7-dauchy-p7">
+                  <span lang="fr">« Enfermer Montesquieu dans une vision purement “constitutionnaliste” serait toutefois réducteur. »</span> — requiring <span lang="fr">« lois civiles et criminelles »</span> and <span lang="fr">« un cadre institutionnel (surtout judiciaire) »</span>.
+                </p>
+              </article>
+            </div>
           </div>
-        </article>
 
-        <article class="s7-q" tabindex="0" data-q-spot="q2">
-          <span class="s7-q__num t-display-serif" aria-hidden="true">2</span>
-          <div>
-            <h3 class="t-display-serif" data-editable="s7-q2">
-              “You show how Montesquieu came to be read mainly through the separation of powers. What do you think was lost in that reading?”
-            </h3>
-            <p class="s7-q__elaboration" data-editable="s7-q2-sub">
-              Where would you begin investigating a “system of liberty” beyond the constitution?
-            </p>
+          <!-- SIGNATURE #1F35FF DIVIDING LINE (AT 34% HEIGHT ON SLIDE 7) -->
+          <div class="v3-blue-line" data-line-label="TWO QUESTIONS FOR THE DISCUSSION" role="separator">
+            <span class="v3-blue-line__tag">MY READING · TWO QUESTIONS FOR THE DISCUSSION</span>
           </div>
-        </article>
+
+          <!-- BELOW THE #1F35FF LINE: TWO QUESTIONS FOR THE DISCUSSION -->
+          <div class="v3-below-line">
+            <div class="v3-chip-row">
+              <span class="voice-chip voice-chip--reading">MY READING · TWO QUESTIONS FOR THE DISCUSSION</span>
+            </div>
+
+            <div class="s7-questions">
+              <article class="s7-q is-active" tabindex="0" data-q-spot="q1">
+                <span class="s7-q__num" aria-hidden="true">1</span>
+                <div>
+                  <h3 class="t-display-serif" data-editable="s7-q1">
+                    You move from Montesquieu’s insistence that laws belong to a particular people (I.3) to hybrid legal orders whose boundaries are constantly renegotiated through imposed transfers, assumed receptions, and direct contact between legal orders (¶13–14). When a legal form acquires a different meaning in another setting, how should we describe that transformation—and at what point does contextual difference cease to be an objection to transplantation and instead identify the boundary-renegotiation process we need to study?
+                  </h3>
+                  <p class="s7-q__elaboration" data-editable="s7-q1-sub">
+                    Engaging ¶10–14 · From rooted laws (Montesquieu I.3) and Watson/Legrand to « leurs frontières sont constamment renégociées » and the 1916 Civil Code: what evidence distinguishes borrowing from a change of legal meaning?
+                  </p>
+                </div>
+              </article>
+
+              <article class="s7-q" tabindex="0" data-q-spot="q2">
+                <span class="s7-q__num" aria-hidden="true">2</span>
+                <div>
+                  <h3 class="t-display-serif" data-editable="s7-q2">
+                    In the Brazilian examples you raise, what evidence would allow us to move between the circulation of Montesquieu’s writings, the appropriation of his arguments and the organisation of political authority? Could institutional ceremonies and images help identify that appropriation, provided that their connection to the texts is documented?
+                  </h3>
+                  <p class="s7-q__elaboration" data-editable="s7-q2-sub">
+                    Engaging ¶6–7 · Beyond a purely “constitutionalist” reading: where would you begin investigating a “system of liberty” across civil, criminal, and judicial guarantees?
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT STRIP: ANSWERS ¶6, ¶7, ¶11–12 & ¶13–14 -->
+        <aside class="dauchy-strip dauchy-strip--dark" aria-label="Serge Dauchy’s paper mapped by paragraph">
+          <p class="dauchy-strip__head">YOUR PAPER, AS I MAP IT</p>
+          <div class="dauchy-strip__list">
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="3" data-para-id="p6">
+              <span class="dauchy-strip__ref">¶6 · slides 3–4</span>
+              <strong class="dauchy-strip__title">BRAZIL · 1824</strong>
+              <span class="dauchy-strip__desc">Circulation, 1823 Assembly, four powers.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="2" data-para-id="p7">
+              <span class="dauchy-strip__ref">¶7 · slides 1–2, 4–5</span>
+              <strong class="dauchy-strip__title">LIBERTY BEYOND THE CONSTITUTION</strong>
+              <span class="dauchy-strip__desc">Civil and criminal laws, judicial frame.</span>
+            </button>
+            <button type="button" class="dauchy-strip__item" data-jump-slide="2" data-para-id="p8-10">
+              <span class="dauchy-strip__ref">¶8–10 · slide 2</span>
+              <strong class="dauchy-strip__title">THE SPIRIT OF THE LAWS</strong>
+              <span class="dauchy-strip__desc">Natural and historical determinants; « esprit général ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="6" data-para-id="p11-12">
+              <span class="dauchy-strip__ref">¶11–12 · slide 6</span>
+              <strong class="dauchy-strip__title">WATSON · LEGRAND</strong>
+              <span class="dauchy-strip__desc">Transplants that “grow in a new body”; « impossibles ».</span>
+            </button>
+            <button type="button" class="dauchy-strip__item is-answered" data-jump-slide="6" data-para-id="p13-14">
+              <span class="dauchy-strip__ref">¶13–14 · slides 1, 6–7</span>
+              <strong class="dauchy-strip__title">HYBRIDITY · CODE OF 1916</strong>
+              <span class="dauchy-strip__desc">Renegotiated boundaries; Beviláqua’s Code.</span>
+            </button>
+          </div>
+        </aside>
       </div>
 
       <div class="slide-footer-meta">
         <span class="t-meta">Ana Vitória Vanzin Mendes · Discussant · PPGD/UFSC · 11 November 2026</span>
-        <span class="slide-num t-meta">07 / 07</span>
+        <span class="slide-num t-meta">07 / 07 · Target 1:25</span>
       </div>
     </article>
   </section>
 
   <!-- =====================================================================
-       SOURCES, VERIFICATION REGISTER & PODIUM REFERENCE APPENDIX
+       SOURCES, CITATION CHECK (5 NOV 2026) & PODIUM REFERENCE APPENDIX
        ===================================================================== -->
   <section class="sources" id="sources" aria-labelledby="sources-title">
     <div class="sources__inner">
       <header class="section-heading">
-        <p class="section-index t-meta">Appendix · Documentary Register &amp; Podium Reference</p>
-        <h2 id="sources-title">Sources, captions and verification notes</h2>
+        <p class="section-index t-meta">Appendix · Documentary Register &amp; Citation Check (v3 · Prepared 5 Nov 2026)</p>
+        <h2 id="sources-title">Sources, voice code and verification register</h2>
       </header>
 
       <div class="method-grid">
         <article>
-          <h3>Montesquieu &amp; Serge Dauchy</h3>
+          <h3>Voice Code &amp; Paragraph Map</h3>
           <p>
-            Aligned with the 7-slide Montesquieu Lectern Script (~9m30s), this response moves from Montesquieu’s judicial role in the <em>Parlement</em> of Bordeaux and <cite lang="fr">De l’esprit des lois</cite> (1748, Book XI, ch. 6) to Brazil’s 1824 Constitution (Art. 10; Dauchy § 6) and Serge Dauchy’s emphasis on civil and criminal laws, judicial institutions, and renegotiated boundaries (§§ 7, 11–14).
+            Every slide separates verbatim sources above the <code>#1F35FF</code> horizontal line (<strong>DAUCHY</strong>, <strong>MONTESQUIEU</strong> 1777 edition, and <strong>OTHER SOURCE</strong>) from Ana Vitória’s interpretation below it (<strong>MY READING</strong>, translations marked <code>[tr. AVVM]</code>), while the right strip maps Serge Dauchy’s 14-paragraph manuscript (<code>¶6</code> to <code>¶14</code>).
           </p>
         </article>
         <article>
-          <h3>Historical Artworks &amp; Credits</h3>
+          <h3>Cases on Screen &amp; Attribution Discipline</h3>
           <p>
-            Slide 05 examines Aurélio de Figueiredo’s <cite lang="pt">Compromisso Constitucional</cite> (1896, representing the oath of 26 February 1891; Museu da República · Reproduction: Romulo Fialdini) alongside Articles 15 and 44 of the 1891 Constitution. Slide 06 examines Alfredo Ceschiatti’s <cite lang="pt">A Justiça</cite> (1961; Supremo Tribunal Federal · Photograph: Fellipe Sampaio / STF) alongside Rafael Simioni’s study on autonomy.
+            Slide 04 examines Aurélio de Figueiredo’s <cite lang="pt">Compromisso Constitucional</cite> (1896, oil on canvas, 330 × 257 cm, Museu da República; Deodoro’s oath, 26 Feb. 1891; Prudente de Moraes at the centre). Slide 05 examines Alfredo Ceschiatti’s <cite lang="pt">A Justiça</cite> (1961, stone — “pedra de Petrópolis”, 3.30 m, STF, Brasília). Neither artwork is offered as evidence of a direct reception of Montesquieu.
           </p>
         </article>
         <article>
-          <h3>Lectern Script &amp; Standing Tools</h3>
+          <h3>Timing &amp; Lectern Script (~1,089 words)</h3>
           <p>
-            Full verbatim lecture notes with bold sentence lead-ins and silent slide-change cues are available in the <strong>Lectern Script</strong> reader (press <code>L</code> or print as a 7-page A4 packet), synchronized with each slide’s top-right Presenter Tip (<code>N</code>) and the Smartphone Remote (<code>R</code>).
+            At 125 wpm with 45 seconds of marked pauses, the 7-page Lectern Script runs <strong>9:28</strong> (<code>9:08</code> at 130 wpm; <code>9:49</code> at 120 wpm; <code>9:34</code> at 120 wpm if Slide 05’s <code>[ADDED, CUTTABLE]</code> sentence on Montesquieu XI.6 is omitted). Press <code>L</code> to open the script or toggle the cuttable sentence live.
           </p>
         </article>
       </div>
@@ -1254,50 +1750,112 @@
         <li id="src-dauchy">
           <span class="source-number">S1</span>
           <p>
-            <strong>DAUCHY, Serge.</strong> <cite lang="fr">« Montesquieu, De l’esprit des lois (1748) »</cite> — Conference paper presented at <em>A circulação das ideias e saberes franceses na ciência jurídica brasileira</em>, PPGD/UFSC, 11 November 2026, esp. paragraphs 6, 7, and 11–14.
+            <strong>DAUCHY, Serge.</strong> <cite lang="fr">Montesquieu, De l’esprit des lois (1748)</cite>. 2026. Unpublished conference manuscript, 14 paragraphs (PPGD/UFSC, 11 November 2026), engaged verbatim across Slides 01–07 (esp. ¶6, ¶7, ¶8–10, ¶11–12, and ¶13–14).
           </p>
         </li>
         <li id="src-montesquieu">
           <span class="source-number">S2</span>
           <p>
-            <strong>MONTESQUIEU, Charles-Louis de Secondat, Baron de.</strong> <cite lang="fr">De l’esprit des lois</cite> (1748; 1777 ed.), esp. Book XI, chapter 6. Reference text: <a href="https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L11/C6" target="_blank" rel="noopener">Wikisource · De l’esprit des lois (1777)</a>.
+            <strong>MONTESQUIEU, Charles-Louis de Secondat, Baron de.</strong> <cite lang="fr">Esprit des lois</cite> (1777). Livre I, chap. 3; Livre XI, chap. 6; Livre XIX, chap. 4. In: WIKISOURCE: <a href="https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L19/C4" target="_blank" rel="noopener">Wikisource · Esprit des lois (1777)</a> (accessed 5 Nov. 2026).
           </p>
         </li>
         <li id="src-const-1824">
           <span class="source-number">S3</span>
           <p>
-            <strong>BRAZIL.</strong> <cite lang="pt">Constituição Política do Império do Brazil</cite> (25 March 1824), Article 10 (Legislative, Moderating, Executive, Judicial); <cite lang="pt">Constituição da República dos Estados Unidos do Brasil</cite> (24 February 1891), Articles 15 and 44. Câmara dos Deputados: <a href="https://www2.camara.leg.br/legin/fed/consti/1824-1899/constituicao-35041-25-marco-1824-532540-publicacaooriginal-14770-pl.html" target="_blank" rel="noopener">Constitutional Archive</a>.
+            <strong>BRASIL.</strong> <cite lang="pt">Constituição Política do Império do Brazil</cite> (25 March 1824), art. 10 (in exact constitutional order: <em lang="pt">Legislativo, Moderador, Executivo, Judicial</em>); <cite lang="pt">Constituição da República dos Estados Unidos do Brasil</cite> (24 February 1891), arts. 15 and 44. Câmara dos Deputados: <a href="https://www2.camara.leg.br/legin/fed/consti/1824-1899/constituicao-35041-25-marco-1824-532540-publicacaooriginal-14770-pl.html" target="_blank" rel="noopener">Publicação Original</a>.
           </p>
         </li>
         <li id="src-figueiredo">
           <span class="source-number">S4</span>
           <p>
-            <strong>MUSEU DA REPÚBLICA.</strong> Catalogue entry for Aurélio de Figueiredo, <cite lang="pt">Compromisso Constitucional</cite>, 1896 (Represents Deodoro da Fonseca’s oath of 26 February 1891 before Prudente de Moraes and the Constituent Congress; oil on canvas, 330 × 257 cm; reproduction credit: Romulo Fialdini): <a href="https://museudarepublica.acervos.museus.gov.br/acervo-museologico/pintura-historica-4/" target="_blank" rel="noopener">Museu da República · Acervo Museológico</a>.
+            <strong>FIGUEIREDO, Aurélio de.</strong> <cite lang="pt">Compromisso Constitucional</cite>, 1896. Oil on canvas, 330 × 257 cm. Museu da República, Rio de Janeiro (represents Deodoro da Fonseca’s oath of 26 February 1891 with Prudente de Moraes presiding at the centre; reproduction credit: Romulo Fialdini): <a href="https://museudarepublica.acervos.museus.gov.br/acervo-museologico/pintura-historica-4/" target="_blank" rel="noopener">Museu da República · Acervo Museológico</a>.
           </p>
         </li>
         <li id="src-ceschiatti">
           <span class="source-number">S5</span>
           <p>
-            <strong>SUPREMO TRIBUNAL FEDERAL (STF).</strong> <cite lang="pt">130 anos: conheça os destaques do acervo cultural do STF</cite> — Alfredo Ceschiatti, <cite lang="pt">A Justiça</cite>, 1961 (Supremo Tribunal Federal, Praça dos Três Poderes, Brasília; granite, 3.30 m; photograph credit: Fellipe Sampaio / STF): <a href="https://noticias.stf.jus.br/postsnoticias/130-anos-conheca-os-destaques-do-acervo-cultural-stf/" target="_blank" rel="noopener">STF · Acervo Cultural</a>.
+            <strong>CESCHIATTI, Alfredo.</strong> <cite lang="pt">A Justiça</cite>, 1961. Stone (“pedra de Petrópolis”), 3.30 m. Supremo Tribunal Federal, Praça dos Três Poderes, Brasília (photograph credit: Fellipe Sampaio / STF; cf. SIMIONI, Rafael Lazzarotto, <cite>Suprema</cite>, 2021, in speaker notes): <a href="https://noticias.stf.jus.br/postsnoticias/130-anos-conheca-os-destaques-do-acervo-cultural-stf/" target="_blank" rel="noopener">STF · Acervo Cultural</a>.
           </p>
         </li>
-        <li id="src-simioni">
+        <li id="src-transplants">
           <span class="source-number">S6</span>
           <p>
-            <strong>SIMIONI, Rafael Lazzarotto.</strong> Study on Alfredo Ceschiatti’s sculpture <cite lang="pt">A Justiça</cite> (STF, Brasília) and the iconography of judicial autonomy (engaged on Slide 06 alongside Arno’s conference prompt).
+            <strong>WATSON, Alan</strong>, <cite>Legal Transplants</cite> (1974, as presented in Dauchy ¶11); <strong>LEGRAND, Pierre</strong>, “The Impossibility of ‘Legal Transplants’”, <cite>Maastricht Journal of European and Comparative Law</cite> 4(2): 111–124 (1997, as presented in Dauchy ¶11–12); <strong>TEUBNER, Gunther</strong>, “Legal Irritants”, <cite>Modern Law Review</cite> 61(1): 11–32 (1998, in notes to ¶14).
           </p>
         </li>
       </ol>
 
+      <!-- Citation Check Table (5 Nov 2026: ✓ = checked online · ⚠ = carried forward or attributed) -->
+      <div class="citation-check-box" aria-labelledby="citation-check-heading">
+        <div class="citation-check-box__head">
+          <h3 id="citation-check-heading" class="t-display-serif">Citation Check (5 November 2026 · v3)</h3>
+          <span class="t-meta">✓ = checked against primary text online · ⚠ = carried forward or explicitly attributed</span>
+        </div>
+        <div class="citation-check-table-wrap">
+          <table class="citation-check-table">
+            <thead>
+              <tr>
+                <th scope="col">Item on Screen</th>
+                <th scope="col">Status</th>
+                <th scope="col">Verification Note</th>
+              </tr>
+            </thead>
+            <tbody id="citation-check-tbody">
+              <tr>
+                <td>Dauchy quotations on slides 1, 2, 3, 6, 7 (¶6, ¶7, ¶8–10, ¶11–14)</td>
+                <td class="status-cell status-cell--ok">✓</td>
+                <td>Automated verbatim match against the 14-paragraph manuscript. Slide 1 renders inner « constitutionnaliste » as “ ”.</td>
+              </tr>
+              <tr>
+                <td>Montesquieu I.3 « c’est un très-grand hasard … » (Slide 6)</td>
+                <td class="status-cell status-cell--ok">✓</td>
+                <td>Wikisource, 1777 edition, Livre I, chap. 3 (quoted in Dauchy ¶10).</td>
+              </tr>
+              <tr>
+                <td>Montesquieu XIX.4 « Plusieurs choses gouvernent les hommes … » (Slide 2)</td>
+                <td class="status-cell status-cell--ok">✓</td>
+                <td>Wikisource, 1777 edition, Livre XIX, chap. 4 (1777 spelling « manieres » preserved).</td>
+              </tr>
+              <tr>
+                <td>Montesquieu XI.6 « … celle de juger est en quelque façon nulle » (Slide 5)</td>
+                <td class="status-cell status-cell--ok">✓</td>
+                <td>Wikisource, 1777 edition, Livre XI, chap. 6.</td>
+              </tr>
+              <tr>
+                <td>Constituição 1824, art. 10 &amp; Constituição 1891, arts. 15, 44 (Slides 3–4)</td>
+                <td class="status-cell status-cell--ok">✓</td>
+                <td>Câmara dos Deputados, publicações originais (exact 1824 order: Legislativo, Moderador, Executivo, Judicial).</td>
+              </tr>
+              <tr>
+                <td><em>Compromisso Constitucional</em> (1896, 330 × 257 cm) &amp; <em>A Justiça</em> (1961, 3.30 m, stone / “pedra de Petrópolis”)</td>
+                <td class="status-cell status-cell--ok">✓</td>
+                <td>Museu da República catalogue &amp; STF visitor article (corrected from v2 “granite” to “stone”; photo credits ⚠ carried forward).</td>
+              </tr>
+              <tr>
+                <td>Legrand (1997), <em>MJ</em> 4(2): 111–124 &amp; Watson (1974), “will grow in its new body”</td>
+                <td class="status-cell status-cell--warn">✓ / ⚠</td>
+                <td>Legrand volume/pages confirmed (✓); Watson quoted as presented in Dauchy ¶11 (⚠ exact page not re-checked).</td>
+              </tr>
+              <tr>
+                <td>« système de liberté » (¶7) &amp; Brazilian reception chronology (1789, 1798, 1823, 1949 in ¶6)</td>
+                <td class="status-cell status-cell--warn">⚠</td>
+                <td>« système de liberté » kept off Montesquieu chip as Dauchy’s attribution; Slide 3 chronology explicitly labeled as Dauchy’s account.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="source-actions">
         <button class="download-link" type="button" id="footer-script-open-btn">Open 7-Page Lectern Script <span>L</span></button>
         <button class="download-link" type="button" id="footer-script-print-btn">Print Lectern Script (7 Pages) <span>A4</span></button>
+        <a class="download-link" href="./public/assets/aistudio/Discussing-Dauchy-handout_b097f5ac.pdf" target="_blank" rel="noopener">Open 1-Page Handout PDF <span>PDF ↗</span></a>
         <button class="download-link" type="button" id="footer-print-btn">Print 7 Slides &amp; Sources <span>A4</span></button>
         <a class="download-link" href="#slide-1">Return to Slide 01 <span aria-hidden="true">↑</span></a>
       </div>
 
       <footer class="colophon">
-        <p>Presenter: <strong>Ana Vitória Vanzin Mendes · Discussant · Doctoral Researcher in Law (UFSC)</strong> (11 November 2026 · 15h10 · CCJ/UFSC).</p>
+        <p>Presenter: <strong>Ana Vitória Vanzin Mendes · Discussant · Doctoral Researcher in Law (PPGD/UFSC)</strong> (11 November 2026 · 15h10 · CCJ/UFSC).</p>
         <p>Temática: Montesquieu · Conferencista: <strong>Serge Dauchy</strong> (CNRS/Université de Lille) · Debatedoras: <strong>Marja Mangili</strong> (UniCesusc) &amp; <strong>Ana Vitória Vanzin Mendes</strong> (UFSC) · <em>A circulação das ideias e saberes franceses na ciência jurídica brasileira</em>.</p>
       </footer>
     </div>
@@ -1332,7 +1890,7 @@
     </svg>
     <span class="constellation-dial__meta" id="constellation-caption">
       <strong class="t-meta" id="constellation-slide-tag">01 · POWER ORBIT</strong>
-      <span id="constellation-label-text">Montesquieu &amp; Three Powers</span>
+      <span id="constellation-label-text">Dauchy ¶7 &amp; ¶14 · Framing the Discussion</span>
     </span>
   </button>
 
@@ -1353,7 +1911,7 @@
   id="bg-music-audio"
   src="./public/assets/aistudio/Classicals.de_-_Chopin_-_Nocturne_Op._9_no._2_in_E-flat_major_a91ca46b.mp3"
   loop
-  preload="auto"
+  preload="none"
 ></audio>
 
 <!-- Floating slide stepper & audience mode exit bar -->
@@ -1372,35 +1930,57 @@
   <p id="dialog-caption"></p>
 </dialog>
 
-<!-- Revised 7-Page Lectern Script & Lecture Notes Dialog (Shortcut L) -->
-<dialog class="workspace-dialog lectern-script-dialog" id="lectern-script-dialog" data-script-size="standard" aria-labelledby="lectern-script-dialog-title">
+<!-- Revised 7-Page Lectern Script & Presenter-Only Prep Notes Dialog (Shortcut L) -->
+<dialog class="workspace-dialog lectern-script-dialog" id="lectern-script-dialog" data-script-size="standard" data-lectern-tab="script" aria-labelledby="lectern-script-dialog-title">
   <div class="workspace-dialog__header lectern-script-dialog__header">
     <div>
-      <p class="source-tag t-meta">MONTESQUIEU • LECTERN SCRIPT • ANA VITÓRIA VANZIN MENDES</p>
+      <p class="source-tag t-meta">DISCUSSING DAUCHY’S MONTESQUIEU · V3 · ANA VITÓRIA VANZIN MENDES</p>
       <h2 class="t-display-serif workspace-dialog__title" id="lectern-script-dialog-title">
-        Revised 7-Page Lectern Script &amp; Lecture Notes
+        7-Page Lectern Script &amp; Backstage Preparation Notes
       </h2>
     </div>
     <button class="dialog-close" id="lectern-script-close" type="button" aria-label="Close Lectern Script">Close ×</button>
   </div>
 
   <div class="lectern-script-toolbar">
-    <p class="lectern-script-toolbar__note">
-      Read the full prose. Bracketed cues are silent. Total target about 9–10 minutes (<code>0:00–9:30</code>), synchronized 1-to-1 with all 7 slides and both closing questions on Slide 7.
-    </p>
+    <div class="lectern-script-toolbar__left">
+      <p class="lectern-script-toolbar__note" id="lectern-metrics-readout">
+        <strong>1,089 words</strong> · 45s marked pauses · <strong>≈ 9:28</strong> at 125 wpm (target 10:00). Bracketed cues are silent.
+      </p>
+      <label class="studio-checkbox lectern-cuttable-toggle">
+        <input type="checkbox" id="toggle-cut-xi6">
+        <span>Omit Slide 5 <code>[ADDED, CUTTABLE]</code> sentence on Montesquieu XI.6 (trims ~15s)</span>
+      </label>
+    </div>
+
     <div class="lectern-script-toolbar__actions">
+      <div class="lectern-tab-group" role="tablist" aria-label="Lectern dialog view">
+        <button type="button" role="tab" class="text-link-sm is-active" data-lectern-view="script" aria-selected="true">
+          📄 Script Pages (1–7)
+        </button>
+        <button type="button" role="tab" class="text-link-sm" data-lectern-view="private-notes" aria-selected="false">
+          🔒 Private Prep Notes (Not for Slides)
+        </button>
+      </div>
+
       <div class="lectern-size-group" role="group" aria-label="Lectern script text size">
         <button type="button" class="text-link-sm is-active" data-script-font="standard" aria-pressed="true">Standard Type</button>
         <button type="button" class="text-link-sm" data-script-font="large" aria-pressed="false">Large Lectern Type</button>
       </div>
+
       <button type="button" class="action-btn action-btn--present-primary t-ui" id="print-script-only-btn">
-        🖨️ Print 7-Page Lectern Script (A4)
+        🖨️ Print 7-Page Script (A4)
       </button>
     </div>
   </div>
 
   <div class="lectern-script-pages" id="lectern-script-pages" aria-label="Seven lectern script pages">
     <!-- Rendered dynamically from getLecternScriptPages() -->
+  </div>
+
+  <!-- Presenter-Only Private Manuscript Notes (Strictly backstage, never shown on Slides 1–7 or public printouts) -->
+  <div class="lectern-private-notes" id="lectern-private-notes" hidden aria-label="Private verification notes on Serge Dauchy’s manuscript (not for the slides)">
+    <!-- Rendered dynamically from PRIVATE_MANUSCRIPT_NOTES -->
   </div>
 </dialog>
 
@@ -1413,7 +1993,7 @@
     <button class="dialog-close" id="phone-remote-dialog-close" type="button" aria-label="Close smartphone remote dialog">Close ×</button>
   </div>
   <p class="phone-remote-dialog__instructions">
-    Scan with your phone camera while standing at the lectern. Includes your full verbatim <strong>Lectern Script</strong> (with bold sentence lead-ins and silent cues), Quick Cues toggle, live timer, and giant thumb slide buttons.
+    Scan with your phone camera while standing at the lectern. Includes your full verbatim <strong>v3 Lectern Script</strong> (with bold sentence lead-ins and silent cues), Quick Cues toggle, live timer, and giant thumb slide buttons.
   </p>
   <div class="phone-remote-dialog__qr-wrap" id="phone-remote-qr-wrap">
     <!-- QR Code SVG injected dynamically -->
@@ -1454,7 +2034,7 @@
     <div class="sync-status-card__main">
       <div>
         <strong class="t-display-serif sync-status-card__slide" id="sync-dialog-slide-readout">
-          Slide 01 / 07 · Montesquieu and the three powers
+          Slide 01 / 07 · Discussing Dauchy’s Montesquieu
         </strong>
         <p class="sync-status-card__sub" id="sync-dialog-detail-readout">
           Presenter: Ana Vitória Vanzin Mendes · PPGD/UFSC · Callout: Default view
@@ -1517,7 +2097,7 @@
         Broadcast Current Slide
       </h3>
       <p class="sync-role-card__desc">
-        Publish your live slide (01 / 07–07 / 07), power-distribution callouts, and 5-second visual pauses as you present.
+        Publish your live slide (01 / 07–07 / 07), voice-coded callouts, and 10-second visual pauses as you present.
       </p>
 
       <div class="sync-form-group">
@@ -1556,12 +2136,12 @@
       <div class="sync-quick-slides" aria-label="Broadcast specific slide">
         <span class="studio-label t-meta">Push Slide Directly to Linked Viewers:</span>
         <div class="sync-quick-slides__row">
-          <button type="button" class="text-link-sm" data-sync-push-slide="1">01 · Cover</button>
-          <button type="button" class="text-link-sm" data-sync-push-slide="2">02 · Montesquieu</button>
-          <button type="button" class="text-link-sm" data-sync-push-slide="3">03 · Three Powers</button>
-          <button type="button" class="text-link-sm" data-sync-push-slide="4">04 · Brazil 1824</button>
-          <button type="button" class="text-link-sm" data-sync-push-slide="5">05 · 1896 Oath</button>
-          <button type="button" class="text-link-sm" data-sync-push-slide="6">06 · 1961 Justice</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="1">01 · Opening</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="2">02 · Liberty (¶7–10)</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="3">03 · Brazil 1824 (¶6)</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="4">04 · 1896 Oath</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="5">05 · 1961 Justice</button>
+          <button type="button" class="text-link-sm" data-sync-push-slide="6">06 · Transplants</button>
           <button type="button" class="text-link-sm" data-sync-push-slide="7">07 · Questions</button>
         </div>
       </div>
@@ -1571,6 +2151,116 @@
         <button type="button" class="text-link-sm" id="sync-google-auth-btn">Sign in with Google</button>
       </div>
     </section>
+  </div>
+</dialog>
+
+<!-- 9:16 Vertical Mobile Stories Preview Modal -->
+<dialog class="workspace-dialog stories-dialog" id="stories-preview-dialog" aria-labelledby="stories-dialog-title">
+  <div class="workspace-dialog__header">
+    <div>
+      <p class="source-tag t-meta">VERTICAL MOBILE PREVIEW · 9:16 STORIES · 1080 × 1920</p>
+      <h2 class="t-display-serif workspace-dialog__title" id="stories-dialog-title">Stories Preview · 7-Slide Walkthrough</h2>
+    </div>
+    <button class="dialog-close" id="stories-dialog-close" type="button">Close ×</button>
+  </div>
+
+  <p class="workspace-dialog__desc">
+    Guided walkthrough beginning with the PPGD-UFSC Event Poster landing screen, followed by the complete 7-slide sequence with interactive callouts and Chopin’s Nocturne Op. 9 No. 2 ambient piano, formatted in vertical 9:16 for Instagram Stories, TikTok, YouTube Shorts, and WhatsApp.
+  </p>
+
+  <div class="stories-player-frame">
+    <div class="stories-phone-mockup">
+      <div class="stories-phone-notch" aria-hidden="true"></div>
+      <video
+        id="stories-video-player"
+        class="stories-video"
+        playsinline
+        controls
+        preload="metadata"
+        poster="./public/assets/stories-poster.jpg"
+      >
+        <source src="./public/assets/montesquieu-stories-preview-9-16.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <!-- Social Media Sharing Strip (WhatsApp, Instagram Stories, LinkedIn) -->
+  <div class="stories-share-strip" role="region" aria-label="Social media sharing">
+    <div class="stories-share-strip__header">
+      <span class="source-tag t-meta">SHARE &amp; DISTRIBUTE STORIES (9:16)</span>
+      <span class="stories-share-strip__hint t-meta">Direct share to social apps</span>
+    </div>
+    <div class="stories-share-buttons">
+      <button
+        type="button"
+        class="stories-share-btn stories-share-btn--whatsapp t-ui"
+        id="stories-share-whatsapp"
+        title="Share Stories Video on WhatsApp"
+      >
+        <svg class="stories-share-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.03C9.36 7.03 9.08 7.09 8.84 7.35C8.6 7.61 7.92 8.25 7.92 9.54C7.92 10.83 8.86 12.07 9 12.24C9.13 12.42 10.87 15.11 13.53 16.26C15.74 17.22 16.19 17.02 16.66 16.98C17.13 16.93 18.19 16.35 18.41 15.73C18.63 15.11 18.63 14.58 18.57 14.47C18.51 14.36 18.34 14.3 18.09 14.17C17.84 14.05 16.61 13.44 16.38 13.36C16.15 13.27 15.99 13.23 15.82 13.47C15.65 13.72 15.18 14.3 15.03 14.47C14.89 14.64 14.75 14.66 14.5 14.53C14.25 14.41 13.45 14.15 12.5 13.3C11.76 12.64 11.26 11.83 11.12 11.58C10.98 11.33 11.11 11.2 11.23 11.08C11.34 10.97 11.48 10.79 11.6 10.65C11.72 10.5 11.77 10.4 11.85 10.23C11.93 10.06 11.89 9.92 11.83 9.79C11.77 9.67 11.28 8.46 11.07 7.97C10.87 7.48 10.67 7.55 10.52 7.54C10.37 7.53 10.21 7.53 10.04 7.53C9.88 7.53 9.62 7.59 9.53 7.03Z"/>
+        </svg>
+        <span>WhatsApp</span>
+      </button>
+
+      <button
+        type="button"
+        class="stories-share-btn stories-share-btn--instagram t-ui"
+        id="stories-share-instagram"
+        title="Share to Instagram Stories"
+      >
+        <svg class="stories-share-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        <span>Instagram Stories</span>
+      </button>
+
+      <button
+        type="button"
+        class="stories-share-btn stories-share-btn--linkedin t-ui"
+        id="stories-share-linkedin"
+        title="Share to LinkedIn"
+      >
+        <svg class="stories-share-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0 0-3.28 1.64 1.64 0 0 0 0 3.28m1.4 10.74v-8.37H5.06v8.37h2.8z"/>
+        </svg>
+        <span>LinkedIn</span>
+      </button>
+
+      <button
+        type="button"
+        class="stories-share-btn stories-share-btn--native t-ui"
+        id="stories-share-native"
+        title="Share via device menu or copy direct link"
+      >
+        <svg class="stories-share-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
+        </svg>
+        <span id="stories-share-native-label">Copy Link</span>
+      </button>
+    </div>
+    <div class="stories-share-feedback t-meta" id="stories-share-feedback" aria-live="polite" hidden></div>
+  </div>
+
+  <div class="stories-dialog__actions">
+    <a
+      class="action-btn t-ui workspace-primary-btn"
+      href="./public/assets/montesquieu-stories-preview-9-16.mp4"
+      download="montesquieu-stories-preview-9-16.mp4"
+      target="_blank"
+    >
+      ⬇️ Download 9:16 Stories Video (.mp4)
+    </a>
+    <button class="action-btn t-ui" id="stories-view-landing-btn" type="button">
+      🏛️ View Event Landing
+    </button>
+    <button class="action-btn t-ui" id="stories-replay-btn" type="button">
+      ↺ Replay
+    </button>
+    <button class="action-btn t-ui" id="stories-dismiss-btn" type="button">
+      Back to Presentation
+    </button>
   </div>
 </dialog>
 
@@ -1659,7 +2349,7 @@
     <div class="circulation-timeline" id="legal-circulation-timeline">
       <div class="circulation-timeline__head">
         <p class="studio-panel__intro">
-          Compare parallel French and Brazilian milestones across <strong>Montesquieu’s <cite>De l’esprit des lois</cite> (1748)</strong>, <strong>Serge Dauchy’s conference paper</strong>, the 1824 Constitution (Art. 10), Figueiredo’s 1896 canvas, and Ceschiatti’s 1961 sculpture at the STF.
+          Compare parallel French and Brazilian milestones across <strong>Serge Dauchy’s manuscript (¶6–14)</strong>, <strong>Montesquieu’s <cite>De l’esprit des lois</cite> (1748 / 1777 ed.)</strong>, the 1824 Constitution (Art. 10), Figueiredo’s 1896 canvas, Ceschiatti’s 1961 stone sculpture at the STF, and the 1916 Civil Code.
         </p>
 
         <div class="circulation-filter-bar" role="group" aria-label="Filter timeline by legal theme">
@@ -1673,7 +2363,7 @@
             Institutional Images (2)
           </button>
           <button class="circulation-filter-btn" type="button" data-timeline-filter="circulation" aria-pressed="false">
-            Author &amp; Context (1)
+            Transplants &amp; 1916 (1)
           </button>
         </div>
       </div>
@@ -1681,7 +2371,7 @@
       <div class="circulation-axis-headers t-meta" aria-hidden="true">
         <span>FRANCE · MONTESQUIEU &amp; DAUCHY</span>
         <span>⇄</span>
-        <span>BRAZIL · INSTITUTIONS &amp; IMAGES</span>
+        <span>BRAZIL · INSTITUTIONS, IMAGES &amp; 1916 CODE</span>
       </div>
 
       <div class="circulation-rows" id="circulation-timeline-list" role="listbox" aria-label="Parallel French and Brazilian legal dates"></div>
@@ -1738,16 +2428,16 @@
   <!-- TAB 2: GOOGLE SEARCH GROUNDING RESEARCH DRAWER -->
   <section class="studio-panel" id="panel-research" role="tabpanel" aria-labelledby="tab-btn-research" hidden>
     <p class="studio-panel__intro">
-      Verify Montesquieu’s magistracy in Bordeaux, Book XI chapter 6 of <cite>De l’esprit des lois</cite>, Article 10 of the 1824 Brazilian Constitution, Articles 15 and 44 of the 1891 Constitution, and provenance for Figueiredo (1896) and Ceschiatti (1961) using live <strong>Google Search grounding</strong>.
+      Verify Serge Dauchy’s quotations (¶6–14), Montesquieu’s 1777 text (I.3, XI.6, XIX.4), Article 10 of the 1824 Brazilian Constitution, Articles 15 and 44 of the 1891 Constitution, and museum/court records for Figueiredo (1896) and Ceschiatti (1961, stone) using live <strong>Google Search grounding</strong>.
     </p>
 
     <div class="studio-field">
       <span class="studio-label t-meta">Quick Verification Prompts</span>
       <div class="studio-chips">
-        <button class="studio-chip" type="button" data-research-prompt="Examine Montesquieu’s judicial career in the Parlement of Bordeaux and how Book XI, chapter 6 of De l’esprit des lois (1748) relates separating legislative, executive, and judicial functions to political liberty.">Montesquieu · Book XI, ch. 6</button>
+        <button class="studio-chip" type="button" data-research-prompt="Verify Montesquieu’s 1777 French text for Book XIX chapter 4 (esprit général), Book XI chapter 6 (celle de juger est en quelque façon nulle), and Book I chapter 3 alongside Serge Dauchy’s paragraph 7.">Montesquieu · XIX.4, XI.6 &amp; I.3</button>
         <button class="studio-chip" type="button" data-research-prompt="Verify Article 10 of the 1824 Imperial Constitution of Brazil enumerating Legislative, Moderating, Executive, and Judicial powers alongside Benjamin Constant’s theory of neutral power.">1824 Constitution · Article 10</button>
         <button class="studio-chip" type="button" data-research-prompt="Verify the Museu da República catalogue record for Aurélio de Figueiredo’s Compromisso Constitucional (1896, representing the oath of 26 February 1891) alongside Articles 15 and 44 of the 1891 Brazilian Constitution.">Figueiredo (1896) &amp; 1891 Const.</button>
-        <button class="studio-chip" type="button" data-research-prompt="Examine Alfredo Ceschiatti’s 1961 sculpture A Justiça at the Supremo Tribunal Federal in Brasília and Rafael Lazzarotto Simioni’s study on the resting sword and judicial autonomy.">Ceschiatti (1961) &amp; Simioni</button>
+        <button class="studio-chip" type="button" data-research-prompt="Verify the STF cultural catalogue entry for Alfredo Ceschiatti’s 1961 sculpture A Justiça in stone (“pedra de Petrópolis”, 3.30 m) and Alan Watson (1974) vs. Pierre Legrand (1997, MJ 4(2): 111–124).">Ceschiatti (Stone) &amp; Transplants</button>
       </div>
     </div>
 
@@ -1800,8 +2490,8 @@
       <select id="image-source-select" class="studio-select">
         <option value="none">Create preparatory diagram from text prompt</option>
         <option value="montesquieu-oval">Slide 01 · Montesquieu Portrait Medallion</option>
-        <option value="compromisso">Slide 05 · Compromisso Constitucional (1896)</option>
-        <option value="justica">Slide 06 · A Justiça — Ceschiatti (1961)</option>
+        <option value="compromisso">Slide 04 · Compromisso Constitucional (1896)</option>
+        <option value="justica">Slide 05 · A Justiça — Ceschiatti (1961, Stone)</option>
         <option value="upload">Upload a photo from your computer...</option>
       </select>
     </div>
@@ -1870,8 +2560,8 @@
         <div class="studio-apply-controls">
           <select id="image-target-slide" class="studio-select">
             <option value="slide-1">Slide 01 · Montesquieu Oval</option>
-            <option value="slide-5">Slide 05 · Compromisso Constitucional</option>
-            <option value="slide-6">Slide 06 · A Justiça (STF)</option>
+            <option value="slide-4">Slide 04 · Compromisso Constitucional</option>
+            <option value="slide-5">Slide 05 · A Justiça (STF)</option>
           </select>
           <button class="action-btn t-ui workspace-primary-btn" id="image-apply-btn" type="button">Preview on Slide</button>
           <button class="action-btn t-ui" id="image-restore-btn" type="button">Restore Verified Image ↺</button>
@@ -1889,8 +2579,8 @@
     <div class="studio-field">
       <label class="studio-label t-meta" for="video-source-select">Reference Plate</label>
       <select id="video-source-select" class="studio-select">
-        <option value="compromisso">Slide 05 · Compromisso Constitucional (1896)</option>
-        <option value="justica">Slide 06 · A Justiça — Ceschiatti (1961)</option>
+        <option value="compromisso">Slide 04 · Compromisso Constitucional (1896)</option>
+        <option value="justica">Slide 05 · A Justiça — Ceschiatti (1961, Stone)</option>
         <option value="montesquieu-oval">Slide 01 · Montesquieu Portrait Medallion</option>
         <option value="upload">Upload a photo from your computer...</option>
       </select>
@@ -1942,8 +2632,8 @@
         <label class="studio-label t-meta" for="video-target-slide">Preview on Slide:</label>
         <div class="studio-apply-controls">
           <select id="video-target-slide" class="studio-select">
-            <option value="slide-5">Slide 05 · Compromisso Constitucional</option>
-            <option value="slide-6">Slide 06 · A Justiça (STF)</option>
+            <option value="slide-4">Slide 04 · Compromisso Constitucional</option>
+            <option value="slide-5">Slide 05 · A Justiça (STF)</option>
             <option value="slide-1">Slide 01 · Montesquieu Oval</option>
           </select>
           <button class="action-btn t-ui workspace-primary-btn" id="video-apply-btn" type="button">Preview on Slide</button>
@@ -1956,7 +2646,7 @@
   <!-- TAB 5: GEMINI DISCUSSANT CHATBOT -->
   <section class="studio-panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-btn-chat" hidden>
     <p class="studio-panel__intro">
-      Engage in a scholarly multi-turn dialogue with Gemini on Montesquieu, Book XI chapter 6, Brazil’s 1824 and 1891 Constitutions, institutional iconography, and Serge Dauchy’s paper.
+      Engage in a scholarly multi-turn dialogue with Gemini on Serge Dauchy’s 14-paragraph manuscript, Montesquieu’s <cite>De l’esprit des lois</cite> (I.3, XI.6, XIX.4), Brazil’s 1824 and 1891 Constitutions, Figueiredo (1896), Ceschiatti (1961), and Watson vs. Legrand.
     </p>
 
     <div class="studio-field">
@@ -1972,10 +2662,10 @@
     <div class="studio-field">
       <span class="studio-label t-meta">Quick Discussion Prompts</span>
       <div class="studio-chips">
-        <button class="studio-chip" type="button" data-chat-prompt="What was lost from Montesquieu’s account of political liberty when De l’esprit des lois came to be read mainly through the separation of powers?">Beyond Separation of Powers</button>
-        <button class="studio-chip" type="button" data-chat-prompt="Why did Brazil’s 1824 Constitution adopt four powers (Legislative, Moderating, Executive, Judicial) drawing on Benjamin Constant instead of a tripartite model?">1824 Moderating Power</button>
-        <button class="studio-chip" type="button" data-chat-prompt="How does Aurélio de Figueiredo’s Compromisso Constitucional (1896) relate to Articles 15 and 44 of the 1891 Constitution without proving de facto institutional independence?">Figueiredo (1896) &amp; 1891 Oath</button>
-        <button class="studio-chip" type="button" data-chat-prompt="How does Ceschiatti’s A Justiça (1961) illustrate the difference between staging judicial autonomy as a visual ideal and sustaining political liberty through laws and practices?">Ceschiatti (1961) &amp; Autonomy</button>
+        <button class="studio-chip" type="button" data-chat-prompt="How does Serge Dauchy’s paragraph 7 critique a purely ‘constitutionalist’ reading of Montesquieu by emphasizing civil and criminal laws and a judicial frame?">Dauchy ¶7 · Beyond Constitutionalism</button>
+        <button class="studio-chip" type="button" data-chat-prompt="Why does Serge Dauchy describe Brazil’s 1824 four-power constitution (Legislative, Moderating, Executive, Judicial) as an evolution or correction of Montesquieu inspired by Benjamin Constant?">Dauchy ¶6 · 1824 Four Powers</button>
+        <button class="studio-chip" type="button" data-chat-prompt="How do Alan Watson (1974) and Pierre Legrand (1997) frame the debate on legal transplants in Dauchy’s paragraphs 11–12, and how does Dauchy move to historical hybridity and the 1916 Civil Code in paragraphs 13–14?">Dauchy ¶11–14 · Transplants &amp; 1916 Code</button>
+        <button class="studio-chip" type="button" data-chat-prompt="How does contrasting Montesquieu XI.6 (celle de juger est en quelque façon nulle) and Dauchy ¶7 (surtout judiciaire) sharpen our reading of Ceschiatti’s 1961 stone sculpture A Justiça?">Slide 05 · XI.6 &amp; Stone Justice</button>
       </div>
     </div>
 
@@ -1983,7 +2673,7 @@
       <div class="chat-message chat-message--assistant">
         <div class="chat-message__author t-meta">DISCUSSANT SCHOLARLY ASSISTANT</div>
         <div class="chat-message__body">
-          Welcome, Ana Vitória. I am ready to explore questions on Montesquieu’s <em>De l’esprit des lois</em>, Brazil’s 1824 and 1891 constitutional arrangements, Figueiredo’s and Ceschiatti’s artworks, and your two closing questions for Serge Dauchy.
+          Welcome, Ana Vitória. I am ready to test arguments and Q&amp;A responses for your v3 discussant intervention on Serge Dauchy’s manuscript (¶1–14).
         </div>
       </div>
     </div>
@@ -2020,22 +2710,22 @@
 
   <header class="meridian-top-badge" id="meridian-top-badge">
     <div class="meridian-top-badge__head">
-      <p class="meridian-top-badge__kicker t-meta" id="meridian-badge-kicker">MONTESQUIEU AND THE THREE POWERS</p>
+      <p class="meridian-top-badge__kicker t-meta" id="meridian-badge-kicker">DISCUSSING DAUCHY’S MONTESQUIEU · V3</p>
       <button class="meridian-close-btn t-meta" id="meridian-3d-close" type="button" aria-label="Close 3D Stage">
         Return to Slides ×
       </button>
     </div>
     <h2 class="meridian-top-badge__title t-display-serif" id="meridian-badge-title">
-      Transatlantic Meridian of Political Liberty &amp; Legal Images
+      Transatlantic Meridian: Context, Reception &amp; Representation of Powers
     </h2>
     <p class="meridian-top-badge__note" id="meridian-badge-note">
-      Drag to orbit · Inspect the French Armillary (1748) and the Brazilian Institutional Plinth (1824, 1891/1896, 1961).
+      Drag to orbit · Inspect the French Armillary (1748) and the Brazilian Institutional Plinth (1824, 1891/1896, 1961, 1916).
     </p>
   </header>
 
   <aside class="meridian-bottom-dock" id="meridian-bottom-dock" aria-label="3D Scene Controls">
     <div class="meridian-dock__bar">
-      <span class="meridian-dock__label t-meta">3D SPATIAL COMPANION · SEVEN-SLIDE INTERVENTION</span>
+      <span class="meridian-dock__label t-meta">3D SPATIAL COMPANION · SEVEN-SLIDE INTERVENTION (V3)</span>
       <button class="meridian-dock__toggle t-meta" id="meridian-dock-toggle" type="button" aria-expanded="true">
         ▾ Hide Controls (H)
       </button>
@@ -2047,19 +2737,19 @@
           Overview · France ⇄ Brasil
         </button>
         <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="france1748" aria-pressed="false">
-          01–03 · Montesquieu &amp; Book XI
+          01–02 · Liberty &amp; XIX.4 (¶7–10)
         </button>
         <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="brazil1824" aria-pressed="false">
-          04 · 1824 Four Powers
+          03 · 1824 Four Powers (¶6)
         </button>
         <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="oath1891" aria-pressed="false">
-          05 · 1896 Oath Canvas
+          04 · 1896 Oath Canvas
         </button>
         <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="justica1961" aria-pressed="false">
-          06 · 1961 A Justiça (STF)
+          05 · 1961 Stone Justice (XI.6)
         </button>
         <button class="meridian-preset-btn t-meta" type="button" data-meridian-preset="codigo1916" aria-pressed="false">
-          07 · Questions for Serge
+          06–07 · Transplants &amp; 1916 Code
         </button>
       </div>
 
@@ -2086,10 +2776,8 @@
 </section>
 
 <script src="./vendor/js/gsap.min.js"></script>
-<script src="./vendor/js/ScrollTrigger.min.js"></script>
 <script type="module" src="./js/report.js"></script>
 <script type="module" src="./js/studio.js"></script>
 <script type="module" src="./js/workspace-firebase.js"></script>
-<script type="module" src="./js/three-meridian.js"></script>
 </body>
 </html>

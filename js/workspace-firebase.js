@@ -6,6 +6,7 @@ import {
   buildAudienceShareUrl,
   parseSyncParamsFromSearch
 } from './audience-sync-logic.mjs';
+import { WORKSPACE_SCOPES } from './google-slides-logic.mjs';
 
 const REVISIONS_STORAGE_KEY = 'three-powers-revisions-v1';
 const LEGACY_KEYS = [
@@ -21,6 +22,85 @@ let auth = null;
 let fbFirestoreMod = null;
 let fbRtdbMod = null;
 let fbAuthMod = null;
+let ensureFirebaseBootFn = null;
+
+// Strictly in-memory OAuth access token cache for Google Workspace APIs (NEVER stored in localStorage/sessionStorage)
+let isSigningInWorkspace = false;
+let cachedWorkspaceAccessToken = null;
+const workspaceAuthListeners = new Set();
+
+function notifyWorkspaceAuthListeners() {
+  const user = auth?.currentUser || null;
+  const snapshot = {
+    user,
+    accessToken: cachedWorkspaceAccessToken,
+    needsAuth: !user || !cachedWorkspaceAccessToken
+  };
+  workspaceAuthListeners.forEach((fn) => {
+    try {
+      fn(snapshot);
+    } catch (e) {}
+  });
+}
+
+export async function ensureFirebaseReady() {
+  if (typeof ensureFirebaseBootFn === 'function') {
+    await ensureFirebaseBootFn();
+  }
+  return { app, auth, db, rtdb };
+}
+
+export function subscribeWorkspaceAuth(listener) {
+  if (typeof listener !== 'function') return () => {};
+  workspaceAuthListeners.add(listener);
+  listener({
+    user: auth?.currentUser || null,
+    accessToken: cachedWorkspaceAccessToken,
+    needsAuth: !auth?.currentUser || !cachedWorkspaceAccessToken
+  });
+  return () => workspaceAuthListeners.delete(listener);
+}
+
+export async function getWorkspaceAccessToken() {
+  return cachedWorkspaceAccessToken;
+}
+
+export function clearWorkspaceAccessToken() {
+  cachedWorkspaceAccessToken = null;
+  notifyWorkspaceAuthListeners();
+}
+
+export async function googleWorkspaceSignIn() {
+  await ensureFirebaseReady();
+  if (!auth || !fbAuthMod) {
+    throw new Error('Firebase Authentication is not available. Check your network connection.');
+  }
+  try {
+    isSigningInWorkspace = true;
+    const provider = new fbAuthMod.GoogleAuthProvider();
+    WORKSPACE_SCOPES.forEach((scope) => provider.addScope(scope));
+    provider.setCustomParameters({ prompt: 'consent' });
+    const result = await fbAuthMod.signInWithPopup(auth, provider);
+    const credential = fbAuthMod.GoogleAuthProvider.credentialFromResult(result);
+    if (!credential?.accessToken) {
+      throw new Error('Google Sign-In completed without returning a Workspace OAuth access token.');
+    }
+    cachedWorkspaceAccessToken = credential.accessToken;
+    notifyWorkspaceAuthListeners();
+    return { user: result.user, accessToken: cachedWorkspaceAccessToken };
+  } finally {
+    isSigningInWorkspace = false;
+  }
+}
+
+export async function workspaceSignOut() {
+  await ensureFirebaseReady();
+  cachedWorkspaceAccessToken = null;
+  if (auth && fbAuthMod) {
+    await fbAuthMod.signOut(auth);
+  }
+  notifyWorkspaceAuthListeners();
+}
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -68,7 +148,7 @@ function sanitizeEditsMap(rawEdits) {
   return clean;
 }
 
-function showConfirmDialog({ title, message, confirmLabel = 'Confirm' }) {
+export function showConfirmDialog({ title, message, confirmLabel = 'Confirm' }) {
   return new Promise((resolve) => {
     const dialog = $('#confirm-dialog');
     const titleEl = $('#confirm-dialog-title');
@@ -301,23 +381,22 @@ function importRevisionsFromJson(file) {
 // ============================================================================
 const CALLOUT_LABELS = {
   '': 'Default slide view',
-  constitutional: 'Slide 02 · Constitutional arrangements',
-  'civil-criminal': 'Slide 02 · Civil and criminal laws',
-  judicial: 'Slide 02 · Judicial institutions',
-  'three-powers': 'Slide 03 · Montesquieu Tripartite Reference',
-  'four-powers': 'Slide 03 · 1824 Art. 10 Four Powers',
-  compromisso: 'Slide 04 · Figueiredo · Compromisso Constitucional (1896)',
-  justica: 'Slide 04 · Ceschiatti · A Justiça (1961, STF)',
-  'sword-detail': 'Slide 04 · A Justiça (1961) · Detail: Sword on lap',
-  whole: 'Slide 04 · A Justiça (1961) · Whole sculpture',
-  'pause-5s': '5-Second Visual Pause Spotlight',
-  watson: 'Slide 05 · Watson: rules move and develop in new settings',
-  legrand: 'Slide 05 · Legrand: legal meaning depends on context',
-  imposed: 'Slide 06 · Imposed transfers',
-  deliberate: 'Slide 06 · Deliberate receptions',
-  overlapping: 'Slide 06 · Overlapping legal orders',
-  q1: 'Slide 07 · Question 1: Rethinking Context & Renegotiated Boundaries',
-  q2: 'Slide 07 · Question 2: Beyond Separation of Powers'
+  constitutional: 'Slide 02 · Constitutional arrangements (¶6)',
+  'civil-criminal': 'Slide 02 · Civil and criminal laws (¶7)',
+  judicial: 'Slide 02 · Judicial frame « surtout judiciaire » (¶7)',
+  'three-powers': 'Slide 03 · Montesquieu Tripartite Reference (XI.6)',
+  'four-powers': 'Slide 03 · 1824 Art. 10 Four Powers (¶6)',
+  deodoro: 'Slide 04 · Compromisso Constitucional · Executive Oath',
+  prudente: 'Slide 04 · Compromisso Constitucional · Prudente de Moraes at Centre',
+  gallery: 'Slide 04 · Compromisso Constitucional · Galleries & Public Witness',
+  'sword-detail': 'Slide 05 · A Justiça (1961) · Detail: Sword on lap',
+  whole: 'Slide 05 · A Justiça (1961) · Whole stone sculpture',
+  'pause-5s': '10-Second Visual Pause Spotlight',
+  watson: 'Slide 06 · Alan Watson (1974): Legal Transplants (¶11)',
+  legrand: 'Slide 06 · Pierre Legrand (1997): Impossibility of Transplants (¶12)',
+  code1916: 'Slide 06 · Dauchy ¶13–14: Hybridity & 1916 Brazilian Civil Code',
+  q1: 'Slide 07 · Question 1: Renegotiation of Legal Boundaries (¶10–14)',
+  q2: 'Slide 07 · Question 2: Circulation, Appropriation & Authority (¶6–7)'
 };
 
 function initAudienceSyncUI() {
@@ -410,7 +489,7 @@ function initAudienceSyncUI() {
   function updateSyncStatusDisplay(stateObj) {
     const slideNum = stateObj?.currentSlide || window.dauchyDeckBridge?.getCurrentSlide() || 1;
     const padded = String(slideNum).padStart(2, '0');
-    const slideTitle = stateObj?.slideTitle || 'Whose liberty? Montesquieu in Brazil';
+    const slideTitle = stateObj?.slideTitle || 'Discussing Dauchy’s Montesquieu';
     const calloutKey = stateObj?.activeCallout ?? (window.dauchyDeckBridge?.getCurrentCallout() || '');
     const calloutText = CALLOUT_LABELS[calloutKey] || CALLOUT_LABELS[''];
     const code = stateObj?.sessionCode || activeSessionCode || DEFAULT_SESSION_CODE;
@@ -951,15 +1030,15 @@ function initAudienceSyncUI() {
     }
   });
 
-  // Optional Google Sign-In for authenticated cloud lock
+  // Optional Google Sign-In for authenticated cloud lock & Workspace scopes
   googleAuthBtn?.addEventListener('click', async () => {
-    if (!auth || !fbAuthMod) return;
     try {
+      await ensureFirebaseReady();
+      if (!auth || !fbAuthMod) return;
       if (auth.currentUser) {
-        await fbAuthMod.signOut(auth);
+        await workspaceSignOut();
       } else {
-        const provider = new fbAuthMod.GoogleAuthProvider();
-        await fbAuthMod.signInWithPopup(auth, provider);
+        await googleWorkspaceSignIn();
       }
     } catch (e) {}
   });
@@ -977,9 +1056,18 @@ function initAudienceSyncUI() {
     onFirebaseReady() {
       if (auth && fbAuthMod) {
         fbAuthMod.onAuthStateChanged(auth, (user) => {
+          if (user) {
+            if (!cachedWorkspaceAccessToken && !isSigningInWorkspace) {
+              cachedWorkspaceAccessToken = null;
+            }
+          } else {
+            cachedWorkspaceAccessToken = null;
+          }
+          notifyWorkspaceAuthListeners();
+
           if (authStatusText) {
             authStatusText.textContent = user
-              ? `Signed in as ${user.email || user.displayName || 'Presenter'} · Cloud Firestore & RTDB active`
+              ? `Signed in as ${user.email || user.displayName || 'Presenter'} · Cloud Firestore & Workspace active`
               : 'Firebase Realtime Sync ready · Optional Google Sign-In for Firestore lock';
           }
           if (googleAuthBtn) {
@@ -1017,36 +1105,64 @@ async function initFirebaseAndRevisions() {
   renderRevisionsList();
   const syncController = initAudienceSyncUI();
 
-  // Dynamically load Firebase App, Auth, Realtime Database, and Firestore when online
-  if (!navigator.onLine) return;
-  try {
-    const res = await fetch('./firebase-applet-config.json');
-    if (!res.ok) return;
-    const firebaseConfig = await res.json();
-    const [appMod, authMod, firestoreMod, rtdbMod] = await Promise.all([
-      import('firebase/app'),
-      import('firebase/auth'),
-      import('firebase/firestore'),
-      import('firebase/database').catch(() => null)
-    ]);
-
-    fbAuthMod = authMod;
-    fbFirestoreMod = firestoreMod;
-    fbRtdbMod = rtdbMod;
-
-    app = appMod.initializeApp(firebaseConfig);
-    db = firestoreMod.getFirestore(app, firebaseConfig.firestoreDatabaseId);
-    auth = authMod.getAuth(app);
-
-    if (rtdbMod && typeof rtdbMod.getDatabase === 'function' && firebaseConfig.databaseURL) {
+  let firebaseBootPromise = null;
+  async function bootFirebaseSdkIfNeeded() {
+    if (firebaseBootPromise) return firebaseBootPromise;
+    if (!navigator.onLine) return;
+    firebaseBootPromise = (async () => {
       try {
-        rtdb = rtdbMod.getDatabase(app, firebaseConfig.databaseURL);
-      } catch (e) {}
-    }
+        const res = await fetch('./firebase-applet-config.json');
+        if (!res.ok) return;
+        const firebaseConfig = await res.json();
+        const [appMod, authMod, firestoreMod, rtdbMod] = await Promise.all([
+          import('firebase/app'),
+          import('firebase/auth'),
+          import('firebase/firestore'),
+          import('firebase/database').catch(() => null)
+        ]);
 
-    syncController.onFirebaseReady();
-    await firestoreMod.getDocFromServer(firestoreMod.doc(db, 'test', 'connection')).catch(() => {});
-  } catch (e) {}
+        fbAuthMod = authMod;
+        fbFirestoreMod = firestoreMod;
+        fbRtdbMod = rtdbMod;
+
+        app = appMod.initializeApp(firebaseConfig);
+        db = firestoreMod.getFirestore(app, firebaseConfig.firestoreDatabaseId);
+        auth = authMod.getAuth(app);
+
+        if (rtdbMod && typeof rtdbMod.getDatabase === 'function' && firebaseConfig.databaseURL) {
+          try {
+            rtdb = rtdbMod.getDatabase(app, firebaseConfig.databaseURL);
+          } catch (e) {}
+        }
+
+        syncController.onFirebaseReady();
+      } catch (e) {}
+    })();
+    return firebaseBootPromise;
+  }
+
+  ensureFirebaseBootFn = bootFirebaseSdkIfNeeded;
+
+  // Boot immediately only if URL has ?sync=; otherwise load on demand or during idle time
+  if ((window.location.search || '').includes('sync=')) {
+    bootFirebaseSdkIfNeeded();
+  } else {
+    [
+      '#sync-audience-btn',
+      '#mobile-sync-toggle',
+      '#header-google-slides-btn',
+      '#prep-google-slides-btn',
+      '#mobile-google-slides-toggle'
+    ].forEach((sel) => {
+      $(sel)?.addEventListener('click', bootFirebaseSdkIfNeeded, { once: true });
+    });
+    const scheduleIdle =
+      typeof window.requestIdleCallback === 'function'
+        ? (cb) => window.requestIdleCallback(cb, { timeout: 3500 })
+        : (cb) => setTimeout(cb, 2200);
+    scheduleIdle(() => bootFirebaseSdkIfNeeded());
+  }
 }
 
 initFirebaseAndRevisions();
+

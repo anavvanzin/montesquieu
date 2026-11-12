@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { perfMonitor } from './perf-monitor.mjs';
 
 // Module-scope reusable scratch objects (zero per-frame GC allocations)
 const _targetCamPos = new THREE.Vector3();
@@ -21,48 +22,48 @@ const ERA_PRESETS = {
     look: [0, 1.45, 0],
     voyage: 0.48,
     kicker: 'TRANSATLANTIC LEGAL MERIDIAN · FRANCE ⇄ BRAZIL',
-    title: 'Montesquieu and the three powers',
-    note: 'Drag to orbit · Political liberty, legal images, and institutional autonomy across France (1748) and Brazil (1824–1961).'
+    title: 'Discussing Dauchy’s Montesquieu',
+    note: 'Drag to orbit · Context, reception, and the representation of powers across France (1748) and Brazil (1824–1961).'
   },
   france1748: {
     cam: [-4.15, 2.85, 4.45],
     look: [-4.2, 1.75, 0],
     voyage: 0.08,
-    kicker: 'SLIDES 01–03 · BORDEAUX & DE L’ESPRIT DES LOIS (1748)',
-    title: 'Who was Montesquieu · Book XI, chapter 6',
-    note: 'Magistrate in the Parlement of Bordeaux (1689–1755); political liberty as security under laws and limits preventing concentrated power.'
+    kicker: 'SLIDES 01–02 · DAUCHY ¶7 & ¶8–10 · MONTESQUIEU XIX.4',
+    title: 'Political liberty beyond the constitutional formula',
+    note: 'Dauchy ¶7 (civil and criminal laws + judicial frame « surtout judiciaire ») and Montesquieu XIX.4 on the general spirit.'
   },
   brazil1824: {
     cam: [0.35, 3.25, 6.2],
     look: [1.1, 1.85, 0],
     voyage: 0.52,
-    kicker: 'SLIDE 04 · CONSTITUTION OF 1824, ART. 10 · DAUCHY § 6',
-    title: 'Montesquieu in Brazil, 1824',
-    note: 'Four powers: Legislative · Moderating · Executive · Judicial (Benjamin Constant’s imperial model, not a fourth branch invented by Montesquieu).'
+    kicker: 'SLIDE 03 · DAUCHY ¶6 · CONSTITUIÇÃO DE 1824, ART. 10',
+    title: 'Brazil, 1824: circulation, correction, and four powers',
+    note: 'Dauchy ¶6 chronology (1789 · 1798 Barata · 1823 Assembly · 1949 translation) and Art. 10 four powers (Legislativo · Moderador · Executivo · Judicial).'
   },
   oath1891: {
     cam: [2.1, 2.75, 5.25],
     look: [2.6, 1.55, 0.25],
     voyage: 0.7,
-    kicker: 'SLIDE 05 · REPRESENTING DISTINCT AND RELATED INSTITUTIONS',
+    kicker: 'SLIDE 04 · DAUCHY ¶6–7 · COMPROMISSO CONSTITUCIONAL',
     title: 'Aurélio de Figueiredo · Compromisso Constitucional, 1896',
-    note: 'Represents Deodoro da Fonseca’s constitutional oath of 26 February 1891 before Prudente de Moraes and the Constituent Congress.'
+    note: 'Oil on canvas (330 × 257 cm, Museu da República): oath of 26 Feb. 1891 before Prudente de Moraes and the Constituent Congress.'
   },
   justica1961: {
     cam: [4.35, 2.75, 4.35],
     look: [4.2, 1.85, -0.15],
     voyage: 0.96,
-    kicker: 'SLIDE 06 · CESCHIATTI’S JUSTICE: THE SWORD AND AUTONOMY',
+    kicker: 'SLIDE 05 · DAUCHY ¶7 & XI.6 · A JUSTIÇA (1961)',
     title: 'Alfredo Ceschiatti · A Justiça, 1961',
-    note: 'Seated granite sculpture holding a resting sword before the Supremo Tribunal Federal in the Praça dos Três Poderes, Brasília.'
+    note: 'Seated stone (“pedra de Petrópolis”, 3.30 m) sculpture holding a resting sword before the Supremo Tribunal Federal in Brasília.'
   },
   codigo1916: {
     cam: [3.2, 2.35, 4.65],
     look: [4.0, 1.15, 0.55],
     voyage: 0.84,
-    kicker: 'SLIDE 07 · STAGE 3: QUESTIONS FOR SERGE DAUCHY',
-    title: 'Context, Renegotiated Boundaries & Political Liberty',
-    note: 'Connecting civil/criminal laws, judicial institutions, and institutional images to both closing questions for Serge Dauchy.'
+    kicker: 'SLIDES 06–07 · DAUCHY ¶10–14 · TRANSPLANTS & RENEGOTIATED BOUNDARIES',
+    title: 'Transplants, hybridity, and the Code of 1916',
+    note: 'Montesquieu I.3, Watson (1974), Legrand (1997), Beviláqua’s 1916 Civil Code, and the renegotiation of legal boundaries.'
   }
 };
 
@@ -283,6 +284,12 @@ export function initTransatlanticMeridian3D() {
   let controls = null;
   let isSoftwareGl = false;
   let gl = null;
+  let detectedRendererName = '';
+  let sceneBuildMs = 0;
+  let firstPerfWindowLogged = false;
+  let perfWindowFrames = 0;
+  let perfWindowSumMs = 0;
+  let perfWindowWorstMs = 0;
 
   // References to animated composite groups & lights
   let keyLight = null;
@@ -356,11 +363,13 @@ export function initTransatlanticMeridian3D() {
   function buildScene() {
     if (isInitialized) return;
     isInitialized = true;
+    const buildStartNow = performance.now();
 
     renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     gl = renderer.getContext();
     const dbg = gl.getExtension('WEBGL_debug_renderer_info');
     const rendererStr = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '';
+    detectedRendererName = rendererStr || 'WebGL Context';
     isSoftwareGl = /SwiftShader|llvmpipe|softpipe|Software|Microsoft Basic Render/i.test(rendererStr);
 
     const w = mount.clientWidth || window.innerWidth;
@@ -1001,6 +1010,20 @@ export function initTransatlanticMeridian3D() {
     });
 
     applyPreset('overview');
+    sceneBuildMs = performance.now() - buildStartNow;
+    perfMonitor.updateThreeMetrics(
+      {
+        initialized: true,
+        active: true,
+        preset: activePresetKey,
+        isSoftwareGl,
+        rendererName: detectedRendererName,
+        buildMs: sceneBuildMs,
+        geometries: renderer.info.memory.geometries,
+        textures: renderer.info.memory.textures
+      },
+      { logToConsole: true }
+    );
   }
 
   // Software-WebGL frame pacing guard via gl.fenceSync
@@ -1031,7 +1054,8 @@ export function initTransatlanticMeridian3D() {
 
   function tick(now = performance.now()) {
     if (!isRunning) return;
-    const dt = Math.min((now - lastTime) / 1000, 0.1);
+    const rawDeltaMs = Math.max(0, now - lastTime);
+    const dt = Math.min(rawDeltaMs / 1000, 0.1);
     lastTime = now;
     const t = now * 0.001;
 
@@ -1095,6 +1119,38 @@ export function initTransatlanticMeridian3D() {
 
     controls.update();
     renderer.render(scene, camera);
+
+    if (rawDeltaMs > 0 && rawDeltaMs < 500) {
+      perfWindowFrames += 1;
+      perfWindowSumMs += rawDeltaMs;
+      if (rawDeltaMs > perfWindowWorstMs) perfWindowWorstMs = rawDeltaMs;
+      if (perfWindowFrames >= 45) {
+        const avgMs = perfWindowSumMs / perfWindowFrames;
+        const shouldLog = !firstPerfWindowLogged;
+        firstPerfWindowLogged = true;
+        perfMonitor.updateThreeMetrics(
+          {
+            initialized: true,
+            active: true,
+            preset: activePresetKey,
+            isSoftwareGl,
+            rendererName: detectedRendererName,
+            buildMs: sceneBuildMs,
+            avgFrameMs: avgMs,
+            worstFrameMs: perfWindowWorstMs,
+            drawCalls: renderer.info.render.calls,
+            triangles: renderer.info.render.triangles,
+            geometries: renderer.info.memory.geometries,
+            textures: renderer.info.memory.textures
+          },
+          { logToConsole: shouldLog }
+        );
+        perfWindowFrames = 0;
+        perfWindowSumMs = 0;
+        perfWindowWorstMs = 0;
+      }
+    }
+
     afterDraw(tick);
   }
 
@@ -1118,7 +1174,21 @@ export function initTransatlanticMeridian3D() {
     }
     if (!isRunning) {
       isRunning = true;
+      perfWindowFrames = 0;
+      perfWindowSumMs = 0;
+      perfWindowWorstMs = 0;
       lastTime = performance.now();
+      perfMonitor.updateThreeMetrics(
+        {
+          initialized: true,
+          active: true,
+          preset: activePresetKey,
+          isSoftwareGl,
+          rendererName: detectedRendererName,
+          buildMs: sceneBuildMs
+        },
+        { logToConsole: false }
+      );
       rafId = requestAnimationFrame(tick);
     }
   }
@@ -1131,6 +1201,7 @@ export function initTransatlanticMeridian3D() {
       cancelAnimationFrame(rafId);
       rafId = 0;
     }
+    perfMonitor.updateThreeMetrics({ active: false }, { logToConsole: true });
   }
 
   function toggleDock() {
@@ -1206,10 +1277,17 @@ export function initTransatlanticMeridian3D() {
       openMeridian3D('overview');
     }
   });
+
+  const api = { openMeridian3D, closeMeridian3D };
+  window.openTransatlanticMeridian3D = openMeridian3D;
+  window.__meridian3DApi = api;
+  return api;
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initTransatlanticMeridian3D);
-} else {
-  initTransatlanticMeridian3D();
+export function ensureTransatlanticMeridian3D() {
+  if (window.__meridian3DApi) {
+    return window.__meridian3DApi;
+  }
+  return initTransatlanticMeridian3D();
 }
+

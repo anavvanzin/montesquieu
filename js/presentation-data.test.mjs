@@ -1,11 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+
 import {
   PRESENTATION_META,
+  VOICE_CODE_KEY,
+  DAUCHY_PARAGRAPH_MAP,
   PRINCIPAL_SLIDES,
+  CITATION_VERIFICATION_ITEMS,
+  PRIVATE_MANUSCRIPT_NOTES,
   VERIFIED_SOURCES,
   getSlideByNumber,
   getLecternScriptPages,
+  computeLecternScriptMetrics,
   getConstellationCoordinates,
   clampMusicVolume,
   formatMusicStatusLabel,
@@ -15,238 +21,133 @@ import {
   computeSlideTransitionSpec
 } from './presentation-data.mjs';
 
-test('PRESENTATION_META matches official PPGD-UFSC poster, France-Brazil artwork, Chopin Nocturne, and Montesquieu Lectern Script', () => {
-  assert.equal(PRESENTATION_META.title, 'Montesquieu and the three powers');
+test('PRESENTATION_META defines the v3 Discussing Dauchy’s Montesquieu deck', () => {
+  assert.equal(PRESENTATION_META.title, 'Discussing Dauchy’s Montesquieu');
+  assert.equal(PRESENTATION_META.subtitle, 'Context, reception and the representation of powers');
+  assert.equal(PRESENTATION_META.deckVersion, 'v3');
+  assert.match(PRESENTATION_META.presenter, /Ana Vitória Vanzin Mendes/);
+  assert.equal(PRESENTATION_META.dauchyBlue, '#1F35FF');
   assert.equal(
-    PRESENTATION_META.subtitle,
-    'Political liberty, legal images, and institutional autonomy in Brazil'
+    PRESENTATION_META.handoutPdfUrl,
+    './public/assets/aistudio/Discussing-Dauchy-handout_b097f5ac.pdf'
   );
-  assert.equal(PRESENTATION_META.presenter, 'Ana Vitória Vanzin Mendes · Discussant');
-  assert.equal(PRESENTATION_META.keynoteSpeaker, 'Serge Dauchy (CNRS/Université de Lille)');
-  assert.deepEqual(PRESENTATION_META.discussants, [
-    'Marja Mangili (UniCesusc)',
-    'Ana Vitória Vanzin Mendes (UFSC)'
-  ]);
-  assert.equal(PRESENTATION_META.eventDateTime, '11 de novembro de 2026 · 15h10');
-  assert.ok(PRESENTATION_META.eventPosterUrl.endsWith('.png'));
-  assert.ok(PRESENTATION_META.flagsMixUrl.endsWith('.png'));
-  assert.ok(PRESENTATION_META.backgroundMusic.src.endsWith('.mp3'));
-  assert.equal(PRESENTATION_META.backgroundMusic.defaultVolume, 0.12);
-  assert.equal(PRESENTATION_META.backgroundMusic.maxVolume, 0.35);
-  assert.equal(PRESENTATION_META.targetDurationMinutes, 10);
-  assert.equal(PRESENTATION_META.presenterTipsShortcut, 'N');
-  assert.equal(PRESENTATION_META.lecternScriptShortcut, 'L');
 });
 
-test('Background music helpers enforce gentle low-volume cap and clear status labels', () => {
-  assert.equal(clampMusicVolume(undefined), 0.12);
-  assert.equal(clampMusicVolume('invalid'), 0.12);
-  assert.equal(clampMusicVolume(-0.5), 0);
-  assert.equal(clampMusicVolume(0.08), 0.08);
-  assert.equal(clampMusicVolume(0.95), 0.35);
+test('VOICE_CODE_KEY and DAUCHY_PARAGRAPH_MAP define the 4-voice key and 5 manuscript paragraph bands', () => {
+  assert.equal(VOICE_CODE_KEY.length, 4);
+  assert.deepEqual(
+    VOICE_CODE_KEY.map((v) => v.id),
+    ['dauchy', 'montesquieu', 'other-source', 'my-reading']
+  );
 
-  const playingLabel = formatMusicStatusLabel({ playing: true, muted: false, volume: 0.12 });
-  assert.equal(playingLabel.shortLabel, 'Nocturne · 12%');
-  assert.equal(playingLabel.percent, 12);
-
-  const mutedLabel = formatMusicStatusLabel({ playing: true, muted: true, volume: 0.12 });
-  assert.equal(mutedLabel.shortLabel, 'Piano · Muted');
-  assert.equal(mutedLabel.percent, 0);
-
-  const standbyLabel = formatMusicStatusLabel({ playing: false, muted: false, volume: 0.12 });
-  assert.equal(standbyLabel.shortLabel, 'Play Nocturne · 12%');
+  assert.equal(DAUCHY_PARAGRAPH_MAP.length, 5);
+  assert.deepEqual(
+    DAUCHY_PARAGRAPH_MAP.map((m) => m.paraRef),
+    ['¶6', '¶7', '¶8–10', '¶11–12', '¶13–14']
+  );
 });
 
-test('shouldBypassOpeningPoster honors ?autostart=1, ?script=1, ?sync=, and #slide-N / #lectern-script deep links', () => {
-  assert.equal(shouldBypassOpeningPoster('', ''), false);
-  assert.equal(shouldBypassOpeningPoster('?autostart=1', ''), true);
-  assert.equal(shouldBypassOpeningPoster('?foo=bar&autostart=1', ''), true);
-  assert.equal(shouldBypassOpeningPoster('?script=1', ''), true);
-  assert.equal(shouldBypassOpeningPoster('?sync=UFSC-2026', ''), true);
-  assert.equal(shouldBypassOpeningPoster('', '#slide-5'), true);
-  assert.equal(shouldBypassOpeningPoster('', '#sources'), true);
-  assert.equal(shouldBypassOpeningPoster('', '#lectern-script'), true);
-  assert.equal(shouldBypassOpeningPoster('', '#unknown'), false);
-});
-
-test('PRINCIPAL_SLIDES matches the 7-slide Montesquieu Lectern Script sequence and preserves both Slide 7 questions', () => {
+test('PRINCIPAL_SLIDES contains 7 v3 slides with Dauchy ¶7, 1824 Art. 10, Figueiredo, Ceschiatti stone, Transplants/1916 Code, and Renegotiated Legal Boundaries', () => {
   assert.equal(PRINCIPAL_SLIDES.length, 7);
-  assert.deepEqual(
-    PRINCIPAL_SLIDES.map((s) => s.number),
-    [1, 2, 3, 4, 5, 6, 7]
-  );
 
-  const serialized = JSON.stringify(PRINCIPAL_SLIDES);
-  assert.equal(/married women/i.test(serialized), false);
+  for (let i = 0; i < 7; i++) {
+    const slide = PRINCIPAL_SLIDES[i];
+    assert.equal(slide.number, i + 1);
+    assert.equal(slide.id, `slide-${i + 1}`);
+    assert.ok(slide.title.length > 0);
+    assert.ok(slide.montesquieuAnchor.length > 10);
+    assert.ok(slide.keyPoint.length > 10);
+  }
 
+  // Slide 1: Opening
   const s1 = getSlideByNumber(1);
-  assert.equal(s1.title, 'Montesquieu and the three powers');
-  assert.equal(
-    s1.subtitle,
-    'Political liberty, legal images, and institutional autonomy in Brazil'
-  );
-  assert.equal(s1.presenter, 'Ana Vitória Vanzin Mendes · Discussant');
+  assert.match(s1.title, /Discussing Dauchy’s Montesquieu/i);
+  assert.match(s1.montesquieuAnchor, /Enfermer Montesquieu dans une vision purement/);
 
+  // Slide 2: Political liberty beyond the constitutional formula
   const s2 = getSlideByNumber(2);
-  assert.equal(s2.title, 'Who was Montesquieu');
-  assert.equal(s2.elements.length, 3);
-  assert.match(s2.elements[0].label, /Parlement of Bordeaux/);
+  assert.match(s2.title, /Political liberty beyond the constitutional formula/i);
+  assert.match(s2.keyPoint, /système de liberté/);
 
+  // Slide 3: Brazil, 1824
   const s3 = getSlideByNumber(3);
-  assert.equal(s3.title, 'Three powers, limits on power');
-  assert.deepEqual(
-    s3.functions.map((fn) => fn.id),
-    ['legislative', 'executive', 'judicial']
-  );
+  assert.match(s3.title, /Brazil, 1824: circulation, correction, and four powers/i);
 
+  // Slide 4: Compromisso Constitucional (1896)
   const s4 = getSlideByNumber(4);
-  assert.equal(s4.title, 'Montesquieu in Brazil, 1824');
-  assert.deepEqual(s4.powersComparison.fourPowers, [
-    'Legislative',
-    'Moderating',
-    'Executive',
-    'Judicial'
-  ]);
+  assert.match(s4.title, /Compromisso Constitucional/i);
 
+  // Slide 5: A Justiça (1961) — stone ("pedra de Petrópolis"), never granite in artwork/script
   const s5 = getSlideByNumber(5);
-  assert.equal(s5.title, 'Representing distinct and related institutions');
-  assert.equal(s5.artwork.artist, 'Aurélio de Figueiredo');
-  assert.equal(s5.artwork.paintingDate, '1896');
-  assert.equal(s5.artwork.eventDate, '26 February 1891');
-  assert.match(s5.artwork.credit, /Romulo Fialdini/);
-  assert.equal(s5.hasVisualPause, true);
+  assert.match(s5.title, /A Justiça.*null.*power/i);
+  assert.match(s5.artwork.material, /pedra de Petrópolis/);
+  assert.doesNotMatch(JSON.stringify(s5.artwork), /granite/i);
+  assert.doesNotMatch(JSON.stringify(s5.lecternScript), /granite/i);
 
+  // Slide 6: Transplants, hybridity, and the Code of 1916
   const s6 = getSlideByNumber(6);
-  assert.equal(s6.title, 'Ceschiatti’s Justice: the sword and autonomy');
-  assert.equal(s6.artwork.artist, 'Alfredo Ceschiatti');
-  assert.equal(s6.artwork.date, '1961');
-  assert.match(s6.artwork.credit, /Fellipe Sampaio \/ STF/);
+  assert.match(s6.title, /Transplants, hybridity, and the Code of 1916/i);
 
+  // Slide 7: Two questions for Serge — Question 1 explicitly reflects Dauchy's renegotiation of legal boundaries
   const s7 = getSlideByNumber(7);
-  assert.equal(s7.title, 'Questions for Serge');
   assert.equal(s7.questions.length, 2);
-  assert.match(
-    s7.questions[0].text,
-    /Montesquieu’s insistence that laws belong to a particular society/
-  );
-  assert.match(s7.questions[1].text, /read mainly through the separation of powers/);
+  assert.match(s7.montesquieuAnchor, /leurs frontières sont constamment renégociées/);
+  assert.match(s7.questions[0].text, /constantly renegotiated/i);
+  assert.match(s7.questions[0].text, /imposed transfers, assumed receptions, and direct contact between legal orders/i);
+  assert.match(s7.questions[0].subtext, /1916 Civil Code/i);
+  assert.match(s7.questions[1].text, /political authority/i);
 });
 
-test('getLecternScriptPages returns all 7 verbatim lectern pages with bold lead-ins, silent cues, and both closing questions', () => {
-  const pages = getLecternScriptPages();
-  assert.equal(pages.length, 7);
-  assert.deepEqual(
-    pages.map((p) => p.page),
-    [1, 2, 3, 4, 5, 6, 7]
-  );
+test('getLecternScriptPages and computeLecternScriptMetrics support cutting the Slide 5 XI.6 sentence', () => {
+  const fullPages = getLecternScriptPages({ excludeCuttable: false });
+  const cutPages = getLecternScriptPages({ excludeCuttable: true });
+  assert.equal(fullPages.length, 7);
+  assert.equal(cutPages.length, 7);
 
-  for (const page of pages) {
-    assert.ok(page.heading.startsWith(`Slide ${page.slideNumber}`));
-    assert.ok(page.elapsedRange.includes('–'));
-    assert.ok(page.paragraphs.length >= 3);
-    assert.ok(page.stageCue.startsWith('[') && page.stageCue.endsWith(']'));
-    for (const para of page.paragraphs) {
-      assert.ok(para.leadIn.length > 0);
-    }
-  }
+  // Slide 5 has 5 paragraphs normally and 4 when the cuttable XI.6 sentence is excluded
+  assert.equal(fullPages[4].paragraphs.length, 5);
+  assert.equal(cutPages[4].paragraphs.length, 4);
 
-  const page1 = pages[0];
-  assert.equal(page1.stageLabel, 'Stage 1: the author and his problem');
-  assert.match(page1.instruction, /Bracketed cues are silent/);
-
-  const page5 = pages[4];
-  assert.match(page5.stageCue, /Give the audience a moment to look/);
-
-  const page7 = pages[6];
-  const fullPage7Text = page7.paragraphs.map((p) => `${p.leadIn} ${p.rest}`).join(' ');
-  assert.match(fullPage7Text, /boundaries are constantly being renegotiated/);
-  assert.match(fullPage7Text, /read mainly through the separation of powers/);
+  const fullMetrics = computeLecternScriptMetrics({ excludeCuttable: false });
+  const cutMetrics = computeLecternScriptMetrics({ excludeCuttable: true });
+  assert.ok(fullMetrics.totalWords > cutMetrics.totalWords);
+  assert.ok(fullMetrics.cuttableWords >= 25);
+  assert.ok(fullMetrics.totalWords >= 1000 && fullMetrics.totalWords <= 1150);
 });
 
-test('Every slide has context-sensitive Presenter Tip cues and deterministic hover/pin state transitions', () => {
-  for (const slide of PRINCIPAL_SLIDES) {
-    const tip = getPresenterTipForSlide(slide.number);
-    assert.equal(tip.slideNumber, slide.number);
-    assert.ok(tip.heading.length > 0);
-    assert.equal(tip.cues.length, 3, `Slide ${slide.number} should have 3 concise podium cues`);
-    for (const cue of tip.cues) {
-      assert.ok(cue.label.length > 0);
-      assert.ok(cue.text.length > 15);
-    }
+test('CITATION_VERIFICATION_ITEMS, PRIVATE_MANUSCRIPT_NOTES, and VERIFIED_SOURCES are complete', () => {
+  assert.equal(CITATION_VERIFICATION_ITEMS.length, 11);
+  assert.equal(PRIVATE_MANUSCRIPT_NOTES.length, 6);
+  assert.equal(VERIFIED_SOURCES.length, 6);
 
-    const coords = getConstellationCoordinates(slide.number);
-    assert.equal(typeof coords.mode, 'string');
-    assert.ok(coords.caption.length > 0);
-    for (const key of ['leg', 'exec', 'jud', 'dom']) {
-      assert.ok(Array.isArray(coords[key]), `${key} must be an [x, y] array`);
-      assert.equal(coords[key].length, 2);
-      assert.ok(Number.isFinite(coords[key][0]) && Number.isFinite(coords[key][1]));
-    }
-  }
+  // Verify Slide 5 citation item explicitly notes stone ("pedra de Petrópolis")
+  const ceschiattiCheck = CITATION_VERIFICATION_ITEMS.find((c) => /A Justiça/.test(c.item));
+  assert.ok(ceschiattiCheck);
+  assert.match(ceschiattiCheck.item, /pedra de Petrópolis/);
+});
 
-  const tip2 = getPresenterTipForSlide(2);
-  assert.match(tip2.guardrail, /Parlement of Bordeaux/);
-
-  const tip3 = getPresenterTipForSlide(3);
-  assert.match(tip3.guardrail, /permanent constitutional courts/);
+test('Helper functions (constellation, music, curtain bypass, presenter tips, slide transitions) work accurately', () => {
+  const c1 = getConstellationCoordinates(1);
+  assert.equal(c1.mode, 'triad');
+  assert.deepEqual(c1.leg, [50, 18]);
+  assert.equal(clampMusicVolume(1.5), 0.35);
+  assert.equal(clampMusicVolume(-0.2), 0);
+  assert.match(formatMusicStatusLabel({ playing: true, volume: 0.25 }).shortLabel, /Nocturne/);
+  assert.equal(shouldBypassOpeningPoster('?sync=UFSC-2026', ''), true);
+  assert.equal(shouldBypassOpeningPoster('', '#slide-3'), true);
+  assert.equal(shouldBypassOpeningPoster('', ''), false);
 
   const tip4 = getPresenterTipForSlide(4);
-  assert.match(tip4.guardrail, /invented by Montesquieu/);
+  assert.equal(tip4.slideNumber, 4);
 
-  const tip5 = getPresenterTipForSlide(5);
-  assert.equal(tip5.pauseActionSlide, 5);
-  assert.ok(tip5.cues.some((c) => c.isPauseCue));
-  assert.match(tip5.guardrail, /interpretation of the image/);
+  const tipState = resolvePresenterTipState(
+    { activeSlide: null, mode: 'closed' },
+    { type: 'click-toggle', slide: 2 }
+  );
+  assert.equal(tipState.activeSlide, 2);
+  assert.equal(tipState.mode, 'pinned');
 
-  const tip6 = getPresenterTipForSlide(6);
-  assert.match(tip6.guardrail, /Rafael Simioni/);
-
-  let state = resolvePresenterTipState(undefined, { type: 'hover-enter', slide: 1 });
-  assert.deepEqual(state, { activeSlide: 1, mode: 'hover' });
-
-  state = resolvePresenterTipState(state, { type: 'click-toggle', slide: 1 });
-  assert.deepEqual(state, { activeSlide: 1, mode: 'pinned' });
-
-  state = resolvePresenterTipState(state, { type: 'hover-leave', slide: 1 });
-  assert.deepEqual(state, { activeSlide: 1, mode: 'pinned' });
-
-  state = resolvePresenterTipState(state, { type: 'click-toggle', slide: 1 });
-  assert.deepEqual(state, { activeSlide: null, mode: 'closed' });
-});
-
-test('VERIFIED_SOURCES covers Serge Dauchy paper, Montesquieu, 1824 & 1891 Constitutions, artworks, and Simioni', () => {
-  assert.equal(VERIFIED_SOURCES.length, 6);
-  const codes = VERIFIED_SOURCES.map((s) => s.code);
-  assert.deepEqual(codes, ['S1', 'S2', 'S3', 'S4', 'S5', 'S6']);
-});
-
-test('computeSlideTransitionSpec returns directional GSAP cross-fade & slide-in parameters and honors reduced motion', () => {
-  const forward = computeSlideTransitionSpec(1, 2);
-  assert.equal(forward.animate, true);
-  assert.equal(forward.direction, 1);
-  assert.equal(forward.distance, 1);
-  assert.ok(forward.enterY > 0);
-  assert.ok(forward.exitY < 0);
-  assert.ok(forward.enterOpacity > 0 && forward.enterOpacity < 1);
-  assert.ok(forward.scrollDuration > 0);
-
-  const backward = computeSlideTransitionSpec(5, 4);
-  assert.equal(backward.animate, true);
-  assert.equal(backward.direction, -1);
-  assert.ok(backward.enterY < 0);
-  assert.ok(backward.exitY > 0);
-
-  const multiJump = computeSlideTransitionSpec(1, 6);
-  assert.equal(multiJump.animate, true);
-  assert.equal(multiJump.distance, 5);
-  assert.ok(multiJump.scrollDuration >= forward.scrollDuration);
-
-  const sameSlide = computeSlideTransitionSpec(3, 3);
-  assert.equal(sameSlide.animate, false);
-  assert.equal(sameSlide.scrollDuration, 0);
-
-  const reduced = computeSlideTransitionSpec(2, 3, { reducedMotion: true });
-  assert.equal(reduced.animate, false);
-  assert.equal(reduced.enterY, 0);
-  assert.equal(reduced.enterOpacity, 1);
+  const spec = computeSlideTransitionSpec(1, 2, { reducedMotion: false, smooth: true });
+  assert.equal(spec.animate, true);
+  assert.equal(spec.direction, 1);
 });

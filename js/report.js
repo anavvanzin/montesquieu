@@ -1,7 +1,9 @@
 import {
   PRESENTATION_META,
   PRINCIPAL_SLIDES,
+  PRIVATE_MANUSCRIPT_NOTES,
   getLecternScriptPages,
+  computeLecternScriptMetrics,
   getConstellationCoordinates,
   clampMusicVolume,
   formatMusicStatusLabel,
@@ -18,6 +20,7 @@ import {
 import { generateQrSvg } from './qr-svg.mjs';
 import { VoiceController } from './voice-control.js';
 import { RemoteController } from './remote-controller.js';
+import { perfMonitor } from './perf-monitor.mjs';
 
 (function () {
   'use strict';
@@ -31,10 +34,10 @@ import { RemoteController } from './remote-controller.js';
   let currentSlideNum = 1;
   let activeSlideCallouts = {
     2: '',
-    3: 'judicial',
-    4: 'four-powers',
-    5: '',
-    6: 'stf',
+    3: 'four-powers',
+    4: '',
+    5: 'stf',
+    6: 'code1916',
     7: 'q1'
   };
   let visualPauseTimer = null;
@@ -322,25 +325,20 @@ import { RemoteController } from './remote-controller.js';
 
   syncMusicUI();
 
-  // Attempt soft background playback on load if not muted; otherwise start on first user gesture
+  // Start soft background playback on first user gesture if not muted (avoids eager 6.4 MB audio stream on initial boot)
   if (!userMutedMusic) {
-    startMusicGentle({ fade: true }).then((started) => {
-      if (!started) {
-        const resumeOnFirstGesture = (ev) => {
-          // If the user clicked a music mute/toggle button directly, its own click handler manages state
-          const targetEl = ev.target instanceof Element ? ev.target : null;
-          if (
-            targetEl?.closest('#curtain-music-btn, #floating-music-btn, #prep-music-toggle, #mobile-music-toggle')
-          ) {
-            return;
-          }
-          if (!userMutedMusic && !isMusicPlaying()) {
-            startMusicGentle({ fade: true });
-          }
-        };
-        document.addEventListener('pointerdown', resumeOnFirstGesture, { once: true, passive: true });
+    const resumeOnFirstGesture = (ev) => {
+      const targetEl = ev.target instanceof Element ? ev.target : null;
+      if (
+        targetEl?.closest('#curtain-music-btn, #floating-music-btn, #prep-music-toggle, #mobile-music-toggle')
+      ) {
+        return;
       }
-    });
+      if (!userMutedMusic && !isMusicPlaying()) {
+        startMusicGentle({ fade: true });
+      }
+    };
+    document.addEventListener('pointerdown', resumeOnFirstGesture, { once: true, passive: true });
   }
 
   // =========================================================================
@@ -426,8 +424,32 @@ import { RemoteController } from './remote-controller.js';
     openLecternScriptDialog(1);
   });
 
+  const headerLandingBtn = $('#header-landing-btn');
+  const headerBrandLink = $('#header-brand-link');
+
+  headerLandingBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    drawPodiumCurtain();
+  });
+
+  headerBrandLink?.addEventListener('click', (e) => {
+    e.preventDefault();
+    drawPodiumCurtain();
+  });
+
+  window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#landing' || window.location.hash === '#curtain') {
+      drawPodiumCurtain();
+    }
+  });
+
   drawCurtainBtn?.addEventListener('click', drawPodiumCurtain);
   mobileCurtainBtn?.addEventListener('click', () => {
+    closeMobileMenu();
+    drawPodiumCurtain();
+  });
+  $('#mobile-landing-link')?.addEventListener('click', (e) => {
+    e.preventDefault();
     closeMobileMenu();
     drawPodiumCurtain();
   });
@@ -464,6 +486,8 @@ import { RemoteController } from './remote-controller.js';
   // Close popover when launching dialogs/drawers inside it
   [
     '#sync-audience-btn',
+    '#prep-google-slides-btn',
+    '#prep-perf-monitor-btn',
     '#meridian-3d-button',
     '#studio-button',
     '#revisions-button',
@@ -599,7 +623,17 @@ import { RemoteController } from './remote-controller.js';
     );
   }
 
-  // Slide 02: Who Was Montesquieu (Court / Spirit of the Laws / Security Under Laws)
+  // Right-Margin Dauchy Paragraph Map Jump Buttons (¶1–14)
+  $$('[data-jump-slide]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetNum = Number(btn.dataset.jumpSlide);
+      if (targetNum >= 1 && targetNum <= TOTAL_SLIDES) {
+        goToSlide(targetNum, { smooth: true, trigger: 'dauchy-strip' });
+      }
+    });
+  });
+
+  // Slide 02: Political Liberty Beyond the Constitutional Formula (¶7 & ¶8–10)
   const s2Bridge = $('#s2-equilibrium-bridge');
   const s2PoleBtns = $$('[data-eq-pole]');
   const s2SelectRows = $$('[data-eq-select]');
@@ -607,7 +641,9 @@ import { RemoteController } from './remote-controller.js';
 
   function setSlide2Pole(pole, { fromRemoteSync = false } = {}) {
     const nextPole =
-      pole === 'court' || pole === 'spirit' || pole === 'liberty' ? pole : 'balanced';
+      pole === 'constitutional' || pole === 'civil-criminal' || pole === 'judicial'
+        ? pole
+        : 'balanced';
     activeSlideCallouts[2] = nextPole === 'balanced' ? '' : nextPole;
     if (s2Bridge) {
       s2Bridge.setAttribute('data-active-pole', nextPole);
@@ -646,49 +682,17 @@ import { RemoteController } from './remote-controller.js';
     });
   });
 
-  // Slide 03: Book XI, Chapter 6 — Legislative, Executive & Judicial Functions
-  const s3ScaleBar = $('#s3-functions-scale');
-  const s3FnCards = $$('[data-s3-fn]');
-  const s3StepMap = {
-    legislative: 'imposed',
-    executive: 'deliberate',
-    judicial: 'overlapping'
-  };
+  // Slide 03: Brazil, 1824 — Circulation, Correction & Four Powers (¶6, Art. 10)
+  const s3OrbitBox = $('#s3-powers-orbit');
+  const s3ModeBtns = $$('[data-powers-mode]');
 
-  function setSlide3Function(fnId, { fromRemoteSync = false } = {}) {
-    if (fnId !== 'legislative' && fnId !== 'executive' && fnId !== 'judicial') return;
-    activeSlideCallouts[3] = fnId;
-    if (s3ScaleBar) {
-      s3ScaleBar.setAttribute('data-step', s3StepMap[fnId] || 'deliberate');
-    }
-    s3FnCards.forEach((card) => {
-      card.classList.toggle('is-active', card.dataset.s3Fn === fnId);
-    });
-    if (!fromRemoteSync) emitPresenterStateChanged();
-  }
-
-  s3FnCards.forEach((card) => {
-    const fnId = card.dataset.s3Fn;
-    card.addEventListener('click', () => setSlide3Function(fnId));
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        setSlide3Function(fnId);
-      }
-    });
-  });
-
-  // Slide 04: Montesquieu in Brazil, 1824 — Tripartite Three Powers vs. 1824 Art. 10 Four Powers
-  const s4OrbitBox = $('#s4-powers-orbit');
-  const s4ModeBtns = $$('[data-powers-mode]');
-
-  function setSlide4PowersMode(mode, { fromRemoteSync = false } = {}) {
+  function setSlide3PowersMode(mode, { fromRemoteSync = false } = {}) {
     const nextMode = mode === 'three-powers' ? 'three-powers' : 'four-powers';
-    activeSlideCallouts[4] = nextMode;
-    if (s4OrbitBox) {
-      s4OrbitBox.setAttribute('data-mode', nextMode);
+    activeSlideCallouts[3] = nextMode;
+    if (s3OrbitBox) {
+      s3OrbitBox.setAttribute('data-mode', nextMode);
     }
-    s4ModeBtns.forEach((btn) => {
+    s3ModeBtns.forEach((btn) => {
       const active = btn.dataset.powersMode === nextMode;
       btn.classList.toggle('is-active', active);
       btn.setAttribute('aria-pressed', String(active));
@@ -696,33 +700,33 @@ import { RemoteController } from './remote-controller.js';
     if (!fromRemoteSync) emitPresenterStateChanged();
   }
 
-  s4ModeBtns.forEach((btn) => {
+  s3ModeBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      setSlide4PowersMode(btn.dataset.powersMode);
+      setSlide3PowersMode(btn.dataset.powersMode);
     });
   });
 
-  // Slide 05: Representing Distinct and Related Institutions (Figueiredo, 1896 / Oath of 1891)
-  const s5ArtworkBox = $('#s5-artwork-box');
-  const s5SpotItems = $$('[data-spot-select]');
+  // Slide 04: Compromisso Constitucional — Executive Authority Under Obligation (¶6–7)
+  const s4ArtworkBox = $('#s4-artwork-box');
+  const s4SpotItems = $$('[data-spot-select]');
 
-  function setSlide5OathSpotlight(spotId, { fromRemoteSync = false } = {}) {
+  function setSlide4OathSpotlight(spotId, { fromRemoteSync = false } = {}) {
     const valid =
       spotId === 'deodoro' || spotId === 'prudente' || spotId === 'gallery' ? spotId : '';
-    activeSlideCallouts[5] = valid;
-    if (s5ArtworkBox) {
-      s5ArtworkBox.setAttribute('data-active-spot', valid);
+    activeSlideCallouts[4] = valid;
+    if (s4ArtworkBox) {
+      s4ArtworkBox.setAttribute('data-active-spot', valid);
     }
-    s5SpotItems.forEach((item) => {
+    s4SpotItems.forEach((item) => {
       item.classList.toggle('is-active', item.dataset.spotSelect === valid);
     });
     if (!fromRemoteSync) emitPresenterStateChanged();
   }
 
-  s5SpotItems.forEach((item) => {
+  s4SpotItems.forEach((item) => {
     const id = item.dataset.spotSelect;
     const toggle = () => {
-      setSlide5OathSpotlight(activeSlideCallouts[5] === id ? '' : id);
+      setSlide4OathSpotlight(activeSlideCallouts[4] === id ? '' : id);
     };
     item.addEventListener('click', toggle);
     item.addEventListener('keydown', (e) => {
@@ -733,24 +737,25 @@ import { RemoteController } from './remote-controller.js';
     });
   });
 
-  // Slide 06: Ceschiatti’s Justice (1961, STF) — Sword Focus & Praça dos Três Poderes Triad
+  // Slide 05: A Justiça (1961, STF, Stone "pedra de Petrópolis") — Sword Focus & Praça Triad
   const swordBtn = $('#toggle-sword-focus');
-  const s6PhotoBox = $('#s6-photo-box');
+  const s5PhotoBox = $('#s5-photo-box');
   const pracaNodeBtns = $$('[data-praca-node]');
-  const pracaCaptionEl = $('#s6-triad-caption');
+  const pracaCaptionEl = $('#s5-triad-caption');
   const PRACA_NOTES = {
-    stf: 'Positioned before the Supreme Federal Court, identifying the figure of Justice with a particular judicial institution.',
-    congress: 'Shares the Praça dos Três Poderes with the National Congress—distinct legislative and judicial buildings in a common civic space.',
-    planalto: 'Shares the Praça dos Três Poderes with the presidential palace—visualising distinct powers within a shared republican setting.'
+    stf: 'Positioned before the Supremo Tribunal Federal, turning Montesquieu’s « null » power of judging into a 3.30 m monumental stone figure.',
+    congress: 'Shares the Praça dos Três Poderes with the National Congress—placing legislative and judicial buildings in direct civic relation.',
+    planalto: 'Shares the Praça dos Três Poderes with the Palácio do Planalto—situating judicial authority alongside executive power.'
   };
 
-  function setSlide6JusticaState(callout, { fromRemoteSync = false } = {}) {
+  function setSlide5JusticaState(callout, { fromRemoteSync = false } = {}) {
     const val = String(callout || '');
     if (val === 'sword-detail' || val === 'whole') {
       const swordFocused = val === 'sword-detail';
-      activeSlideCallouts[6] = swordFocused ? 'sword-detail' : 'whole';
-      if (s6PhotoBox) {
-        s6PhotoBox.classList.toggle('is-sword-focused', swordFocused);
+      activeSlideCallouts[5] = swordFocused ? 'sword-detail' : 'whole';
+      if (s5PhotoBox) {
+        s5PhotoBox.classList.toggle('is-sword-focused', swordFocused);
+        s5PhotoBox.setAttribute('data-focus-mode', swordFocused ? 'sword-detail' : 'whole');
       }
       if (swordBtn) {
         swordBtn.classList.toggle('is-active', swordFocused);
@@ -758,7 +763,7 @@ import { RemoteController } from './remote-controller.js';
         swordBtn.textContent = swordFocused ? 'Show whole sculpture' : 'Detail: Sword on lap';
       }
     } else if (val === 'stf' || val === 'congress' || val === 'planalto') {
-      activeSlideCallouts[6] = val;
+      activeSlideCallouts[5] = val;
       pracaNodeBtns.forEach((btn) => {
         const active = btn.dataset.pracaNode === val;
         btn.classList.toggle('is-active', active);
@@ -772,17 +777,49 @@ import { RemoteController } from './remote-controller.js';
   }
 
   swordBtn?.addEventListener('click', () => {
-    const next = !s6PhotoBox?.classList.contains('is-sword-focused');
-    setSlide6JusticaState(next ? 'sword-detail' : 'whole');
+    const next = s5PhotoBox?.getAttribute('data-focus-mode') !== 'sword-detail';
+    setSlide5JusticaState(next ? 'sword-detail' : 'whole');
   });
 
   pracaNodeBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      setSlide6JusticaState(btn.dataset.pracaNode);
+      setSlide5JusticaState(btn.dataset.pracaNode);
     });
   });
 
-  // Slide 07: Questions for Serge Spotlights (Q1 / Q2)
+  // Slide 06: Transplants, Hybridity & the Code of 1916 (¶10–14)
+  const s6ScaleBar = $('#s6-transplants-scale');
+  const s6Cards = $$('[data-s6-card]');
+  const s6StepMap = {
+    watson: 'imposed',
+    legrand: 'deliberate',
+    code1916: 'overlapping'
+  };
+
+  function setSlide6TransplantCard(cardId, { fromRemoteSync = false } = {}) {
+    if (cardId !== 'watson' && cardId !== 'legrand' && cardId !== 'code1916') return;
+    activeSlideCallouts[6] = cardId;
+    if (s6ScaleBar) {
+      s6ScaleBar.setAttribute('data-step', s6StepMap[cardId] || 'overlapping');
+    }
+    s6Cards.forEach((card) => {
+      card.classList.toggle('is-active', card.dataset.s6Card === cardId);
+    });
+    if (!fromRemoteSync) emitPresenterStateChanged();
+  }
+
+  s6Cards.forEach((card) => {
+    const cardId = card.dataset.s6Card;
+    card.addEventListener('click', () => setSlide6TransplantCard(cardId));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setSlide6TransplantCard(cardId);
+      }
+    });
+  });
+
+  // Slide 07: Two Questions for Serge Spotlights (Q1 / Q2)
   const s7Questions = $$('[data-q-spot]');
 
   function setSlide7QuestionSpot(qId, { fromRemoteSync = false } = {}) {
@@ -806,7 +843,7 @@ import { RemoteController } from './remote-controller.js';
   });
 
   // =========================================================================
-  // 7. 5-Second Visual Pause Aura (Slide 05 — Figueiredo’s Compromisso Constitucional)
+  // 7. 10-Second Visual Pause Aura (Slides 04 & 05 — Figueiredo & Ceschiatti)
   // =========================================================================
   const pauseButtons = $$('[data-visual-pause]');
 
@@ -818,13 +855,15 @@ import { RemoteController } from './remote-controller.js';
     const prevSlide = visualPauseSlide;
     visualPauseSlide = 0;
 
-    const sec = $('#slide-5');
-    const badge = $('#s5-pause-badge');
-    sec?.removeAttribute('data-visual-pause-active');
-    if (badge) {
-      badge.hidden = true;
-      badge.classList.remove('is-counting');
-    }
+    [4, 5].forEach((n) => {
+      const sec = $(`#slide-${n}`);
+      const badge = $(`#s${n}-pause-badge`);
+      sec?.removeAttribute('data-visual-pause-active');
+      if (badge) {
+        badge.hidden = true;
+        badge.classList.remove('is-counting');
+      }
+    });
     pauseButtons.forEach((b) => b.classList.remove('is-active'));
 
     if (prevSlide && !fromRemoteSync) {
@@ -834,7 +873,7 @@ import { RemoteController } from './remote-controller.js';
 
   function startVisualPause(slideNum, { fromRemoteSync = false } = {}) {
     const targetNum = Number(slideNum);
-    if (targetNum !== 5) return;
+    if (targetNum !== 4 && targetNum !== 5) return;
 
     if (visualPauseSlide === targetNum) {
       stopVisualPause({ fromRemoteSync });
@@ -863,7 +902,7 @@ import { RemoteController } from './remote-controller.js';
 
     visualPauseTimer = setTimeout(() => {
       stopVisualPause({ fromRemoteSync });
-    }, 5000);
+    }, 10000);
   }
 
   pauseButtons.forEach((btn) => {
@@ -947,7 +986,7 @@ import { RemoteController } from './remote-controller.js';
         const pauseTrigger = document.createElement('button');
         pauseTrigger.type = 'button';
         pauseTrigger.className = 'presenter-tip__pause-btn t-ui';
-        pauseTrigger.textContent = '◎ Start 5s Visual Pause';
+        pauseTrigger.textContent = '◎ Start 10s Visual Pause';
         pauseTrigger.addEventListener('click', (ev) => {
           ev.stopPropagation();
           applyPresenterTipAction({ type: 'close' });
@@ -1061,6 +1100,10 @@ import { RemoteController } from './remote-controller.js';
   const lecternDialog = $('#lectern-script-dialog');
   const lecternCloseBtn = $('#lectern-script-close');
   const lecternPagesContainer = $('#lectern-script-pages');
+  const lecternPrivateNotesContainer = $('#lectern-private-notes');
+  const lecternMetricsReadout = $('#lectern-metrics-readout');
+  const toggleCutXi6Checkbox = $('#toggle-cut-xi6');
+  const lecternViewBtns = $$('[data-lectern-view]');
   const printLecternContainer = $('#print-lectern-script');
   const printScriptOnlyBtn = $('#print-script-only-btn');
   const prepPrintScriptDirectBtn = $('#prep-print-script-direct-btn');
@@ -1071,6 +1114,9 @@ import { RemoteController } from './remote-controller.js';
   const footerScriptPrintBtn = $('#footer-script-print-btn');
   const scriptFontBtns = $$('[data-script-font]');
 
+  let excludeCuttableXi6 = false;
+  let activeLecternView = 'script';
+
   function buildLecternPageElement(pageData, { forPrint = false } = {}) {
     const pageEl = document.createElement('article');
     pageEl.className = forPrint ? 'print-lectern-page' : 'lectern-page-card';
@@ -1078,7 +1124,7 @@ import { RemoteController } from './remote-controller.js';
 
     const runningHead = document.createElement('header');
     runningHead.className = 'lectern-page__running-head t-meta';
-    runningHead.textContent = 'MONTESQUIEU • LECTERN SCRIPT • ANA VITÓRIA VANZIN MENDES';
+    runningHead.textContent = 'DISCUSSING DAUCHY’S MONTESQUIEU • LECTERN SCRIPT • ANA VITÓRIA VANZIN MENDES';
     pageEl.appendChild(runningHead);
 
     const titleRow = document.createElement('div');
@@ -1103,11 +1149,15 @@ import { RemoteController } from './remote-controller.js';
 
     pageEl.appendChild(titleRow);
 
+    const pageWordCount = pageData.paragraphs.reduce(
+      (sum, p) => sum + `${p.leadIn || ''} ${p.rest || ''}`.trim().split(/\s+/).filter(Boolean).length,
+      0
+    );
     const metaLine = document.createElement('p');
     metaLine.className = 'lectern-page__meta t-meta';
     metaLine.textContent = pageData.stageLabel
-      ? `${pageData.elapsedRange}  |  ${pageData.stageLabel}`
-      : pageData.elapsedRange;
+      ? `${pageData.elapsedRange}  |  ${pageData.stageLabel}  |  ${pageWordCount} spoken words`
+      : `${pageData.elapsedRange}  |  ${pageWordCount} spoken words`;
     pageEl.appendChild(metaLine);
 
     if (pageData.instruction) {
@@ -1125,6 +1175,9 @@ import { RemoteController } from './remote-controller.js';
     body.className = 'lectern-page__prose';
     pageData.paragraphs.forEach((p) => {
       const para = document.createElement('p');
+      if (p.cuttable) {
+        para.dataset.cuttableParagraph = 'true';
+      }
       const strong = document.createElement('strong');
       strong.textContent = p.leadIn;
       para.appendChild(strong);
@@ -1150,13 +1203,61 @@ import { RemoteController } from './remote-controller.js';
     return pageEl;
   }
 
+  function renderPrivateManuscriptNotes() {
+    if (!lecternPrivateNotesContainer) return;
+    lecternPrivateNotesContainer.textContent = '';
+
+    const banner = document.createElement('div');
+    banner.className = 'lectern-private-notes__banner';
+    banner.textContent =
+      'BACKSTAGE PREP ONLY — These private manuscript verification notes on Serge Dauchy’s draft stay strictly in this private prep tab for Q&A readiness and are never displayed on the public slides or printed script.';
+    lecternPrivateNotesContainer.appendChild(banner);
+
+    const grid = document.createElement('div');
+    grid.className = 'lectern-private-notes__grid';
+
+    PRIVATE_MANUSCRIPT_NOTES.forEach((note) => {
+      const card = document.createElement('article');
+      card.className = 'private-note-card';
+      card.dataset.privateNoteId = String(note.id || note.number);
+
+      const head = document.createElement('div');
+      head.className = 'private-note-card__head';
+
+      const chip = document.createElement('span');
+      chip.className = 'voice-chip voice-chip--reading';
+      chip.textContent = `PRIVATE PREP · #${note.number || note.id}`;
+
+      const h3 = document.createElement('h3');
+      h3.className = 'private-note-card__title';
+      h3.textContent = note.locus || note.title || '';
+
+      head.appendChild(chip);
+      head.appendChild(h3);
+      card.appendChild(head);
+
+      const pNote = document.createElement('p');
+      pNote.textContent = note.detail || note.prepNote || '';
+      card.appendChild(pNote);
+
+      grid.appendChild(card);
+    });
+
+    lecternPrivateNotesContainer.appendChild(grid);
+  }
+
   function populateLecternScriptViews() {
-    const pages = getLecternScriptPages();
+    const pages = getLecternScriptPages({ excludeCuttable: excludeCuttableXi6 });
+    const metrics = computeLecternScriptMetrics({ excludeCuttable: excludeCuttableXi6, wpm: 125 });
+    if (lecternMetricsReadout) {
+      lecternMetricsReadout.textContent = `${metrics.totalWords} spoken words (~${metrics.formattedDuration} at ${metrics.wpm} wpm · ${metrics.totalPauseSeconds}s pauses)`;
+    }
     if (lecternPagesContainer) {
       lecternPagesContainer.textContent = '';
       pages.forEach((p) => {
         lecternPagesContainer.appendChild(buildLecternPageElement(p, { forPrint: false }));
       });
+      highlightActiveLecternPage(currentSlideNum);
     }
     if (printLecternContainer) {
       printLecternContainer.textContent = '';
@@ -1166,7 +1267,34 @@ import { RemoteController } from './remote-controller.js';
     }
   }
 
+  function setLecternModalView(viewMode) {
+    activeLecternView = viewMode === 'private-notes' ? 'private-notes' : 'script';
+    lecternViewBtns.forEach((btn) => {
+      const active = btn.dataset.lecternView === activeLecternView;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
+    if (lecternPagesContainer) {
+      lecternPagesContainer.hidden = activeLecternView !== 'script';
+    }
+    if (lecternPrivateNotesContainer) {
+      lecternPrivateNotesContainer.hidden = activeLecternView !== 'private-notes';
+    }
+  }
+
   populateLecternScriptViews();
+  renderPrivateManuscriptNotes();
+
+  toggleCutXi6Checkbox?.addEventListener('change', () => {
+    excludeCuttableXi6 = Boolean(toggleCutXi6Checkbox.checked);
+    populateLecternScriptViews();
+  });
+
+  lecternViewBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setLecternModalView(btn.dataset.lecternView);
+    });
+  });
 
   function highlightActiveLecternPage(slideNum) {
     if (!lecternPagesContainer) return;
@@ -1179,6 +1307,7 @@ import { RemoteController } from './remote-controller.js';
     if (!lecternDialog) return;
     closePrepPopover();
     closeMobileMenu();
+    setLecternModalView('script');
     highlightActiveLecternPage(targetPage);
     if (!lecternDialog.open) {
       if (typeof lecternDialog.showModal === 'function') {
@@ -1251,7 +1380,7 @@ import { RemoteController } from './remote-controller.js';
   }
 
   function getCurrentCallout() {
-    if (visualPauseSlide === currentSlideNum && currentSlideNum === 5) {
+    if (visualPauseSlide === currentSlideNum && (currentSlideNum === 4 || currentSlideNum === 5)) {
       return 'pause-5s';
     }
     return activeSlideCallouts[currentSlideNum] || '';
@@ -1261,7 +1390,7 @@ import { RemoteController } from './remote-controller.js';
     const num = Number(slideNum);
     const id = String(calloutId || '');
 
-    if (id === 'pause-5s' && num === 5) {
+    if (id === 'pause-5s' && (num === 4 || num === 5)) {
       startVisualPause(num, { fromRemoteSync });
       return;
     }
@@ -1271,14 +1400,14 @@ import { RemoteController } from './remote-controller.js';
 
     if (num === 2) {
       setSlide2Pole(id, { fromRemoteSync });
-    } else if (num === 3) {
-      setSlide3Function(id, { fromRemoteSync });
-    } else if (num === 4 && (id === 'three-powers' || id === 'four-powers')) {
-      setSlide4PowersMode(id, { fromRemoteSync });
+    } else if (num === 3 && (id === 'three-powers' || id === 'four-powers')) {
+      setSlide3PowersMode(id, { fromRemoteSync });
+    } else if (num === 4) {
+      setSlide4OathSpotlight(id, { fromRemoteSync });
     } else if (num === 5) {
-      setSlide5OathSpotlight(id, { fromRemoteSync });
+      setSlide5JusticaState(id, { fromRemoteSync });
     } else if (num === 6) {
-      setSlide6JusticaState(id, { fromRemoteSync });
+      setSlide6TransplantCard(id, { fromRemoteSync });
     } else if (num === 7) {
       setSlide7QuestionSpot(id, { fromRemoteSync });
     }
@@ -1296,7 +1425,14 @@ import { RemoteController } from './remote-controller.js';
     slide1El.addEventListener(
       'pointermove',
       (e) => {
-        if (prefersReducedMotion?.matches) return;
+        if (
+          prefersReducedMotion?.matches ||
+          currentSlideNum !== 1 ||
+          isCurtainVisible() ||
+          isProgrammaticGsapScroll
+        ) {
+          return;
+        }
         const rect = slide1El.getBoundingClientRect();
         const nx = (e.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
         const ny = (e.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
@@ -1324,21 +1460,85 @@ import { RemoteController } from './remote-controller.js';
   // 9. Slide Stepper, Navigation & Scroll Synchronization
   // =========================================================================
   const headerEl = $('.header');
-  function syncHeaderOffset() {
-    const isPresenting = document.body.classList.contains('is-presenting');
-    const h = !isPresenting && headerEl ? Math.ceil(headerEl.getBoundingClientRect().height) : 0;
-    document.documentElement.style.setProperty('--header-offset', `${h}px`);
-    return h;
-  }
-  syncHeaderOffset();
-  window.addEventListener('resize', syncHeaderOffset, { passive: true });
-
   const slideSections = $$('[data-slide]');
   const navLinks = $$('[data-slide-link]');
   const slideIndicator = $('#slide-indicator');
   const prevBtn = $('#prev-slide');
   const nextBtn = $('#next-slide');
   const progressBar = $('#reading-progress-bar');
+
+  let cachedHeaderOffset = 0;
+  let cachedMaxScroll = 1;
+  let cachedSlideMetrics = [];
+  let resizeRafPending = false;
+
+  function syncHeaderOffset() {
+    const isPresenting = document.body.classList.contains('is-presenting');
+    const h = !isPresenting && headerEl ? Math.ceil(headerEl.offsetHeight) : 0;
+    cachedHeaderOffset = h;
+    document.documentElement.style.setProperty('--header-offset', `${h}px`);
+    return h;
+  }
+
+  function refreshLayoutMetrics() {
+    syncHeaderOffset();
+    const doc = document.documentElement;
+    const scrollY = window.scrollY;
+    cachedMaxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+    cachedSlideMetrics = slideSections.map((sec) => {
+      const rect = sec.getBoundingClientRect();
+      const top = rect.top + scrollY;
+      return {
+        num: Number(sec.dataset.slide),
+        top,
+        center: top + rect.height * 0.5
+      };
+    });
+  }
+
+  refreshLayoutMetrics();
+  window.addEventListener(
+    'resize',
+    () => {
+      if (resizeRafPending) return;
+      resizeRafPending = true;
+      requestAnimationFrame(() => {
+        resizeRafPending = false;
+        refreshLayoutMetrics();
+      });
+    },
+    { passive: true }
+  );
+  if (document.fonts && typeof document.fonts.ready?.then === 'function') {
+    document.fonts.ready.then(() => refreshLayoutMetrics()).catch(() => {});
+  }
+
+  // Lazy loader for Three.js 3D Transatlantic Meridian companion stage (~680 KB deferred until requested)
+  let meridianLoadPromise = null;
+  function openMeridian3DLazy(preset = 'overview') {
+    if (window.__meridian3DApi) {
+      window.__meridian3DApi.openMeridian3D(preset);
+      return;
+    }
+    if (!meridianLoadPromise) {
+      meridianLoadPromise = import('./three-meridian.js')
+        .then((mod) => mod.ensureTransatlanticMeridian3D())
+        .catch((err) => {
+          meridianLoadPromise = null;
+          throw err;
+        });
+    }
+    meridianLoadPromise.then((api) => api?.openMeridian3D?.(preset)).catch(() => {});
+  }
+
+  $$('[data-open-meridian-3d]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      if (window.__meridian3DApi) return;
+      e.preventDefault();
+      const preset = btn.getAttribute('data-open-meridian-3d') || 'overview';
+      openMeridian3DLazy(preset);
+    });
+  });
 
   const bgs = {
     storm: $('.bg--storm'),
@@ -1349,25 +1549,11 @@ import { RemoteController } from './remote-controller.js';
 
   let suppressScrollEmitUntil = 0;
 
-  // GSAP + ScrollTrigger engine for subtle cross-fade & directional slide-in transitions
+  // GSAP engine for single-layer GPU-composited cross-fade & directional slide-in transitions
   const gsapApi = typeof window !== 'undefined' ? window.gsap || null : null;
-  const scrollTriggerApi = typeof window !== 'undefined' ? window.ScrollTrigger || null : null;
-  if (gsapApi && scrollTriggerApi) {
-    try {
-      gsapApi.registerPlugin(scrollTriggerApi);
-    } catch (e) {}
-  }
-
   let activeSlideTimeline = null;
+  let activeTransitionProbe = null;
   let isProgrammaticGsapScroll = false;
-  let scrollRevealReady = false;
-
-  function getSlideStageBlocks(frameEl) {
-    if (!frameEl) return [];
-    return [...frameEl.children].filter(
-      (child) => !child.classList.contains('presenter-tip') && !child.hidden
-    );
-  }
 
   function clearAllSlideGsapProps() {
     if (!gsapApi) return;
@@ -1375,13 +1561,8 @@ import { RemoteController } from './remote-controller.js';
       const frame = $('.slide-frame', sec);
       if (!frame) return;
       frame.classList.remove('is-gsap-transitioning');
-      const blocks = getSlideStageBlocks(frame);
       gsapApi.killTweensOf(frame);
-      if (blocks.length > 0) gsapApi.killTweensOf(blocks);
       gsapApi.set(frame, { clearProps: 'opacity,transform' });
-      if (blocks.length > 0) {
-        gsapApi.set(blocks, { clearProps: 'opacity,transform' });
-      }
     });
   }
 
@@ -1398,40 +1579,23 @@ import { RemoteController } from './remote-controller.js';
     const frame = sec ? $('.slide-frame', sec) : null;
     if (!frame) return;
 
-    const blocks = getSlideStageBlocks(frame);
     frame.classList.add('is-gsap-transitioning');
     gsapApi.killTweensOf(frame);
-    if (blocks.length > 0) gsapApi.killTweensOf(blocks);
 
     gsapApi.fromTo(
       frame,
-      { opacity: 0.34, y: direction * 16 },
+      { opacity: 0.42, y: direction * 14 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.56,
+        duration: 0.46,
         ease: 'power2.out',
+        force3D: true,
         overwrite: 'auto',
         clearProps: 'opacity,transform',
         onComplete: () => frame.classList.remove('is-gsap-transitioning')
       }
     );
-
-    if (blocks.length > 0) {
-      gsapApi.fromTo(
-        blocks,
-        { opacity: 0.52, y: direction * 9 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.46,
-          stagger: 0.045,
-          ease: 'power2.out',
-          overwrite: 'auto',
-          clearProps: 'opacity,transform'
-        }
-      );
-    }
   }
 
   function updateActiveSlideUI(num, { fromRemoteSync = false } = {}) {
@@ -1461,17 +1625,7 @@ import { RemoteController } from './remote-controller.js';
     const scene = activeSection?.dataset.scene || 'storm';
     Object.entries(bgs).forEach(([key, el]) => {
       if (!el) return;
-      const targetOpacity = key === scene ? 1 : 0;
-      if (gsapApi && !prefersReducedMotion?.matches) {
-        gsapApi.to(el, {
-          opacity: targetOpacity,
-          duration: 0.72,
-          ease: 'power2.out',
-          overwrite: 'auto'
-        });
-      } else {
-        el.style.opacity = String(targetOpacity);
-      }
+      el.classList.toggle('is-active-bg', key === scene);
     });
 
     if (changed && !fromRemoteSync) {
@@ -1482,6 +1636,12 @@ import { RemoteController } from './remote-controller.js';
   function goToSlide(num, options = true) {
     const smooth = typeof options === 'boolean' ? options : options?.smooth !== false;
     const fromRemoteSync = typeof options === 'object' && Boolean(options?.fromRemoteSync);
+    const trigger =
+      typeof options === 'object' && options?.trigger
+        ? String(options.trigger)
+        : fromRemoteSync
+        ? 'remote-sync'
+        : 'navigation';
     const clamped = Math.max(1, Math.min(TOTAL_SLIDES, num));
     const prevSlide = currentSlideNum;
 
@@ -1497,6 +1657,10 @@ import { RemoteController } from './remote-controller.js';
       smooth
     });
 
+    if (activeTransitionProbe) {
+      activeTransitionProbe.complete({ interrupted: true });
+      activeTransitionProbe = null;
+    }
     if (activeSlideTimeline) {
       activeSlideTimeline.kill();
       activeSlideTimeline = null;
@@ -1507,18 +1671,28 @@ import { RemoteController } from './remote-controller.js';
     const h = syncHeaderOffset();
     const top = Math.max(0, Math.round(target.getBoundingClientRect().top + window.scrollY - h));
 
-    if (
+    const canAnimateGsap = Boolean(
       gsapApi &&
-      spec.animate &&
-      !document.body.classList.contains('is-editing') &&
-      !document.body.classList.contains('is-phone-remote')
-    ) {
+        spec.animate &&
+        !document.body.classList.contains('is-editing') &&
+        !document.body.classList.contains('is-phone-remote')
+    );
+
+    if (prevSlide !== clamped) {
+      activeTransitionProbe = perfMonitor.beginSlideTransition({
+        fromSlide: prevSlide,
+        toSlide: clamped,
+        trigger,
+        mode: canAnimateGsap ? 'gsap' : smooth ? 'native-smooth' : 'instant'
+      });
+    }
+
+    if (canAnimateGsap) {
       const prevSection = $(`#slide-${prevSlide}`);
       const prevFrame = prevSection ? $('.slide-frame', prevSection) : null;
       const nextFrame = $('.slide-frame', target);
-      const nextBlocks = getSlideStageBlocks(nextFrame);
 
-      suppressScrollEmitUntil = Date.now() + Math.round((spec.scrollDuration + 0.3) * 1000);
+      suppressScrollEmitUntil = Date.now() + Math.round((spec.scrollDuration + 0.2) * 1000);
       isProgrammaticGsapScroll = true;
 
       if (prevFrame) prevFrame.classList.add('is-gsap-transitioning');
@@ -1526,17 +1700,25 @@ import { RemoteController } from './remote-controller.js';
 
       updateActiveSlideUI(clamped, { fromRemoteSync });
 
+      const probeRef = activeTransitionProbe;
       const scrollProxy = { y: window.scrollY };
       activeSlideTimeline = gsapApi.timeline({
         onComplete: () => {
           isProgrammaticGsapScroll = false;
           activeSlideTimeline = null;
           clearAllSlideGsapProps();
-          scrollTriggerApi?.refresh?.();
+          if (probeRef) {
+            probeRef.complete({ interrupted: false });
+            if (activeTransitionProbe === probeRef) activeTransitionProbe = null;
+          }
         },
         onInterrupt: () => {
           isProgrammaticGsapScroll = false;
           clearAllSlideGsapProps();
+          if (probeRef) {
+            probeRef.complete({ interrupted: true });
+            if (activeTransitionProbe === probeRef) activeTransitionProbe = null;
+          }
         }
       });
 
@@ -1545,9 +1727,9 @@ import { RemoteController } from './remote-controller.js';
         {
           y: top,
           duration: spec.scrollDuration,
-          ease: 'power3.inOut',
+          ease: 'power2.inOut',
           onUpdate: () => {
-            window.scrollTo(0, scrollProxy.y);
+            window.scrollTo(0, Math.round(scrollProxy.y));
           }
         },
         0
@@ -1561,6 +1743,7 @@ import { RemoteController } from './remote-controller.js';
             y: spec.exitY,
             duration: spec.exitDuration,
             ease: 'power2.out',
+            force3D: true,
             overwrite: 'auto'
           },
           0
@@ -1568,34 +1751,19 @@ import { RemoteController } from './remote-controller.js';
       }
 
       if (nextFrame) {
-        gsapApi.set(nextFrame, { opacity: spec.enterOpacity, y: spec.enterY });
+        gsapApi.set(nextFrame, { opacity: spec.enterOpacity, y: spec.enterY, force3D: true });
         activeSlideTimeline.to(
           nextFrame,
           {
             opacity: 1,
             y: 0,
             duration: spec.enterDuration,
-            ease: 'power3.out',
+            ease: 'power2.out',
+            force3D: true,
             overwrite: 'auto'
           },
           spec.enterDelay
         );
-
-        if (nextBlocks.length > 0) {
-          gsapApi.set(nextBlocks, { opacity: spec.childOpacity, y: spec.childOffsetY });
-          activeSlideTimeline.to(
-            nextBlocks,
-            {
-              opacity: 1,
-              y: 0,
-              duration: spec.childDuration,
-              stagger: spec.childStagger,
-              ease: 'power2.out',
-              overwrite: 'auto'
-            },
-            spec.enterDelay + 0.05
-          );
-        }
       }
 
       if (!fromRemoteSync) {
@@ -1604,9 +1772,16 @@ import { RemoteController } from './remote-controller.js';
       return;
     }
 
-    suppressScrollEmitUntil = Date.now() + (smooth ? 900 : 250);
+    suppressScrollEmitUntil = Date.now() + (smooth ? 600 : 180);
     window.scrollTo({ top, behavior: smooth ? 'smooth' : 'auto' });
     updateActiveSlideUI(clamped, { fromRemoteSync });
+    if (activeTransitionProbe) {
+      const probeRef = activeTransitionProbe;
+      requestAnimationFrame(() => {
+        probeRef.complete({ interrupted: false });
+        if (activeTransitionProbe === probeRef) activeTransitionProbe = null;
+      });
+    }
     if (!fromRemoteSync) {
       emitPresenterStateChanged();
     }
@@ -1617,13 +1792,17 @@ import { RemoteController } from './remote-controller.js';
       const num = Number(link.dataset.slideLink);
       if (num >= 1 && num <= TOTAL_SLIDES) {
         e.preventDefault();
-        goToSlide(num);
+        goToSlide(num, { smooth: true, trigger: 'header-nav' });
       }
     });
   });
 
-  prevBtn?.addEventListener('click', () => goToSlide(currentSlideNum - 1));
-  nextBtn?.addEventListener('click', () => goToSlide(currentSlideNum + 1));
+  prevBtn?.addEventListener('click', () =>
+    goToSlide(currentSlideNum - 1, { smooth: true, trigger: 'stepper' })
+  );
+  nextBtn?.addEventListener('click', () =>
+    goToSlide(currentSlideNum + 1, { smooth: true, trigger: 'stepper' })
+  );
 
   // Keyboard navigation & stage shortcuts
   document.addEventListener('keydown', (e) => {
@@ -1632,9 +1811,12 @@ import { RemoteController } from './remote-controller.js';
       dialog?.open ||
       lecternDialog?.open ||
       $('#phone-remote-dialog')?.open ||
+      $('#stories-preview-dialog')?.open ||
       $('#revisions-dialog')?.open ||
       $('#confirm-dialog')?.open ||
-      $('#sync-audience-dialog')?.open
+      $('#sync-audience-dialog')?.open ||
+      $('#google-slides-dialog')?.open ||
+      $('#perf-monitor-dialog')?.open
     ) {
       return;
     }
@@ -1715,10 +1897,10 @@ import { RemoteController } from './remote-controller.js';
 
     if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
       e.preventDefault();
-      goToSlide(currentSlideNum + 1);
+      goToSlide(currentSlideNum + 1, { smooth: true, trigger: 'keyboard' });
     } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
       e.preventDefault();
-      goToSlide(currentSlideNum - 1);
+      goToSlide(currentSlideNum - 1, { smooth: true, trigger: 'keyboard' });
     } else if (!e.ctrlKey && !e.metaKey && !e.altKey) {
       const key = e.key.toLowerCase();
       if (key === 'p') {
@@ -1752,49 +1934,65 @@ import { RemoteController } from './remote-controller.js';
       } else if (key === 't') {
         e.preventDefault();
         toggleAutoPace();
+      } else if (key === 'm' && !window.__meridian3DApi) {
+        e.preventDefault();
+        openMeridian3DLazy('overview');
       }
     }
   });
 
-  function onScroll() {
-    const doc = document.documentElement;
-    const maxScroll = Math.max(1, doc.scrollHeight - window.innerHeight);
+  let scrollRafPending = false;
+  function flushScrollState() {
+    scrollRafPending = false;
+    const scrollY = window.scrollY;
     if (progressBar) {
-      progressBar.style.transform = `scaleX(${Math.min(1, Math.max(0, window.scrollY / maxScroll))})`;
+      const ratio = Math.min(1, Math.max(0, scrollY / cachedMaxScroll));
+      progressBar.style.transform = `scaleX(${ratio.toFixed(4)})`;
     }
 
-    if (Date.now() < suppressScrollEmitUntil) {
+    if (isProgrammaticGsapScroll || Date.now() < suppressScrollEmitUntil) {
       return;
     }
 
-    const viewportCenter = window.innerHeight * 0.45;
+    if (!cachedSlideMetrics.length) {
+      refreshLayoutMetrics();
+    }
+
+    const viewportFocusDocY = scrollY + window.innerHeight * 0.45;
     let bestNum = currentSlideNum;
     let bestDist = Infinity;
 
-    slideSections.forEach((sec) => {
-      const r = sec.getBoundingClientRect();
-      const center = r.top + r.height / 2;
-      const dist = Math.abs(center - viewportCenter);
+    for (let i = 0; i < cachedSlideMetrics.length; i++) {
+      const item = cachedSlideMetrics[i];
+      const dist = Math.abs(item.center - viewportFocusDocY);
       if (dist < bestDist) {
         bestDist = dist;
-        bestNum = Number(sec.dataset.slide);
+        bestNum = item.num;
       }
-    });
+    }
 
     if (bestNum !== currentSlideNum) {
       updateActiveSlideUI(bestNum, { fromRemoteSync: false });
     }
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  updateConstellationForSlide(1);
-  onScroll();
+  function onScroll() {
+    if (scrollRafPending) return;
+    scrollRafPending = true;
+    requestAnimationFrame(flushScrollState);
+  }
 
-  $$('main > section').forEach((sec) => sec.classList.add('is-in-view'));
+  window.addEventListener('scroll', onScroll, { passive: true });
+  updateActiveSlideUI(1, { fromRemoteSync: true });
+  flushScrollState();
 
   // Interrupt programmatic GSAP scroll cleanly if user manually scrolls with mousewheel or touch
   const cancelProgrammaticScrollOnUserGesture = () => {
     if (isProgrammaticGsapScroll && activeSlideTimeline) {
+      if (activeTransitionProbe) {
+        activeTransitionProbe.complete({ interrupted: true });
+        activeTransitionProbe = null;
+      }
       activeSlideTimeline.kill();
       activeSlideTimeline = null;
       isProgrammaticGsapScroll = false;
@@ -1812,29 +2010,6 @@ import { RemoteController } from './remote-controller.js';
     isProgrammaticGsapScroll = false;
     clearAllSlideGsapProps();
   });
-
-  // Natural scroll cross-fade & slide-in across the 7 sections via GSAP ScrollTrigger
-  if (gsapApi && scrollTriggerApi && !prefersReducedMotion?.matches) {
-    slideSections.forEach((sec) => {
-      const slideNum = Number(sec.dataset.slide);
-      scrollTriggerApi.create({
-        trigger: sec,
-        start: 'top 78%',
-        end: 'bottom 22%',
-        onEnter: () => {
-          if (!scrollRevealReady || isProgrammaticGsapScroll || isCurtainVisible()) return;
-          animateSlideFrameEntrance(slideNum, 1);
-        },
-        onEnterBack: () => {
-          if (!scrollRevealReady || isProgrammaticGsapScroll || isCurtainVisible()) return;
-          animateSlideFrameEntrance(slideNum, -1);
-        }
-      });
-    });
-    requestAnimationFrame(() => {
-      scrollRevealReady = true;
-    });
-  }
 
   // =========================================================================
   // 10. Clean Audience Mode / Fullscreen Presentation
@@ -1905,8 +2080,9 @@ import { RemoteController } from './remote-controller.js';
   const resetBtn = $('#reset-edits');
   const editableEls = $$('[data-editable]');
 
-  const STORAGE_KEY = 'montesquieu-lectern-aligned-v3';
+  const STORAGE_KEY = 'montesquieu-discussing-dauchy-v3';
   const LEGACY_KEYS = [
+    'montesquieu-lectern-aligned-v3',
     'whose-liberty-dauchy-response-v2',
     'whose-liberty-unified-edits-v1',
     'three-powers-edits-v1',
@@ -2041,7 +2217,16 @@ import { RemoteController } from './remote-controller.js';
       });
       saveEdits();
     },
-    exportAllBundle: downloadEditsJsonBundle
+    exportAllBundle: downloadEditsJsonBundle,
+    showLanding() {
+      drawPodiumCurtain();
+    },
+    drawCurtain() {
+      drawPodiumCurtain();
+    },
+    dismissCurtain(opts = {}) {
+      dismissPodiumCurtain(opts);
+    }
   };
 
   window.dauchyDeckBridge = deckBridge;
@@ -2187,16 +2372,17 @@ import { RemoteController } from './remote-controller.js';
   function handleRemoteAction(action) {
     if (!action) return;
     if (action === 'pause-5s') {
-      if (currentSlideNum !== 5) goToSlide(5);
-      startVisualPause(5);
+      const targetPauseSlide = currentSlideNum === 4 || currentSlideNum === 5 ? currentSlideNum : 4;
+      if (currentSlideNum !== targetPauseSlide) goToSlide(targetPauseSlide);
+      startVisualPause(targetPauseSlide);
     } else if (action === 'toggle-powers') {
-      if (currentSlideNum !== 4) goToSlide(4);
-      const isFour = activeSlideCallouts[4] === 'four-powers';
-      applySlideCallout(4, isFour ? 'three-powers' : 'four-powers');
+      if (currentSlideNum !== 3) goToSlide(3);
+      const isFour = activeSlideCallouts[3] === 'four-powers';
+      applySlideCallout(3, isFour ? 'three-powers' : 'four-powers');
     } else if (action === 'toggle-sword') {
-      if (currentSlideNum !== 6) goToSlide(6);
-      const isSword = activeSlideCallouts[6] === 'sword-detail';
-      applySlideCallout(6, isSword ? 'whole' : 'sword-detail');
+      if (currentSlideNum !== 5) goToSlide(5);
+      const isSword = activeSlideCallouts[5] === 'sword-detail';
+      applySlideCallout(5, isSword ? 'whole' : 'sword-detail');
     } else if (action === 'toggle-tip') {
       applyPresenterTipAction({ type: 'click-toggle', slide: currentSlideNum });
     } else if (action === 'toggle-music') {
@@ -2274,19 +2460,20 @@ import { RemoteController } from './remote-controller.js';
     },
     onToggleTip: () => applyPresenterTipAction({ type: 'click-toggle', slide: currentSlideNum }),
     onTogglePause: () => {
-      if (currentSlideNum !== 5) goToSlide(5);
-      startVisualPause(5);
+      const targetPauseSlide = currentSlideNum === 4 || currentSlideNum === 5 ? currentSlideNum : 4;
+      if (currentSlideNum !== targetPauseSlide) goToSlide(targetPauseSlide);
+      startVisualPause(targetPauseSlide);
     },
     onToggleMusic: () => toggleBackgroundMusic(),
     onTogglePowers: () => {
-      if (currentSlideNum !== 4) goToSlide(4);
-      const isFour = activeSlideCallouts[4] === 'four-powers';
-      applySlideCallout(4, isFour ? 'three-powers' : 'four-powers');
+      if (currentSlideNum !== 3) goToSlide(3);
+      const isFour = activeSlideCallouts[3] === 'four-powers';
+      applySlideCallout(3, isFour ? 'three-powers' : 'four-powers');
     },
     onToggleSword: () => {
-      if (currentSlideNum !== 6) goToSlide(6);
-      const isSword = activeSlideCallouts[6] === 'sword-detail';
-      applySlideCallout(6, isSword ? 'whole' : 'sword-detail');
+      if (currentSlideNum !== 5) goToSlide(5);
+      const isSword = activeSlideCallouts[5] === 'sword-detail';
+      applySlideCallout(5, isSword ? 'whole' : 'sword-detail');
     },
     onOpenScript: () => openLecternScriptDialog(currentSlideNum),
     onToggleCurtain: () => {
@@ -2413,6 +2600,155 @@ import { RemoteController } from './remote-controller.js';
     }
   }
 
+  // G. Stories Video Preview Modal (9:16 Vertical Mobile Player)
+  const storiesDialog = $('#stories-preview-dialog');
+  const storiesCloseBtn = $('#stories-dialog-close');
+  const storiesDismissBtn = $('#stories-dismiss-btn');
+  const storiesReplayBtn = $('#stories-replay-btn');
+  const storiesVideoPlayer = $('#stories-video-player');
+  const headerStoriesBtn = $('#header-stories-btn');
+  const prepStoriesBtn = $('#prep-stories-btn');
+  const curtainStoriesBtn = $('#curtain-stories-btn');
+
+  function openStoriesPreviewDialog() {
+    if (!storiesDialog) return;
+    closePrepPopover();
+    if (!storiesDialog.open) {
+      if (typeof storiesDialog.showModal === 'function') {
+        storiesDialog.showModal();
+      } else {
+        storiesDialog.setAttribute('open', '');
+      }
+    }
+    if (storiesVideoPlayer) {
+      storiesVideoPlayer.currentTime = 0;
+      storiesVideoPlayer.play().catch(() => {});
+    }
+  }
+
+  function closeStoriesPreviewDialog() {
+    if (!storiesDialog) return;
+    if (storiesVideoPlayer) {
+      storiesVideoPlayer.pause();
+    }
+    if (typeof storiesDialog.close === 'function') {
+      storiesDialog.close();
+    } else {
+      storiesDialog.removeAttribute('open');
+    }
+  }
+
+  const storiesViewLandingBtn = $('#stories-view-landing-btn');
+
+  headerStoriesBtn?.addEventListener('click', openStoriesPreviewDialog);
+  prepStoriesBtn?.addEventListener('click', openStoriesPreviewDialog);
+  curtainStoriesBtn?.addEventListener('click', openStoriesPreviewDialog);
+  storiesCloseBtn?.addEventListener('click', closeStoriesPreviewDialog);
+  storiesDismissBtn?.addEventListener('click', closeStoriesPreviewDialog);
+  storiesViewLandingBtn?.addEventListener('click', () => {
+    closeStoriesPreviewDialog();
+    drawPodiumCurtain();
+  });
+  storiesDialog?.addEventListener('click', (e) => {
+    if (e.target === storiesDialog) closeStoriesPreviewDialog();
+  });
+
+  storiesReplayBtn?.addEventListener('click', () => {
+    if (storiesVideoPlayer) {
+      storiesVideoPlayer.currentTime = 0;
+      storiesVideoPlayer.play().catch(() => {});
+    }
+  });
+
+  // Social Media Distribution Handlers (WhatsApp, Instagram Stories, LinkedIn, Native/Copy Link)
+  const shareWhatsappBtn = $('#stories-share-whatsapp');
+  const shareInstagramBtn = $('#stories-share-instagram');
+  const shareLinkedinBtn = $('#stories-share-linkedin');
+  const shareNativeBtn = $('#stories-share-native');
+  const shareNativeLabel = $('#stories-share-native-label');
+  const shareFeedback = $('#stories-share-feedback');
+
+  function showShareFeedback(msg, duration = 3200) {
+    if (!shareFeedback) return;
+    shareFeedback.textContent = msg;
+    shareFeedback.hidden = false;
+    setTimeout(() => {
+      shareFeedback.hidden = true;
+    }, duration);
+  }
+
+  function getStoriesShareData() {
+    const origin = window.location.origin || '';
+    const videoUrl = new URL('./public/assets/montesquieu-stories-preview-9-16.mp4', window.location.href).href;
+    const appUrl = window.location.href.split('#')[0];
+    const title = 'Whose Liberty? Montesquieu in Brazil | 9:16 Stories Preview';
+    const text = 'Whose Liberty? Montesquieu in Brazil — 7-slide discussant presentation following Serge Dauchy (PPGD/UFSC). Watch the 9:16 Stories preview with Chopin Nocturne:';
+    return { origin, videoUrl, appUrl, title, text };
+  }
+
+  shareWhatsappBtn?.addEventListener('click', () => {
+    const { text, videoUrl, appUrl } = getStoriesShareData();
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${text}\n${videoUrl}\n\nFull Interactive Deck: ${appUrl}`)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    showShareFeedback('Opening WhatsApp with 9:16 stories video link...');
+  });
+
+  shareLinkedinBtn?.addEventListener('click', () => {
+    const { appUrl } = getStoriesShareData();
+    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(appUrl)}`;
+    window.open(linkedinUrl, '_blank', 'noopener,noreferrer,width=600,height=600');
+    showShareFeedback('Opening LinkedIn share dialog...');
+  });
+
+  shareInstagramBtn?.addEventListener('click', async () => {
+    const { videoUrl, text } = getStoriesShareData();
+    // Try mobile native share first (which supports Instagram Stories on mobile devices)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Montesquieu in Brazil (9:16 Stories)',
+          text,
+          url: videoUrl
+        });
+        showShareFeedback('Shared to Stories!');
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+      }
+    }
+    // Fallback: copy video link to clipboard with instructions
+    try {
+      await navigator.clipboard.writeText(videoUrl);
+      showShareFeedback('✓ Video link copied! Open Instagram → Add Story → Link Sticker or upload downloaded video.');
+    } catch (e) {
+      showShareFeedback(`Direct video URL: ${videoUrl}`);
+    }
+  });
+
+  shareNativeBtn?.addEventListener('click', async () => {
+    const { title, text, videoUrl } = getStoriesShareData();
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url: videoUrl });
+        showShareFeedback('Shared successfully!');
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(videoUrl);
+      if (shareNativeLabel) shareNativeLabel.textContent = '✓ Copied!';
+      showShareFeedback('✓ Direct 9:16 video link copied to clipboard!');
+      setTimeout(() => {
+        if (shareNativeLabel) shareNativeLabel.textContent = 'Copy Link';
+      }, 2500);
+    } catch (e) {
+      showShareFeedback(`Direct video URL: ${videoUrl}`);
+    }
+  });
+
+  window.openStoriesPreviewDialog = openStoriesPreviewDialog;
   window.openPhoneRemoteDialog = openPhoneRemoteDialog;
   window.openLecternScriptDialog = openLecternScriptDialog;
   window.printLecternScript = printLecternScript;
