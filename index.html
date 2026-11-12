@@ -3,10 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="/">
+  <title>Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC</title>
   <meta name="description" content="Interactive 7-slide discussant presentation by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026) on Montesquieu, reception, context, and the conditions of liberty.">
+  <link rel="canonical" href="https://montesquieu.anavanzin.com/">
+  <meta property="og:site_name" content="Whose Liberty? Montesquieu in Brazil · PPGD/UFSC">
   <meta property="og:title" content="Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC">
   <meta property="og:description" content="Discussing Dauchy’s Montesquieu: Context, reception and the representation of powers — Seven-slide discussant response by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026).">
-  <title>Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC</title>
+  <meta property="og:url" content="https://montesquieu.anavanzin.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://montesquieu.anavanzin.com/public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="900">
+  <meta property="og:image:alt" content="Oil-impasto painted maps of France and Brazil integrated on archival parchment">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="pt_BR">
+  <meta property="og:locale:alternate" content="fr_FR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Whose Liberty? Montesquieu in Brazil | Ana Vitória Vanzin Mendes · PPGD/UFSC">
+  <meta name="twitter:description" content="Discussing Dauchy’s Montesquieu: Context, reception and the representation of powers — Seven-slide discussant response by Ana Vitória Vanzin Mendes following Serge Dauchy (PPGD/UFSC, 11 November 2026).">
+  <meta name="twitter:image" content="https://montesquieu.anavanzin.com/public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png">
+  <meta name="twitter:image:alt" content="Oil-impasto painted maps of France and Brazil integrated on archival parchment">
+  <meta name="author" content="Ana Vitória Vanzin Mendes (PPGD/UFSC)">
   <link rel="icon" href="./assets/img/logo-owl.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +60,12 @@
         }
         var search = window.location.search || '';
         var hash = window.location.hash || '';
+        var path = window.location.pathname || '';
+        var isSlideRoute = /^\/slide\/[1-7]$/.test(path) || path === '/sources' || path === '/stories';
+        var hasInitialSlide = document.documentElement.hasAttribute('data-initial-slide') || document.documentElement.hasAttribute('data-initial-view');
         if (
+          isSlideRoute ||
+          hasInitialSlide ||
           /(?:^\?|&)autostart=1(?:&|$)/.test(search) ||
           /(?:^\?|&)script=1(?:&|$)/.test(search) ||
           search.indexOf('sync=') !== -1 ||
@@ -85,9 +108,20 @@
 
     <div class="poster-hero__container poster-hero__navy-inner">
       <div class="poster-hero__kicker-line">
-        <span class="poster-hero__ppgd t-meta">PPGD-UFSC</span>
-        <span class="poster-hero__gold-stem" aria-hidden="true"></span>
-        <span class="poster-hero__dates-top t-meta" lang="pt">11 a 13 de novembro de 2026 · CCJ/UFSC</span>
+        <div class="poster-hero__kicker-left">
+          <span class="poster-hero__ppgd t-meta">PPGD-UFSC</span>
+          <span class="poster-hero__gold-stem" aria-hidden="true"></span>
+          <span class="poster-hero__dates-top t-meta" lang="pt">11 a 13 de novembro de 2026 · CCJ/UFSC</span>
+        </div>
+        <a
+          class="poster-hero__portfolio-back t-meta"
+          href="https://www.anavanzin.com/projetos"
+          target="_blank"
+          rel="noopener"
+          title="Voltar para Projetos e Trabalhos em anavanzin.com"
+        >
+          ← anavanzin.com / projetos
+        </a>
       </div>
 
       <p class="poster-hero__series t-display-serif" lang="pt">
@@ -154,6 +188,35 @@
           <p class="poster-hero__datetime t-display-serif">
             11 de novembro de 2026 <span class="poster-hero__red-dot" aria-hidden="true">•</span> 15h10
           </p>
+        </div>
+
+        <!-- Distinguished Archival Record Seal & Metadata Badge -->
+        <div class="archival-curtain-seal" role="note" aria-label="Official archival record of presented intervention">
+          <div class="archival-curtain-seal__top">
+            <span class="archival-curtain-seal__badge t-meta">ARCHIVAL RECORD · PRESENTED INTERVENTION</span>
+            <span class="archival-curtain-seal__venue t-meta">PPGD/UFSC · CCJ FLORIANÓPOLIS</span>
+          </div>
+          <p class="archival-curtain-seal__delivered t-display-serif">
+            Delivered on <strong>11 November 2026</strong> at <strong>15h10 BRT</strong> as invited discussant following Keynote <strong>Serge Dauchy</strong> (CNRS / Université de Lille).
+          </p>
+          <div class="archival-curtain-seal__actions">
+            <button type="button" class="archival-seal-btn t-ui" id="curtain-copy-citation-btn" title="Copy academic citation in ABNT / Chicago format">
+              <span>📋 Copy Academic Citation</span>
+            </button>
+            <button type="button" class="archival-seal-btn t-ui" id="curtain-copy-share-btn" title="Copy canonical presentation link">
+              <span>🔗 Copy Archival Link</span>
+            </button>
+            <a
+              class="archival-seal-btn t-ui"
+              href="https://www.anavanzin.com/projetos"
+              target="_blank"
+              rel="noopener"
+              title="Voltar para Trabalhos e Projetos em anavanzin.com"
+            >
+              <span>📁 anavanzin.com / projetos ↗</span>
+            </a>
+          </div>
+          <div class="archival-seal-feedback t-meta" id="curtain-seal-feedback" aria-live="polite" hidden></div>
         </div>
 
         <!-- Presentation Entry Strip -->
@@ -238,10 +301,22 @@
      ========================================================================= -->
 <header class="header" id="top-header">
   <div class="header__bar">
-    <a class="header__brand" href="#landing" id="header-brand-link" title="Display Event Landing Poster &amp; PPGD-UFSC Program (C)">
-      <img class="header__owl-mark" src="./assets/img/logo-owl.png" alt="" width="20" height="20">
-      <span class="header__wordmark">Discussing Dauchy’s Montesquieu</span>
-    </a>
+    <div class="header__brand-group">
+      <a class="header__brand" href="#landing" id="header-brand-link" title="Display Event Landing Poster &amp; PPGD-UFSC Program (C)">
+        <img class="header__owl-mark" src="./assets/img/logo-owl.png" alt="" width="20" height="20">
+        <span class="header__wordmark">Discussing Dauchy’s Montesquieu</span>
+      </a>
+      <span class="header__portfolio-divider" aria-hidden="true">|</span>
+      <a
+        class="header__portfolio-link t-meta"
+        href="https://www.anavanzin.com/projetos"
+        target="_blank"
+        rel="noopener"
+        title="Voltar para Projetos em anavanzin.com"
+      >
+        ← anavanzin.com / projetos
+      </a>
+    </div>
 
     <nav class="header__nav t-ui" aria-label="Slide navigation">
       <button type="button" class="header__landing-btn" id="header-landing-btn" title="Display Opening Event Poster &amp; Landing Screen (C)">
@@ -405,6 +480,10 @@
               <button class="action-btn t-ui" id="prep-print-script-direct-btn" type="button">
                 <span>Print Script (7p)</span>
               </button>
+
+              <button class="action-btn t-ui" id="portfolio-embed-btn" type="button" title="Get embed and link code for www.anavanzin.com/trabalhos">
+                <span>🌐 Embed / Portfolio</span>
+              </button>
             </div>
           </div>
 
@@ -505,6 +584,48 @@
 <div class="bg bg--nightsea" aria-hidden="true"><img src="./assets/img/bgs/nightsea.webp" alt="" loading="lazy" decoding="async"></div>
 
 <main id="report">
+  <!-- =========================================================================
+       DISTINGUISHED ARCHIVAL RECORD BANNER & DEEP-LINK CITATION CONSOLE
+       Indicates this is an already presented scholarly intervention (11 Nov 2026)
+       ========================================================================= -->
+  <aside class="archival-record-banner" id="archival-record-banner" role="region" aria-label="Official archival record of presented material">
+    <div class="archival-record-banner__inner">
+      <div class="archival-record-banner__lead">
+        <span class="archival-record-badge t-meta">ARCHIVAL RECORD</span>
+        <span class="archival-record-dates t-meta">PRESENTED 11 NOV 2026 · 15h10 BRT</span>
+        <span class="archival-record-venue t-meta">PPGD/UFSC · CCJ (FLORIANÓPOLIS)</span>
+      </div>
+      <div class="archival-record-banner__summary">
+        <strong class="archival-record-title">Discussing Dauchy’s Montesquieu</strong>
+        <span class="archival-record-sep" aria-hidden="true">—</span>
+        <span class="archival-record-sub">Context, reception and the representation of powers</span>
+        <span class="archival-record-role">· Discussant: <strong>Ana Vitória Vanzin Mendes</strong> (PPGD/UFSC) · Keynote: <strong>Serge Dauchy</strong> (CNRS/Lille)</span>
+      </div>
+      <div class="archival-record-banner__tools">
+        <button type="button" class="archival-tool-btn t-ui" id="banner-copy-citation-btn" title="Copy academic citation in ABNT and Chicago format">
+          <span>📋 Copy Citation</span>
+        </button>
+        <button type="button" class="archival-tool-btn t-ui" id="banner-share-slide-btn" title="Copy deep-linked canonical URL for the active slide">
+          <span>🔗 Share Slide <span id="banner-slide-label">01</span></span>
+        </button>
+        <button type="button" class="archival-tool-btn t-ui" id="banner-landing-btn" title="View opening event program and poster">
+          <span>🏛️ Event Program</span>
+        </button>
+        <a
+          href="https://www.anavanzin.com/projetos"
+          class="archival-tool-btn t-ui"
+          id="banner-portfolio-btn"
+          title="Ver página de Projetos e Trabalhos em anavanzin.com"
+          target="_blank"
+          rel="noopener"
+        >
+          <span>📁 anavanzin.com / projetos ↗</span>
+        </a>
+      </div>
+    </div>
+    <div class="archival-banner-feedback t-meta" id="archival-banner-feedback" aria-live="polite" hidden></div>
+  </aside>
+
   <!-- Print-only masthead for the UFSC panel slide deck handout -->
   <header class="print-lecture-header" aria-label="Panel and presentation information">
     <div class="print-lecture-header__top">
@@ -2260,6 +2381,65 @@
     </button>
     <button class="action-btn t-ui" id="stories-dismiss-btn" type="button">
       Back to Presentation
+    </button>
+  </div>
+</dialog>
+
+<!-- Portfolio Integration & Embed Helper Modal -->
+<dialog class="workspace-dialog" id="portfolio-embed-dialog" aria-labelledby="portfolio-embed-title">
+  <div class="workspace-dialog__header">
+    <div>
+      <p class="source-tag t-meta">ANAVANZIN.COM PORTFOLIO INTEGRATION</p>
+      <h2 class="t-display-serif workspace-dialog__title" id="portfolio-embed-title">Embed &amp; Link to anavanzin.com/projetos</h2>
+    </div>
+    <button class="dialog-close" id="portfolio-embed-close" type="button">Close ×</button>
+  </div>
+
+  <p class="workspace-dialog__desc">
+    Use these ready-to-paste snippets to feature this presentation inside your main website portfolio at <strong>www.anavanzin.com/trabalhos</strong> or <strong>/projetos</strong>.
+  </p>
+
+  <div class="embed-snippet-group">
+    <div class="embed-snippet-header">
+      <span class="embed-snippet-label t-meta">1. RESPONSIVE IFRAME EMBED (FOR WEBFLOW / WORDPRESS / CMS)</span>
+      <button type="button" class="action-btn t-ui action-btn--copy" id="copy-iframe-snippet-btn">Copy Iframe</button>
+    </div>
+    <pre class="embed-code-block"><code id="code-iframe-snippet">&lt;div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,0.15);"&gt;
+  &lt;iframe src="https://montesquieu.anavanzin.com/" title="Discussing Dauchy’s Montesquieu · Ana Vitória Vanzin Mendes" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="embed-snippet-group">
+    <div class="embed-snippet-header">
+      <span class="embed-snippet-label t-meta">2. PORTFOLIO CARD HTML (FOR WORKS GRID)</span>
+      <button type="button" class="action-btn t-ui action-btn--copy" id="copy-card-snippet-btn">Copy Card HTML</button>
+    </div>
+    <pre class="embed-code-block"><code id="code-card-snippet">&lt;a href="https://montesquieu.anavanzin.com/" class="work-card" target="_blank" rel="noopener"&gt;
+  &lt;img src="https://montesquieu.anavanzin.com/public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png" alt="Discussing Dauchy’s Montesquieu" /&gt;
+  &lt;div class="work-info"&gt;
+    &lt;span class="tag"&gt;PPGD/UFSC · Intervenção Acadêmica&lt;/span&gt;
+    &lt;h3&gt;Discussing Dauchy’s Montesquieu: Context, reception and the representation of powers&lt;/h3&gt;
+    &lt;p&gt;Conferencista: Serge Dauchy · Debatedora: Ana Vitória Vanzin Mendes (11 Nov 2026)&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/a&gt;</code></pre>
+  </div>
+
+  <div class="embed-snippet-group">
+    <div class="embed-snippet-header">
+      <span class="embed-snippet-label t-meta">3. MARKDOWN LINK (FOR CURRICULUM LATTES / GITHUB / README)</span>
+      <button type="button" class="action-btn t-ui action-btn--copy" id="copy-markdown-snippet-btn">Copy Markdown</button>
+    </div>
+    <pre class="embed-code-block"><code id="code-markdown-snippet">[Discussing Dauchy’s Montesquieu (PPGD/UFSC 2026)](https://montesquieu.anavanzin.com/) — Debatedora: Ana Vitória Vanzin Mendes</code></pre>
+  </div>
+
+  <div class="embed-feedback t-meta" id="embed-snippet-feedback" aria-live="polite" hidden></div>
+
+  <div class="workspace-dialog__actions">
+    <a href="https://www.anavanzin.com/projetos" class="action-btn t-ui workspace-primary-btn" target="_blank" rel="noopener">
+      Open anavanzin.com/projetos ↗
+    </a>
+    <button class="action-btn t-ui" id="portfolio-embed-dismiss-btn" type="button">
+      Done
     </button>
   </div>
 </dialog>

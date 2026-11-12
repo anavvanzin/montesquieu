@@ -2,6 +2,11 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const { GoogleGenAI } = require('@google/genai');
+const {
+  DEFAULT_CANONICAL_DOMAIN,
+  resolveSlideRouteKey,
+  injectServerRenderedMetadata,
+} = require('./seo-metadata.cjs');
 
 const root = __dirname;
 const port = Number(process.env.PORT || process.argv[2] || 3000);
@@ -577,7 +582,38 @@ http
       return;
     }
 
-    const relPathname = pathname === '/' ? '/index.html' : pathname;
+    // Deep-linked slide routes, sources, landing, and stories with server-rendered SEO & OpenGraph tags
+    const slideRouteKey = resolveSlideRouteKey(pathname);
+    if ((req.method === 'GET' || req.method === 'HEAD') && slideRouteKey) {
+      try {
+        const indexHtml = fs.readFileSync(path.resolve(root, 'index.html'), 'utf8');
+        const customDomain = process.env.CANONICAL_DOMAIN || process.env.SITE_URL || DEFAULT_CANONICAL_DOMAIN;
+        const renderedHtml = injectServerRenderedMetadata(indexHtml, pathname, customDomain);
+        const bodyBuf = Buffer.from(renderedHtml, 'utf8');
+
+        res.writeHead(200, {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Content-Length': bodyBuf.length,
+          'Cache-Control': 'no-cache',
+        });
+        if (req.method === 'HEAD') {
+          res.end();
+          return;
+        }
+        res.end(bodyBuf);
+        return;
+      } catch (err) {
+        console.error('Failed to render slide route:', err);
+      }
+    }
+
+    // Strip /slide/ prefix if requested for static subresources (e.g. /slide/css/report.css -> /css/report.css)
+    let normalizedPath = pathname;
+    if (normalizedPath.startsWith('/slide/')) {
+      normalizedPath = normalizedPath.replace(/^\/slide/, '');
+    }
+
+    const relPathname = normalizedPath === '/' ? '/index.html' : normalizedPath;
     let file = path.resolve(root, '.' + relPathname);
     if (!file.startsWith(root + path.sep)) {
       res.writeHead(403).end();

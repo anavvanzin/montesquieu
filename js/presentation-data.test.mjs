@@ -135,6 +135,10 @@ test('Helper functions (constellation, music, curtain bypass, presenter tips, sl
   assert.match(formatMusicStatusLabel({ playing: true, volume: 0.25 }).shortLabel, /Nocturne/);
   assert.equal(shouldBypassOpeningPoster('?sync=UFSC-2026', ''), true);
   assert.equal(shouldBypassOpeningPoster('', '#slide-3'), true);
+  assert.equal(shouldBypassOpeningPoster('', '', '/slide/3'), true);
+  assert.equal(shouldBypassOpeningPoster('', '', '/sources'), true);
+  assert.equal(shouldBypassOpeningPoster('', '', '/stories'), true);
+  assert.equal(shouldBypassOpeningPoster('', '', '/landing'), false);
   assert.equal(shouldBypassOpeningPoster('', ''), false);
 
   const tip4 = getPresenterTipForSlide(4);

@@ -1116,9 +1116,16 @@ export function formatMusicStatusLabel({ playing = false, muted = false, volume 
 /**
  * Determine whether the opening event poster stage should be skipped automatically.
  */
-export function shouldBypassOpeningPoster(search = '', hash = '') {
+export function shouldBypassOpeningPoster(search = '', hash = '', pathname = '') {
   const qs = String(search || '');
   const hs = String(hash || '');
+  const ps = String(pathname || '');
+  if (ps === '/landing' || hs === '#landing' || hs === '#curtain') {
+    return false;
+  }
+  if (/^\/slide\/[1-7]$/.test(ps) || ps === '/sources' || ps === '/stories') {
+    return true;
+  }
   if (
     /(?:^\?|&)autostart=1(?:&|$)/.test(qs) ||
     /(?:^\?|&)script=1(?:&|$)/.test(qs) ||

@@ -402,9 +402,20 @@ import { perfMonitor } from './perf-monitor.mjs';
     curtainStartBtn?.focus({ preventScroll: true });
   }
 
+  const initialSlideAttr = document.documentElement.getAttribute('data-initial-slide');
+  const initialViewAttr = document.documentElement.getAttribute('data-initial-view');
+  const initialPathMatch = window.location.pathname.match(/^\/slide\/([1-7])$/);
+  const detectedInitialSlide = initialSlideAttr
+    ? parseInt(initialSlideAttr, 10)
+    : initialPathMatch
+    ? parseInt(initialPathMatch[1], 10)
+    : null;
+
   if (
     document.documentElement.getAttribute('data-curtain-bypassed') === 'true' ||
-    shouldBypassOpeningPoster(window.location.search, window.location.hash)
+    detectedInitialSlide !== null ||
+    initialViewAttr ||
+    shouldBypassOpeningPoster(window.location.search, window.location.hash, window.location.pathname)
   ) {
     curtainOpen = false;
     document.documentElement.setAttribute('data-curtain-bypassed', 'true');
@@ -1628,7 +1639,26 @@ import { perfMonitor } from './perf-monitor.mjs';
       el.classList.toggle('is-active-bg', key === scene);
     });
 
+    const bannerSlideLabel = $('#banner-slide-label');
+    if (bannerSlideLabel) {
+      bannerSlideLabel.textContent = padded;
+    }
+
     if (changed && !fromRemoteSync) {
+      try {
+        if (window.history && window.history.replaceState) {
+          const newPath = `/slide/${num}`;
+          if (window.location.pathname !== newPath) {
+            window.history.replaceState({ slide: num }, '', newPath);
+          }
+        }
+      } catch (e) {}
+
+      const canonicalEl = document.querySelector('link[rel="canonical"]');
+      if (canonicalEl) {
+        canonicalEl.setAttribute('href', `${window.location.origin}/slide/${num}`);
+      }
+
       emitPresenterStateChanged();
     }
   }
@@ -1983,8 +2013,41 @@ import { perfMonitor } from './perf-monitor.mjs';
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  updateActiveSlideUI(1, { fromRemoteSync: true });
-  flushScrollState();
+
+  const startingSlide =
+    detectedInitialSlide && detectedInitialSlide >= 1 && detectedInitialSlide <= TOTAL_SLIDES
+      ? detectedInitialSlide
+      : 1;
+
+  if (startingSlide > 1) {
+    updateActiveSlideUI(startingSlide, { fromRemoteSync: true });
+    requestAnimationFrame(() => {
+      goToSlide(startingSlide, false);
+    });
+  } else {
+    updateActiveSlideUI(1, { fromRemoteSync: true });
+    flushScrollState();
+  }
+
+  if (
+    initialViewAttr === 'sources' ||
+    window.location.pathname === '/sources' ||
+    window.location.hash === '#sources'
+  ) {
+    requestAnimationFrame(() => {
+      const sourcesEl = $('#sources');
+      if (sourcesEl) {
+        sourcesEl.scrollIntoView({ behavior: 'auto' });
+      }
+    });
+  } else if (
+    initialViewAttr === 'stories' ||
+    window.location.pathname === '/stories'
+  ) {
+    requestAnimationFrame(() => {
+      openStoriesPreviewDialog();
+    });
+  }
 
   // Interrupt programmatic GSAP scroll cleanly if user manually scrolls with mousewheel or touch
   const cancelProgrammaticScrollOnUserGesture = () => {
@@ -2746,6 +2809,142 @@ import { perfMonitor } from './perf-monitor.mjs';
     } catch (e) {
       showShareFeedback(`Direct video URL: ${videoUrl}`);
     }
+  });
+
+  // =========================================================================
+  // Archival Record Badge & Citation Console Handlers
+  // =========================================================================
+  const ACADEMIC_CITATION_TEXT =
+    'MENDES, Ana Vitória Vanzin. Discussing Dauchy’s Montesquieu: Context, reception and the representation of powers. Debatedora na conferência de Serge Dauchy sobre Montesquieu no Programa de Pós-Graduação em Direito (PPGD/UFSC). Florianópolis: CCJ/UFSC, 11 nov. 2026.';
+
+  const curtainCopyCitationBtn = $('#curtain-copy-citation-btn');
+  const curtainCopyShareBtn = $('#curtain-copy-share-btn');
+  const curtainSealFeedback = $('#curtain-seal-feedback');
+
+  const bannerCopyCitationBtn = $('#banner-copy-citation-btn');
+  const bannerShareSlideBtn = $('#banner-share-slide-btn');
+  const bannerLandingBtn = $('#banner-landing-btn');
+  const bannerFeedback = $('#archival-banner-feedback');
+
+  async function copyArchivalText(text, feedbackEl, successMsg) {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+      if (feedbackEl) {
+        feedbackEl.textContent = successMsg;
+        feedbackEl.hidden = false;
+        setTimeout(() => {
+          feedbackEl.hidden = true;
+        }, 3500);
+      }
+    } catch (err) {
+      if (feedbackEl) {
+        feedbackEl.textContent = `Archival link: ${text}`;
+        feedbackEl.hidden = false;
+      }
+    }
+  }
+
+  curtainCopyCitationBtn?.addEventListener('click', () => {
+    copyArchivalText(
+      ACADEMIC_CITATION_TEXT,
+      curtainSealFeedback,
+      '✓ Academic citation copied to clipboard (ABNT / Chicago)!'
+    );
+  });
+
+  bannerCopyCitationBtn?.addEventListener('click', () => {
+    copyArchivalText(
+      ACADEMIC_CITATION_TEXT,
+      bannerFeedback,
+      '✓ Academic citation copied to clipboard (ABNT / Chicago)!'
+    );
+  });
+
+  curtainCopyShareBtn?.addEventListener('click', () => {
+    const origin = window.location.origin || 'https://montesquieu.anavanzin.com';
+    copyArchivalText(
+      `${origin}/`,
+      curtainSealFeedback,
+      '✓ Canonical presentation link copied to clipboard!'
+    );
+  });
+
+  bannerShareSlideBtn?.addEventListener('click', () => {
+    const origin = window.location.origin || 'https://montesquieu.anavanzin.com';
+    const slideUrl = `${origin}/slide/${currentSlideNum}`;
+    const padded = String(currentSlideNum).padStart(2, '0');
+    copyArchivalText(
+      slideUrl,
+      bannerFeedback,
+      `✓ Deep-link for Slide ${padded} copied to clipboard!`
+    );
+  });
+
+  bannerLandingBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    drawPodiumCurtain();
+  });
+
+  // Portfolio Integration Helper Modal Handlers
+  const portfolioEmbedBtn = $('#portfolio-embed-btn');
+  const portfolioEmbedDialog = $('#portfolio-embed-dialog');
+  const portfolioEmbedClose = $('#portfolio-embed-close');
+  const portfolioEmbedDismiss = $('#portfolio-embed-dismiss-btn');
+  const copyIframeBtn = $('#copy-iframe-snippet-btn');
+  const copyCardBtn = $('#copy-card-snippet-btn');
+  const copyMarkdownBtn = $('#copy-markdown-snippet-btn');
+  const embedSnippetFeedback = $('#embed-snippet-feedback');
+
+  function openPortfolioEmbedDialog() {
+    if (!portfolioEmbedDialog) return;
+    closePrepPopover();
+    if (typeof portfolioEmbedDialog.showModal === 'function') {
+      portfolioEmbedDialog.showModal();
+    } else {
+      portfolioEmbedDialog.setAttribute('open', '');
+    }
+  }
+
+  function closePortfolioEmbedDialog() {
+    if (!portfolioEmbedDialog) return;
+    if (typeof portfolioEmbedDialog.close === 'function') {
+      portfolioEmbedDialog.close();
+    } else {
+      portfolioEmbedDialog.removeAttribute('open');
+    }
+  }
+
+  portfolioEmbedBtn?.addEventListener('click', openPortfolioEmbedDialog);
+  portfolioEmbedClose?.addEventListener('click', closePortfolioEmbedDialog);
+  portfolioEmbedDismiss?.addEventListener('click', closePortfolioEmbedDialog);
+  portfolioEmbedDialog?.addEventListener('click', (e) => {
+    if (e.target === portfolioEmbedDialog) closePortfolioEmbedDialog();
+  });
+
+  copyIframeBtn?.addEventListener('click', () => {
+    const code = $('#code-iframe-snippet')?.textContent || '';
+    copyArchivalText(code, embedSnippetFeedback, '✓ Responsive iframe embed code copied to clipboard!');
+  });
+
+  copyCardBtn?.addEventListener('click', () => {
+    const code = $('#code-card-snippet')?.textContent || '';
+    copyArchivalText(code, embedSnippetFeedback, '✓ Portfolio card HTML snippet copied to clipboard!');
+  });
+
+  copyMarkdownBtn?.addEventListener('click', () => {
+    const code = $('#code-markdown-snippet')?.textContent || '';
+    copyArchivalText(code, embedSnippetFeedback, '✓ Markdown link snippet copied to clipboard!');
   });
 
   window.openStoriesPreviewDialog = openStoriesPreviewDialog;
