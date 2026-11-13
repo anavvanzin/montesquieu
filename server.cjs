@@ -28,6 +28,8 @@ const types = {
   '.svg': 'image/svg+xml',
   '.woff2': 'font/woff2',
   '.json': 'application/json; charset=utf-8',
+  '.webmanifest': 'application/manifest+json; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
   '.pdf': 'application/pdf',
   '.txt': 'text/plain; charset=utf-8',
 };
@@ -510,6 +512,154 @@ function handleAudienceSyncEvents(req, res, urlObj) {
   });
 }
 
+function sendArchival404(req, res) {
+  const html = `<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 · Archival Folio Not Found | Montesquieu in Brazil</title>
+  <link rel="stylesheet" href="/vendor/fonts/newsreader.css">
+  <link rel="stylesheet" href="/vendor/fonts/inter-tight.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a0e17;
+      color: #f0ede6;
+      font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    .archival-404 {
+      max-width: 640px;
+      margin: 2rem 1rem;
+      padding: 2.5rem;
+      background: #111827;
+      border: 1px solid #233149;
+      border-top: 3px solid #d4a73c;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.45);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #d4a73c;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(212, 167, 60, 0.4);
+      padding-bottom: 0.25rem;
+    }
+    h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      margin: 0 0 1rem;
+      line-height: 1.25;
+      color: #fff;
+    }
+    p {
+      color: #94a3b8;
+      line-height: 1.6;
+      margin: 0 0 1.5rem;
+    }
+    .slide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+    .slide-link {
+      display: block;
+      text-align: center;
+      padding: 0.5rem;
+      border: 1px solid #233149;
+      color: #f0ede6;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .slide-link:hover {
+      border-color: #d4a73c;
+      background: rgba(212, 167, 60, 0.12);
+      color: #fff;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #233149;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: #d4a73c;
+      color: #0a0e17;
+    }
+    .btn-primary:hover {
+      background: #e2ba52;
+    }
+    .btn-secondary {
+      border: 1px solid #233149;
+      color: #f0ede6;
+    }
+    .btn-secondary:hover {
+      border-color: #d4a73c;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <main class="archival-404">
+    <span class="badge">Archival Record Index · PPGD/UFSC</span>
+    <h1>Folio Not Found</h1>
+    <p>The requested slide route or archival folio is not cataloged in this presentation index. You can return directly to the main presentation or jump to an individual slide below.</p>
+    
+    <div class="slide-grid">
+      <a class="slide-link" href="/slide/1">Slide 1</a>
+      <a class="slide-link" href="/slide/2">Slide 2</a>
+      <a class="slide-link" href="/slide/3">Slide 3</a>
+      <a class="slide-link" href="/slide/4">Slide 4</a>
+      <a class="slide-link" href="/slide/5">Slide 5</a>
+      <a class="slide-link" href="/slide/6">Slide 6</a>
+      <a class="slide-link" href="/slide/7">Slide 7</a>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="/">← Return to Presentation Deck</a>
+      <a class="btn btn-secondary" href="/sources">Archival Sources</a>
+      <a class="btn btn-secondary" href="https://www.anavanzin.com/projetos" target="_blank" rel="noopener">anavanzin.com / projetos ↗</a>
+    </div>
+  </main>
+</body>
+</html>`;
+  const buf = Buffer.from(html, 'utf8');
+  res.writeHead(404, {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Content-Length': buf.length,
+    'Cache-Control': 'no-cache',
+    'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+  });
+  if (req.method === 'HEAD') {
+    res.end();
+    return;
+  }
+  res.end(buf);
+}
+
 http
   .createServer(async (req, res) => {
     let urlObj;
@@ -520,6 +670,58 @@ http
     } catch {
       res.writeHead(400).end();
       return;
+    }
+
+    // Health check endpoint for cloud/container deployment probes
+    if ((req.method === 'GET' || req.method === 'HEAD') && (pathname === '/healthz' || pathname === '/health')) {
+      const payload = {
+        status: 'healthy',
+        app: 'Whose Liberty? Montesquieu in Brazil',
+        canonicalDomain: process.env.CANONICAL_DOMAIN || process.env.SITE_URL || DEFAULT_CANONICAL_DOMAIN,
+        uptimeSeconds: Math.round(process.uptime()),
+        timestamp: new Date().toISOString(),
+      };
+      sendJson(res, 200, payload);
+      return;
+    }
+
+    // Dynamic robots.txt
+    if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/robots.txt') {
+      const customDomain = process.env.CANONICAL_DOMAIN || process.env.SITE_URL || DEFAULT_CANONICAL_DOMAIN;
+      const cleanDomain = customDomain.replace(/\/+$/, '');
+      const content = `User-agent: *\nAllow: /\n\nSitemap: ${cleanDomain}/sitemap.xml\n`;
+      const buf = Buffer.from(content, 'utf8');
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Content-Length': buf.length,
+        'Cache-Control': 'public, max-age=86400',
+        'X-Content-Type-Options': 'nosniff',
+      });
+      if (req.method === 'HEAD') return res.end();
+      return res.end(buf);
+    }
+
+    // Dynamic sitemap.xml
+    if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/sitemap.xml') {
+      const customDomain = process.env.CANONICAL_DOMAIN || process.env.SITE_URL || DEFAULT_CANONICAL_DOMAIN;
+      const cleanDomain = customDomain.replace(/\/+$/, '');
+      const routes = ['/', '/slide/1', '/slide/2', '/slide/3', '/slide/4', '/slide/5', '/slide/6', '/slide/7', '/sources', '/landing', '/stories'];
+      const urlsXml = routes
+        .map(
+          (r) =>
+            `  <url>\n    <loc>${cleanDomain}${r === '/' ? '/' : r}</loc>\n    <lastmod>2026-11-12</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${r === '/' ? '1.0' : r.startsWith('/slide/') ? '0.9' : '0.8'}</priority>\n  </url>`
+        )
+        .join('\n');
+      const content = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urlsXml}\n</urlset>\n`;
+      const buf = Buffer.from(content, 'utf8');
+      res.writeHead(200, {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Content-Length': buf.length,
+        'Cache-Control': 'public, max-age=86400',
+        'X-Content-Type-Options': 'nosniff',
+      });
+      if (req.method === 'HEAD') return res.end();
+      return res.end(buf);
     }
 
     if (req.method === 'GET' && pathname === '/api/audience-sync/events') {
@@ -594,7 +796,9 @@ http
         res.writeHead(200, {
           'Content-Type': 'text/html; charset=utf-8',
           'Content-Length': bodyBuf.length,
-          'Cache-Control': 'no-cache',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'X-Content-Type-Options': 'nosniff',
+          'Referrer-Policy': 'strict-origin-when-cross-origin',
         });
         if (req.method === 'HEAD') {
           res.end();
@@ -621,8 +825,28 @@ http
     }
 
     const serveResolvedFile = (targetFile, stat) => {
-      const contentType = types[path.extname(targetFile).toLowerCase()] || 'application/octet-stream';
+      const ext = path.extname(targetFile).toLowerCase();
+      const contentType = types[ext] || 'application/octet-stream';
       const rangeHeader = req.headers.range;
+
+      const isStaticAsset = /\.(css|js|mjs|webp|png|jpg|jpeg|mp4|mp3|svg|woff2|webmanifest|ico)$/i.test(targetFile);
+      const isSw = path.basename(targetFile) === 'sw.js';
+      const cacheControl = isSw
+        ? 'no-cache, no-store, must-revalidate'
+        : isStaticAsset
+        ? 'public, max-age=86400, stale-while-revalidate=604800'
+        : 'no-cache, no-store, must-revalidate';
+
+      const commonHeaders = {
+        'Content-Type': contentType,
+        'Accept-Ranges': 'bytes',
+        'Cache-Control': cacheControl,
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+      };
+      if (isSw) {
+        commonHeaders['Service-Worker-Allowed'] = '/';
+      }
 
       if (rangeHeader && /^bytes=\d*-\d*$/.test(rangeHeader)) {
         const parts = rangeHeader.replace(/bytes=/, '').split('-');
@@ -630,15 +854,14 @@ http
         const end = parts[1] ? Math.min(parseInt(parts[1], 10), stat.size - 1) : stat.size - 1;
 
         if (Number.isNaN(start) || Number.isNaN(end) || start > end || start >= stat.size) {
-          res.writeHead(416, { 'Content-Range': `bytes */${stat.size}` }).end();
+          res.writeHead(416, { ...commonHeaders, 'Content-Range': `bytes */${stat.size}` }).end();
           return;
         }
 
         res.writeHead(206, {
+          ...commonHeaders,
           'Content-Range': `bytes ${start}-${end}/${stat.size}`,
-          'Accept-Ranges': 'bytes',
           'Content-Length': end - start + 1,
-          'Content-Type': contentType,
         });
         if (req.method === 'HEAD') {
           res.end();
@@ -651,9 +874,8 @@ http
       }
 
       res.writeHead(200, {
-        'Content-Type': contentType,
+        ...commonHeaders,
         'Content-Length': stat.size,
-        'Accept-Ranges': 'bytes',
       });
       if (req.method === 'HEAD') {
         res.end();
@@ -677,12 +899,12 @@ http
               serveResolvedFile(publicFallback, fbStat);
               return;
             }
-            res.writeHead(404).end('Not found');
+            sendArchival404(req, res);
           });
           return;
         }
       }
-      res.writeHead(404).end('Not found');
+      sendArchival404(req, res);
     });
   })
   .listen(port, host, () => console.log(`Presentation server: http://${host}:${port}/index.html`));

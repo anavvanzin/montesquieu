@@ -1129,6 +1129,17 @@ async function initFirebaseAndRevisions() {
         db = firestoreMod.getFirestore(app, firebaseConfig.firestoreDatabaseId);
         auth = authMod.getAuth(app);
 
+        // Validate Connection to Firestore (Skill Mandatory Constraint)
+        if (typeof firestoreMod.getDocFromServer === 'function' && typeof firestoreMod.doc === 'function') {
+          firestoreMod
+            .getDocFromServer(firestoreMod.doc(db, 'test', 'connection'))
+            .catch((error) => {
+              if (error instanceof Error && error.message.includes('the client is offline')) {
+                console.error('Please check your Firebase configuration.');
+              }
+            });
+        }
+
         if (rtdbMod && typeof rtdbMod.getDatabase === 'function' && firebaseConfig.databaseURL) {
           try {
             rtdb = rtdbMod.getDatabase(app, firebaseConfig.databaseURL);

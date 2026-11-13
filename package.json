@@ -7,6 +7,7 @@
     "dev": "node server.cjs",
     "start": "node server.cjs",
     "build": "node --check server.cjs",
+    "test": "node --test js/*.test.mjs",
     "lint": "node --check server.cjs && node --check js/report.js && node --check js/studio.js && node --check js/timeline-data.mjs && node --check js/audience-sync-logic.mjs && node --check js/workspace-firebase.js && node --check js/three-meridian.js && node --check js/qr-svg.mjs && node --check js/voice-control.js && node --check js/remote-controller.js && npx eslint firestore.rules"
   },
   "engines": {

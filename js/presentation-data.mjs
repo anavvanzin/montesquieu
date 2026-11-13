@@ -1280,3 +1280,13 @@ export function computeSlideTransitionSpec(
     bgDuration: 0.48
   };
 }
+
+export {
+  ACADEMIC_ANNOTATIONS,
+  ANNOTATION_KEYS,
+  normalizeAnnotationText,
+  findAnnotationForSelection,
+  getAnnotationsForSlide,
+  formatAnnotationCitation
+} from './academic-annotations.mjs';
+

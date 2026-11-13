@@ -8549,6 +8549,618 @@ button.dauchy-strip__item:hover {
   }
 }
 
+/* =========================================================================
+   ACADEMIC ANNOTATIONS & SCHOLARLY FOOTNOTES LAYER (EDITORIAL DESIGN)
+   Strict zero-pill discipline · University press typography (Newsreader + IBM Plex Mono)
+   Warm parchment palette · High-contrast projector support
+   ========================================================================= */
+
+/* Action button toggle state */
+.action-btn--annotations {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.action-btn--annotations[aria-pressed="true"],
+[data-annotations-layer="active"] #header-annotations-btn,
+[data-annotations-layer="active"] #banner-annotations-btn {
+  background: rgba(212, 167, 60, 0.18) !important;
+  border-color: #d4a73c !important;
+  color: #1F35FF !important;
+  box-shadow: 0 0 0 2px rgba(212, 167, 60, 0.25);
+}
+
+[data-theme="dark"] .action-btn--annotations[aria-pressed="true"],
+[data-theme="dark"][data-annotations-layer="active"] #header-annotations-btn,
+[data-theme="dark"][data-annotations-layer="active"] #banner-annotations-btn {
+  background: rgba(226, 186, 82, 0.22) !important;
+  border-color: #e2ba52 !important;
+  color: #93c5fd !important;
+}
+
+/* Inactive term state: clean natural reading without clutter */
+.academic-term {
+  background: transparent;
+  color: inherit;
+  border-bottom: 1.5px dotted transparent;
+  text-decoration: none;
+  border-radius: 2px;
+  padding: 0 1px;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Active annotation layer: scholarly warm gold highlight & dotted underline */
+[data-annotations-layer="active"] .academic-term {
+  background: rgba(212, 167, 60, 0.15);
+  border-bottom: 1.5px dotted #d4a73c;
+  cursor: pointer;
+}
+
+[data-annotations-layer="active"] .academic-term:hover,
+[data-annotations-layer="active"] .academic-term:focus-visible {
+  background: rgba(212, 167, 60, 0.3);
+  border-bottom: 1.5px solid #1F35FF;
+  box-shadow: 0 0 0 2px rgba(212, 167, 60, 0.28);
+  outline: none;
+}
+
+[data-annotations-layer="active"] .academic-term.is-active-target {
+  background: rgba(31, 53, 255, 0.16);
+  border-bottom: 2px solid #1F35FF;
+  box-shadow: 0 0 0 3px rgba(31, 53, 255, 0.24);
+}
+
+[data-theme="dark"][data-annotations-layer="active"] .academic-term {
+  background: rgba(226, 186, 82, 0.18);
+  border-bottom: 1.5px dotted #e2ba52;
+}
+
+[data-theme="dark"][data-annotations-layer="active"] .academic-term:hover,
+[data-theme="dark"][data-annotations-layer="active"] .academic-term:focus-visible {
+  background: rgba(226, 186, 82, 0.32);
+  border-bottom-color: #60a5fa;
+  box-shadow: 0 0 0 2px rgba(226, 186, 82, 0.35);
+}
+
+[data-theme="dark"][data-annotations-layer="active"] .academic-term.is-active-target {
+  background: rgba(96, 165, 250, 0.24);
+  border-bottom-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.3);
+}
+
+/* Floating Real-time Annotation Popover Card */
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.academic-annotation-popover {
+  position: fixed;
+  z-index: 1050;
+  max-width: 480px;
+  width: calc(100vw - 32px);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.academic-annotation-popover.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  animation: slide-up 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .academic-annotation-popover {
+    transform: none !important;
+    transition: opacity 0.15s ease !important;
+  }
+  .academic-annotation-popover.is-visible {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+.academic-popover__card {
+  background: #fdfbf7;
+  border: 1px solid rgba(212, 167, 60, 0.45);
+  border-top: 3.5px solid #d4a73c;
+  border-radius: 6px;
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.28), 0 4px 16px rgba(0, 0, 0, 0.08);
+  color: #1e293b;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .academic-popover__card {
+  background: #111827;
+  border-color: rgba(212, 167, 60, 0.35);
+  border-top-color: #e2ba52;
+  color: #f1f5f9;
+  box-shadow: 0 26px 54px -12px rgba(0, 0, 0, 0.65), 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.academic-popover__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px 8px;
+  background: rgba(212, 167, 60, 0.08);
+  border-bottom: 1px solid rgba(212, 167, 60, 0.2);
+}
+
+[data-theme="dark"] .academic-popover__header {
+  background: rgba(226, 186, 82, 0.06);
+  border-bottom-color: rgba(226, 186, 82, 0.15);
+}
+
+.academic-popover__meta-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.academic-popover__kicker {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.62rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1F35FF;
+}
+
+[data-theme="dark"] .academic-popover__kicker {
+  color: #93c5fd;
+}
+
+.academic-popover__dauchy-tag {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  background: rgba(31, 53, 255, 0.1);
+  color: #1F35FF;
+  border-radius: 2px;
+}
+
+[data-theme="dark"] .academic-popover__dauchy-tag {
+  background: rgba(147, 197, 253, 0.15);
+  color: #93c5fd;
+}
+
+.academic-popover__close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #64748b;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.academic-popover__close:hover {
+  color: #0f172a;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .academic-popover__close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.academic-popover__body {
+  padding: 14px 16px;
+  overflow-y: auto;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.academic-popover__term {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+[data-theme="dark"] .academic-popover__term {
+  color: #f8fafc;
+}
+
+.academic-popover__citation {
+  margin: 0;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.72rem;
+  color: #475569;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="dark"] .academic-popover__citation {
+  color: #94a3b8;
+}
+
+.academic-popover__quote {
+  margin: 0;
+  padding: 8px 12px;
+  background: rgba(212, 167, 60, 0.07);
+  border-left: 2.5px solid #d4a73c;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+[data-theme="dark"] .academic-popover__quote {
+  background: rgba(226, 186, 82, 0.08);
+  border-left-color: #e2ba52;
+}
+
+.academic-popover__quote-orig {
+  margin: 0;
+  font-family: var(--font-serif, 'Newsreader', serif);
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: #1e293b;
+}
+
+[data-theme="dark"] .academic-popover__quote-orig {
+  color: #e2e8f0;
+}
+
+.academic-popover__quote-trans {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: #64748b;
+}
+
+[data-theme="dark"] .academic-popover__quote-trans {
+  color: #94a3b8;
+}
+
+.academic-popover__section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.academic-popover__section-title {
+  margin: 0;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+[data-theme="dark"] .academic-popover__section-title {
+  color: #94a3b8;
+}
+
+.academic-popover__footnote {
+  margin: 0;
+  font-family: var(--font-serif, 'Newsreader', serif);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: #334155;
+}
+
+[data-theme="dark"] .academic-popover__footnote {
+  color: #cbd5e1;
+}
+
+.academic-popover__section--discussant {
+  background: rgba(31, 53, 255, 0.04);
+  padding: 8px 10px;
+  border-radius: 4px;
+  border-left: 2px solid #1F35FF;
+}
+
+[data-theme="dark"] .academic-popover__section--discussant {
+  background: rgba(31, 53, 255, 0.12);
+  border-left-color: #60a5fa;
+}
+
+.academic-popover__discussant {
+  margin: 0;
+  font-family: var(--font-serif, 'Newsreader', serif);
+  font-size: 0.84rem;
+  line-height: 1.48;
+  color: #1e293b;
+}
+
+[data-theme="dark"] .academic-popover__discussant {
+  color: #e2e8f0;
+}
+
+.academic-popover__footer {
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.02);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+[data-theme="dark"] .academic-popover__footer {
+  background: rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.academic-popover__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.academic-popover__btn {
+  padding: 5px 10px;
+  font-size: 0.72rem;
+  border: 1px solid var(--line-strong, #cbd5e1);
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.academic-popover__btn:hover {
+  border-color: #1F35FF;
+  color: #1F35FF;
+  background: rgba(31, 53, 255, 0.05);
+}
+
+[data-theme="dark"] .academic-popover__btn {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .academic-popover__btn:hover {
+  border-color: #60a5fa;
+  color: #60a5fa;
+  background: rgba(96, 165, 250, 0.1);
+}
+
+.academic-popover__shortcut-hint {
+  font-size: 0.64rem;
+  color: #64748b;
+}
+
+[data-theme="dark"] .academic-popover__shortcut-hint {
+  color: #94a3b8;
+}
+
+/* Slide Marginalia Rail (Docked Footnotes) */
+.academic-marginalia-rail {
+  position: fixed;
+  top: 76px;
+  right: 18px;
+  width: 330px;
+  max-height: calc(100vh - 96px);
+  z-index: 920;
+  background: #fcfaf4;
+  border: 1px solid rgba(212, 167, 60, 0.4);
+  border-top: 3px solid #d4a73c;
+  border-radius: 6px;
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+}
+
+[data-theme="dark"] .academic-marginalia-rail {
+  background: #0f172a;
+  border-color: rgba(212, 167, 60, 0.3);
+  border-top-color: #e2ba52;
+  color: #f8fafc;
+  box-shadow: 0 18px 40px -8px rgba(0, 0, 0, 0.6);
+}
+
+.marginalia-rail__header {
+  padding: 10px 14px 8px;
+  background: rgba(212, 167, 60, 0.08);
+  border-bottom: 1px solid rgba(212, 167, 60, 0.2);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+[data-theme="dark"] .marginalia-rail__header {
+  background: rgba(226, 186, 82, 0.06);
+  border-bottom-color: rgba(226, 186, 82, 0.15);
+}
+
+.marginalia-rail__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.marginalia-rail__badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: #1F35FF;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .marginalia-rail__badge {
+  color: #93c5fd;
+}
+
+.marginalia-rail__title {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.marginalia-rail__sub {
+  font-size: 0.68rem;
+  color: #64748b;
+}
+
+[data-theme="dark"] .marginalia-rail__sub {
+  color: #94a3b8;
+}
+
+.marginalia-rail__close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #64748b;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.marginalia-rail__close:hover {
+  color: #0f172a;
+}
+
+[data-theme="dark"] .marginalia-rail__close:hover {
+  color: #ffffff;
+}
+
+.marginalia-rail__list {
+  padding: 12px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.marginalia-item {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.marginalia-item:hover,
+.marginalia-item.is-active {
+  background: #ffffff;
+  border-color: #1F35FF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateX(-2px);
+}
+
+[data-theme="dark"] .marginalia-item {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .marginalia-item:hover,
+[data-theme="dark"] .marginalia-item.is-active {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #60a5fa;
+  transform: translateX(-2px);
+}
+
+.marginalia-item__term {
+  margin: 0 0 4px;
+  font-family: var(--font-serif, 'Newsreader', serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+[data-theme="dark"] .marginalia-item__term {
+  color: #f8fafc;
+}
+
+.marginalia-item__citation {
+  margin: 0 0 6px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  color: #475569;
+}
+
+[data-theme="dark"] .marginalia-item__citation {
+  color: #94a3b8;
+}
+
+.marginalia-item__snippet {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #334155;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .marginalia-item__snippet {
+  color: #cbd5e1;
+}
+
+.marginalia-rail__footer {
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.02);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 0.68rem;
+  color: #64748b;
+  text-align: center;
+}
+
+[data-theme="dark"] .marginalia-rail__footer {
+  background: rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+}
+
+/* High-contrast Projector Mode */
+[data-projector="high"][data-annotations-layer="active"] .academic-term {
+  background: rgba(255, 230, 100, 0.45) !important;
+  border-bottom: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+[data-projector="high"] .academic-popover__card {
+  border: 2px solid #000000 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Responsive adjustment */
+@media (max-width: 1100px) {
+  .academic-marginalia-rail {
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-height: 48vh;
+    top: auto;
+    bottom: 60px;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.2);
+  }
+}
+
+
 
 
 

@@ -21,6 +21,12 @@ import { generateQrSvg } from './qr-svg.mjs';
 import { VoiceController } from './voice-control.js';
 import { RemoteController } from './remote-controller.js';
 import { perfMonitor } from './perf-monitor.mjs';
+import {
+  ACADEMIC_ANNOTATIONS,
+  findAnnotationForSelection,
+  getAnnotationsForSlide,
+  formatAnnotationCitation
+} from './academic-annotations.mjs';
 
 (function () {
   'use strict';
@@ -117,7 +123,391 @@ import { perfMonitor } from './perf-monitor.mjs';
   mobileProjectorBtn?.addEventListener('click', toggleProjectorMode);
 
   // =========================================================================
-  // 2. Low-Volume Background Music Controller (Chopin Nocturne Op. 9, No. 2)
+  // 2. Academic Annotations & Scholarly Footnotes Layer (A)
+  // Real-time gloss, text highlight detection, floating popover, and slide marginalia
+  // =========================================================================
+  const ANNOTATIONS_STORAGE_KEY = 'dauchy-annotations-layer';
+  const headerAnnotationsBtn = $('#header-annotations-btn');
+  const bannerAnnotationsBtn = $('#banner-annotations-btn');
+  const prepAnnotationsBtn = $('#prep-annotations-btn');
+  const prepAnnotationsLabel = $('#prep-annotations-label');
+  const mobileAnnotationsBtn = $('#mobile-annotations-toggle');
+  const mobileAnnotationsLabel = $('#mobile-annotations-label');
+
+  const popoverEl = $('#academic-annotation-popover');
+  const popoverCategory = $('#academic-popover-category');
+  const popoverDauchy = $('#academic-popover-dauchy');
+  const popoverTerm = $('#academic-popover-term');
+  const popoverCitation = $('#academic-popover-citation');
+  const popoverQuoteOrig = $('#academic-popover-quote-orig');
+  const popoverQuoteTrans = $('#academic-popover-quote-trans');
+  const popoverFootnote = $('#academic-popover-footnote');
+  const popoverDiscussant = $('#academic-popover-discussant');
+  const popoverCloseBtn = $('#academic-popover-close');
+  const popoverCopyBtn = $('#academic-popover-copy-btn');
+  const popoverPinBtn = $('#academic-popover-pin-btn');
+
+  const marginaliaRail = $('#academic-marginalia-rail');
+  const marginaliaRailList = $('#marginalia-rail-list');
+  const marginaliaRailSub = $('#marginalia-rail-slide-sub');
+  const marginaliaRailClose = $('#marginalia-rail-close');
+
+  function showArchivalNotification(msg) {
+    const feedbackEl = $('#archival-banner-feedback');
+    if (!feedbackEl) return;
+    feedbackEl.textContent = msg;
+    feedbackEl.hidden = false;
+    setTimeout(() => {
+      feedbackEl.hidden = true;
+    }, 3200);
+  }
+
+  let isAnnotationsLayerActive = true;
+  try {
+    const saved = localStorage.getItem(ANNOTATIONS_STORAGE_KEY);
+    if (saved !== null) {
+      isAnnotationsLayerActive = saved === 'active';
+    }
+  } catch (e) {}
+
+  let activePopoverEntry = null;
+  let activeTargetElement = null;
+  let isMarginaliaRailPinned = false;
+
+  function applyAnnotationsLayer(isActive) {
+    isAnnotationsLayerActive = Boolean(isActive);
+    if (isAnnotationsLayerActive) {
+      document.documentElement.setAttribute('data-annotations-layer', 'active');
+    } else {
+      document.documentElement.removeAttribute('data-annotations-layer');
+      hideAcademicPopover();
+    }
+
+    try {
+      localStorage.setItem(ANNOTATIONS_STORAGE_KEY, isAnnotationsLayerActive ? 'active' : 'inactive');
+    } catch (e) {}
+
+    const stateStr = String(isAnnotationsLayerActive);
+    if (headerAnnotationsBtn) {
+      headerAnnotationsBtn.setAttribute('aria-pressed', stateStr);
+    }
+    if (bannerAnnotationsBtn) {
+      bannerAnnotationsBtn.setAttribute('aria-pressed', stateStr);
+    }
+    if (prepAnnotationsBtn) {
+      prepAnnotationsBtn.setAttribute('aria-pressed', stateStr);
+      if (prepAnnotationsLabel) {
+        prepAnnotationsLabel.textContent = `📖 Academic Annotations Layer: ${isAnnotationsLayerActive ? 'ON' : 'OFF'} (A)`;
+      }
+    }
+    if (mobileAnnotationsLabel) {
+      mobileAnnotationsLabel.textContent = isAnnotationsLayerActive ? 'On' : 'Off';
+    }
+
+    updateSlideMarginaliaRail(currentSlideNum);
+  }
+
+  function toggleAcademicAnnotationsLayer(forceState) {
+    const nextState = typeof forceState === 'boolean' ? forceState : !isAnnotationsLayerActive;
+    applyAnnotationsLayer(nextState);
+
+    if (nextState) {
+      // Find the primary annotated term on the active slide to present smoothly
+      const activeSlideEl = $(`#slide-${currentSlideNum}`);
+      const termEl = activeSlideEl ? $('.academic-term', activeSlideEl) : null;
+      if (termEl) {
+        const key = termEl.dataset.annotationKey;
+        const entry = ACADEMIC_ANNOTATIONS[key] || getAnnotationsForSlide(currentSlideNum)[0];
+        if (entry) {
+          showAcademicPopover(entry, termEl.getBoundingClientRect(), termEl);
+        }
+      } else {
+        const slideEntries = getAnnotationsForSlide(currentSlideNum);
+        if (slideEntries && slideEntries.length) {
+          const frame = activeSlideEl ? ($('.slide-frame', activeSlideEl) || activeSlideEl) : null;
+          const rect = frame
+            ? frame.getBoundingClientRect()
+            : { left: window.innerWidth / 2, top: window.innerHeight / 3, width: 0, height: 0 };
+          showAcademicPopover(slideEntries[0], rect);
+        }
+      }
+    } else {
+      hideAcademicPopover();
+    }
+
+    showArchivalNotification(
+      `Academic Annotations layer ${nextState ? 'enabled' : 'hidden'} (Press A to toggle)`
+    );
+  }
+
+  headerAnnotationsBtn?.addEventListener('click', () => toggleAcademicAnnotationsLayer());
+  bannerAnnotationsBtn?.addEventListener('click', () => toggleAcademicAnnotationsLayer());
+  prepAnnotationsBtn?.addEventListener('click', () => toggleAcademicAnnotationsLayer());
+  mobileAnnotationsBtn?.addEventListener('click', () => toggleAcademicAnnotationsLayer());
+
+  let hidePopoverTimer = null;
+
+  function showAcademicPopover(entry, targetRect, originEl = null) {
+    if (!entry || !popoverEl) return;
+    clearTimeout(hidePopoverTimer);
+    activePopoverEntry = entry;
+    if (activeTargetElement) {
+      activeTargetElement.classList.remove('is-active-target');
+    }
+    if (originEl) {
+      activeTargetElement = originEl;
+      activeTargetElement.classList.add('is-active-target');
+    }
+
+    if (popoverCategory) popoverCategory.textContent = entry.category || 'ACADEMIC ANNOTATION';
+    if (popoverDauchy) popoverDauchy.textContent = `DAUCHY ${entry.dauchyParagraph || '¶'}`;
+    if (popoverTerm) popoverTerm.textContent = entry.term || '';
+    if (popoverCitation) popoverCitation.textContent = entry.sourceCitation || '';
+
+    if (popoverQuoteOrig) {
+      popoverQuoteOrig.textContent = entry.quoteOriginal || '';
+      popoverQuoteOrig.setAttribute('lang', entry.quoteLanguage || 'fr');
+    }
+    if (popoverQuoteTrans) {
+      popoverQuoteTrans.textContent = entry.quoteTranslation || '';
+    }
+
+    if (popoverFootnote) popoverFootnote.textContent = entry.scholarlyFootnote || '';
+    if (popoverDiscussant) popoverDiscussant.textContent = entry.discussantIntervention || '';
+
+    popoverEl.hidden = false;
+    popoverEl.setAttribute('aria-hidden', 'false');
+
+    requestAnimationFrame(() => {
+      const popoverRect = popoverEl.getBoundingClientRect();
+      const pad = 16;
+      let left = targetRect.left + (targetRect.width / 2) - (popoverRect.width / 2);
+      let top = targetRect.bottom + 8;
+
+      if (top + popoverRect.height > window.innerHeight - pad && targetRect.top - popoverRect.height - 8 > pad) {
+        top = targetRect.top - popoverRect.height - 8;
+      }
+
+      if (left < pad) left = pad;
+      if (left + popoverRect.width > window.innerWidth - pad) {
+        left = window.innerWidth - pad - popoverRect.width;
+      }
+
+      if (top < pad) top = pad;
+      if (top + popoverRect.height > window.innerHeight - pad) {
+        top = window.innerHeight - pad - popoverRect.height;
+      }
+
+      popoverEl.style.left = `${Math.round(left)}px`;
+      popoverEl.style.top = `${Math.round(top)}px`;
+
+      if (popoverEl.classList.contains('is-visible')) {
+        popoverEl.classList.remove('is-visible');
+        void popoverEl.offsetWidth;
+      }
+
+      requestAnimationFrame(() => {
+        popoverEl.classList.add('is-visible');
+      });
+    });
+  }
+
+  function hideAcademicPopover({ immediate = false } = {}) {
+    if (!popoverEl) return;
+    clearTimeout(hidePopoverTimer);
+    popoverEl.classList.remove('is-visible');
+    popoverEl.setAttribute('aria-hidden', 'true');
+    if (activeTargetElement) {
+      activeTargetElement.classList.remove('is-active-target');
+      activeTargetElement = null;
+    }
+    if (immediate) {
+      popoverEl.hidden = true;
+    } else {
+      hidePopoverTimer = setTimeout(() => {
+        if (!popoverEl.classList.contains('is-visible')) {
+          popoverEl.hidden = true;
+        }
+      }, 320);
+    }
+  }
+
+  popoverCloseBtn?.addEventListener('click', () => hideAcademicPopover());
+
+  popoverCopyBtn?.addEventListener('click', async () => {
+    if (!activePopoverEntry) return;
+    const citation = formatAnnotationCitation(activePopoverEntry, 'abnt');
+    try {
+      await navigator.clipboard.writeText(citation);
+      const prevText = popoverCopyBtn.innerHTML;
+      popoverCopyBtn.innerHTML = '<span>✓ Copied!</span>';
+      setTimeout(() => {
+        if (popoverCopyBtn) popoverCopyBtn.innerHTML = prevText;
+      }, 2000);
+    } catch (e) {
+      showArchivalNotification('Citation copied to clipboard');
+    }
+  });
+
+  popoverPinBtn?.addEventListener('click', () => {
+    toggleMarginaliaRail(true);
+    if (activePopoverEntry) {
+      highlightMarginaliaItem(activePopoverEntry.key);
+    }
+  });
+
+  function toggleMarginaliaRail(forceState) {
+    if (!marginaliaRail) return;
+    isMarginaliaRailPinned = typeof forceState === 'boolean' ? forceState : marginaliaRail.hidden;
+    marginaliaRail.hidden = !isMarginaliaRailPinned;
+    if (isMarginaliaRailPinned) {
+      updateSlideMarginaliaRail(currentSlideNum);
+    }
+  }
+
+  marginaliaRailClose?.addEventListener('click', () => toggleMarginaliaRail(false));
+
+  function updateSlideMarginaliaRail(slideNum) {
+    if (!marginaliaRail || marginaliaRail.hidden) return;
+    const items = getAnnotationsForSlide(slideNum);
+    if (marginaliaRailSub) {
+      const padded = String(slideNum).padStart(2, '0');
+      marginaliaRailSub.textContent = `Slide ${padded} · ${items.length} Critical Note${items.length === 1 ? '' : 's'}`;
+    }
+
+    if (!marginaliaRailList) return;
+    if (!items.length) {
+      marginaliaRailList.innerHTML = `<p class="t-meta" style="padding: 12px; color: var(--ink-muted);">No registered annotations for this slide. Highlight or select any text on canvas.</p>`;
+      return;
+    }
+
+    marginaliaRailList.innerHTML = items
+      .map(
+        (it) => `
+        <article class="marginalia-item" data-rail-key="${it.key}" tabindex="0">
+          <p class="marginalia-item__term">${it.term}</p>
+          <p class="marginalia-item__citation">${it.sourceCitation} · <strong>DAUCHY ${it.dauchyParagraph}</strong></p>
+          <p class="marginalia-item__snippet">${it.scholarlyFootnote}</p>
+        </article>
+      `
+      )
+      .join('');
+
+    $$('.marginalia-item', marginaliaRailList).forEach((card) => {
+      const key = card.dataset.railKey;
+      const entry = ACADEMIC_ANNOTATIONS[key];
+      if (!entry) return;
+
+      const trigger = () => {
+        highlightMarginaliaItem(key);
+        const termEl = $(`#slide-${slideNum} .academic-term[data-annotation-key="${key}"]`);
+        if (termEl) {
+          termEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          showAcademicPopover(entry, termEl.getBoundingClientRect(), termEl);
+        } else {
+          showAcademicPopover(entry, card.getBoundingClientRect());
+        }
+      };
+
+      card.addEventListener('click', trigger);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          trigger();
+        }
+      });
+    });
+  }
+
+  function highlightMarginaliaItem(key) {
+    if (!marginaliaRailList) return;
+    $$('.marginalia-item', marginaliaRailList).forEach((card) => {
+      card.classList.toggle('is-active', card.dataset.railKey === key);
+    });
+  }
+
+  // Bind click & keyboard triggers on marked academic terms in slides
+  function bindAcademicTerms() {
+    $$('.academic-term').forEach((el) => {
+      const key = el.dataset.annotationKey;
+      const entry = ACADEMIC_ANNOTATIONS[key];
+      if (!entry) return;
+
+      const open = (e) => {
+        e.stopPropagation();
+        if (!isAnnotationsLayerActive) {
+          applyAnnotationsLayer(true);
+        }
+        showAcademicPopover(entry, el.getBoundingClientRect(), el);
+      };
+
+      el.addEventListener('click', open);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          open(e);
+        }
+      });
+    });
+  }
+  bindAcademicTerms();
+
+  // Real-time Text Selection / Highlighting Listener
+  let selectionDebounce = null;
+  function handleTextSelection() {
+    clearTimeout(selectionDebounce);
+    selectionDebounce = setTimeout(() => {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed) return;
+
+      const text = sel.toString().trim();
+      if (text.length < 3) return;
+
+      const anchorNode = sel.anchorNode;
+      const anchorEl = anchorNode?.nodeType === Node.ELEMENT_NODE ? anchorNode : anchorNode?.parentElement;
+      if (!anchorEl || !anchorEl.closest('#report')) return;
+
+      const match = findAnnotationForSelection(text);
+      if (match) {
+        try {
+          const range = sel.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            if (!isAnnotationsLayerActive) {
+              applyAnnotationsLayer(true);
+            }
+            showAcademicPopover(match, rect);
+          }
+        } catch (e) {}
+      }
+    }, 180);
+  }
+
+  document.addEventListener('selectionchange', handleTextSelection);
+  document.addEventListener('mouseup', handleTextSelection);
+  document.addEventListener('touchend', handleTextSelection);
+
+  // Close popover on click outside
+  document.addEventListener('mousedown', (e) => {
+    if (!popoverEl || popoverEl.hidden) return;
+    const target = e.target;
+    if (
+      !popoverEl.contains(target) &&
+      !target.closest('.academic-term') &&
+      !target.closest('.marginalia-item') &&
+      target !== headerAnnotationsBtn &&
+      target !== bannerAnnotationsBtn &&
+      target !== prepAnnotationsBtn
+    ) {
+      hideAcademicPopover();
+    }
+  });
+
+  // Initialize academic annotations layer state
+  applyAnnotationsLayer(isAnnotationsLayerActive);
+
+  // =========================================================================
+  // 3. Low-Volume Background Music Controller (Chopin Nocturne Op. 9, No. 2)
   // =========================================================================
   const bgAudio = $('#bg-music-audio');
   const curtainMusicBtn = $('#curtain-music-btn');
@@ -1644,6 +2034,13 @@ import { perfMonitor } from './perf-monitor.mjs';
       bannerSlideLabel.textContent = padded;
     }
 
+    if (typeof updateSlideMarginaliaRail === 'function') {
+      updateSlideMarginaliaRail(num);
+    }
+    if (changed && activePopoverEntry && !isMarginaliaRailPinned && typeof hideAcademicPopover === 'function') {
+      hideAcademicPopover();
+    }
+
     if (changed && !fromRemoteSync) {
       try {
         if (window.history && window.history.replaceState) {
@@ -1901,6 +2298,16 @@ import { perfMonitor } from './perf-monitor.mjs';
     }
 
     if (e.key === 'Escape') {
+      if (typeof hideAcademicPopover === 'function' && popoverEl && !popoverEl.hidden) {
+        e.preventDefault();
+        hideAcademicPopover();
+        return;
+      }
+      if (typeof toggleMarginaliaRail === 'function' && marginaliaRail && !marginaliaRail.hidden) {
+        e.preventDefault();
+        toggleMarginaliaRail(false);
+        return;
+      }
       if (presenterTipState.mode !== 'closed') {
         e.preventDefault();
         const prevTipSlide = presenterTipState.activeSlide;
@@ -1933,7 +2340,10 @@ import { perfMonitor } from './perf-monitor.mjs';
       goToSlide(currentSlideNum - 1, { smooth: true, trigger: 'keyboard' });
     } else if (!e.ctrlKey && !e.metaKey && !e.altKey) {
       const key = e.key.toLowerCase();
-      if (key === 'p') {
+      if (key === 'a') {
+        e.preventDefault();
+        toggleAcademicAnnotationsLayer();
+      } else if (key === 'p') {
         e.preventDefault();
         toggleProjectorMode();
       } else if (key === 'f') {
@@ -2953,4 +3363,8 @@ import { perfMonitor } from './perf-monitor.mjs';
   window.printLecternScript = printLecternScript;
   window.toggleVoiceNavigation = toggleVoiceNavigation;
   window.toggleAutoPace = toggleAutoPace;
+  window.toggleAcademicAnnotationsLayer = toggleAcademicAnnotationsLayer;
+  window.showAcademicPopover = showAcademicPopover;
+  window.hideAcademicPopover = hideAcademicPopover;
+  window.toggleMarginaliaRail = toggleMarginaliaRail;
 })();

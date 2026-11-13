@@ -1,9 +1,11 @@
-const CACHE_NAME = 'whose-liberty-montesquieu-v9';
+const CACHE_NAME = 'whose-liberty-montesquieu-v10';
 const CORE_ASSETS = [
   './',
   './index.html',
+  './manifest.webmanifest',
   './css/report.css',
   './js/report.js',
+  './js/academic-annotations.mjs',
   './js/presentation-data.mjs',
   './js/timeline-data.mjs',
   './js/audience-sync-logic.mjs',

@@ -25,7 +25,10 @@
   <meta name="twitter:image" content="https://montesquieu.anavanzin.com/public/assets/aistudio/c9c1d695-f5e3-4da2-b7dc-d4a3788e04bf_3353c5b9.png">
   <meta name="twitter:image:alt" content="Oil-impasto painted maps of France and Brazil integrated on archival parchment">
   <meta name="author" content="Ana Vitória Vanzin Mendes (PPGD/UFSC)">
+  <meta name="theme-color" content="#0a0e17">
   <link rel="icon" href="./assets/img/logo-owl.png" type="image/png">
+  <link rel="apple-touch-icon" href="./assets/img/logo-owl.png">
+  <link rel="manifest" href="./manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" media="print" onload="this.media='all'">
@@ -337,6 +340,10 @@
         <span>🎬 Stories</span>
       </button>
 
+      <button class="action-btn action-btn--annotations t-ui" id="header-annotations-btn" type="button" aria-pressed="false" title="Toggle Academic Annotations &amp; Footnotes Layer (A)">
+        <span id="header-annotations-label">📖 Notes</span>
+      </button>
+
       <button class="action-btn action-btn--script t-ui" id="header-script-btn" type="button" title="Open 7-page Lectern Script &amp; Lecture Notes (L)">
         <span>📄 Script</span>
       </button>
@@ -442,6 +449,10 @@
 
             <button class="action-btn prep-popover__tip-btn t-ui" id="prep-tip-toggle" type="button">
               <span>Show Current Slide Presenter Tip (N)</span>
+            </button>
+
+            <button class="action-btn prep-popover__tip-btn t-ui" id="prep-annotations-btn" type="button" aria-pressed="false" title="Toggle Academic Annotations &amp; Footnotes Layer (A)">
+              <span id="prep-annotations-label">📖 Academic Annotations Layer: OFF (A)</span>
             </button>
           </div>
 
@@ -550,6 +561,10 @@
       <span>Lectern Script (7 Pages):</span>
       <strong>Open Notes (L)</strong>
     </button>
+    <button class="mobile-theme-toggle t-ui" id="mobile-annotations-toggle" type="button">
+      <span>Academic Annotations (A):</span>
+      <strong id="mobile-annotations-label">Off</strong>
+    </button>
     <button class="mobile-theme-toggle t-ui" id="mobile-curtain-toggle" type="button">
       <span>Event Poster Start Screen:</span>
       <strong>Open Poster</strong>
@@ -607,6 +622,9 @@
         </button>
         <button type="button" class="archival-tool-btn t-ui" id="banner-share-slide-btn" title="Copy deep-linked canonical URL for the active slide">
           <span>🔗 Share Slide <span id="banner-slide-label">01</span></span>
+        </button>
+        <button type="button" class="archival-tool-btn t-ui" id="banner-annotations-btn" title="Toggle real-time academic footnotes and annotations layer (A)">
+          <span>📖 Academic Notes</span>
         </button>
         <button type="button" class="archival-tool-btn t-ui" id="banner-landing-btn" title="View opening event program and poster">
           <span>🏛️ Event Program</span>
@@ -736,7 +754,7 @@
                       <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶10 → ¶14 · FROM ROOTEDNESS TO HYBRIDITY</span>
                     </div>
                     <p class="v3-source-summary" data-editable="s1-dauchy-p14">
-                      Moves from laws rooted in a particular history (<span lang="fr">« l’esprit général d’une nation »</span>, ¶10) to hybrid systems where <span lang="fr">« leurs frontières sont constamment renégociées »</span> and your closing question on Clóvis Beviláqua’s 1916 Brazilian Civil Code (¶13–14).
+                      Moves from laws rooted in a particular history (<span lang="fr">« <mark class="academic-term" data-annotation-key="esprit-general" tabindex="0">l’esprit général d’une nation</mark> »</span>, ¶10) to hybrid systems where <span lang="fr">« <mark class="academic-term" data-annotation-key="frontieres-renegociees" tabindex="0">leurs frontières sont constamment renégociées</mark> »</span> and your closing question on <mark class="academic-term" data-annotation-key="transplantes-juridicos" tabindex="0">Clóvis Beviláqua’s 1916 Brazilian Civil Code</mark> (¶13–14).
                     </p>
                   </article>
                 </div>
@@ -904,7 +922,7 @@
                     <span class="voice-chip voice-chip--montesquieu">MONTESQUIEU · XIX.4 · SLIDE 2 (1777 TEXT)</span>
                   </div>
                   <blockquote class="v3-quote-fr t-display-serif" lang="fr" data-editable="s2-mont-fr">
-                    « Plusieurs choses gouvernent les hommes, le climat, la religion, les lois, les maximes du gouvernement, les exemples des choses passées, les mœurs, les manieres ; d’où il se forme un esprit général qui en résulte. »
+                    « Plusieurs choses gouvernent les hommes, le climat, la religion, les lois, les maximes du gouvernement, les exemples des choses passées, les mœurs, les manieres ; d’où il se forme un <mark class="academic-term" data-annotation-key="esprit-general" tabindex="0">esprit général</mark> qui en résulte. »
                   </blockquote>
                   <p class="v3-quote-tr" data-editable="s2-mont-tr">
                     Many things govern men: climate, religion, laws, the maxims of government, examples of past things, mores, manners; from which a general spirit is formed as a result. <span class="tr-tag">[tr. AVVM]</span>
@@ -931,7 +949,7 @@
                   <li class="s2-element-item" tabindex="0" data-pole-panel="liberty" data-eq-select="liberty">
                     <span class="t-meta s2-element-item__num">¶8–10</span>
                     <div class="s2-element-item__body">
-                      <span class="t-display-serif s2-element-item__label" data-editable="s2-el-3">Natural &amp; historical determinants (« esprit général », XIX.4)</span>
+                      <span class="t-display-serif s2-element-item__label" data-editable="s2-el-3">Natural &amp; historical determinants (« <mark class="academic-term" data-annotation-key="esprit-general" tabindex="0">esprit général</mark> », XIX.4)</span>
                       <span class="s2-element-item__sub" data-editable="s2-el-3-sub">Climate, religion, laws, maxims of government, past examples, mores, and manners (« manieres ») shape whether liberty can take root.</span>
                     </div>
                   </li>
@@ -959,7 +977,7 @@
                       <span>Civil · Criminal · Judicial</span>
                     </button>
                     <button class="eq-pole-btn t-meta" type="button" data-eq-pole="liberty" aria-pressed="false">
-                      <span>Esprit général (XIX.4)</span>
+                      <span><mark class="academic-term" data-annotation-key="esprit-general" tabindex="0">Esprit général</mark> (XIX.4)</span>
                     </button>
                   </div>
                 </div>
@@ -977,7 +995,7 @@
             <div class="v3-reading-lead">
               <span class="voice-chip voice-chip--reading">MY READING</span>
               <p class="v3-reading-prose" data-editable="s2-my-reading">
-                Political liberty is not a self-executing constitutional diagram: its concrete conditions lie in ordinary civil, criminal, and judicial protections working within the historical and social relations that Montesquieu calls the <em lang="fr">esprit général</em>.
+                Political liberty is not a self-executing constitutional diagram: its <mark class="academic-term" data-annotation-key="system-of-liberty" tabindex="0">concrete conditions of liberty</mark> lie in ordinary civil, criminal, and judicial protections working within the historical and social relations that Montesquieu calls the <em lang="fr"><mark class="academic-term" data-annotation-key="esprit-general" tabindex="0">esprit général</mark></em>.
               </p>
             </div>
           </div>
@@ -1089,11 +1107,11 @@
                     <span class="voice-chip voice-chip--other">OTHER SOURCE · CONSTITUIÇÃO DE 1824, ART. 10</span>
                   </div>
                   <p class="v3-source-summary" lang="pt" data-editable="s3-art10-pt">
-                    « Art. 10. Os Poderes Politicos reconhecidos pela Constituição do Imperio do Brazil são quatro: o Poder Legislativo, o Poder Moderador, o Poder Executivo, e o Poder Judicial. »
+                    « Art. 10. Os Poderes Politicos reconhecidos pela Constituição do Imperio do Brazil são quatro: o Poder Legislativo, o <mark class="academic-term" data-annotation-key="moderating-power" tabindex="0">Poder Moderador</mark>, o Poder Executivo, e o Poder Judicial. »
                   </p>
                   <div class="s3-powers t-display-serif" aria-label="Four powers in exact 1824 Article 10 order: Legislative, Moderating, Executive, Judicial">
                     <span data-editable="s3-p1">1. Legislative (<em lang="pt">Legislativo</em>)</span>
-                    <span class="power-highlight" data-editable="s3-p2">2. Moderating (<em lang="pt">Moderador</em>)</span>
+                    <span class="power-highlight" data-editable="s3-p2"><mark class="academic-term" data-annotation-key="moderating-power" tabindex="0">2. Moderating (<em lang="pt">Moderador</em>)</mark></span>
                     <span data-editable="s3-p3">3. Executive (<em lang="pt">Executivo</em>)</span>
                     <span data-editable="s3-p4">4. Judicial (<em lang="pt">Judicial</em>)</span>
                   </div>
@@ -1268,7 +1286,7 @@
 
               <figcaption class="artwork-official-caption s4-diptych__caption" id="s4-caption-text">
                 <strong class="s4-diptych__artist" data-editable="s4-artist">Aurélio de Figueiredo</strong>
-                <span class="s4-diptych__work" data-editable="s4-work"><cite lang="pt">Compromisso Constitucional</cite>, 1896 (oil on canvas, 330 × 257 cm)</span>
+                <span class="s4-diptych__work" data-editable="s4-work"><cite lang="pt"><mark class="academic-term" data-annotation-key="compromisso-constitucional" tabindex="0">Compromisso Constitucional</mark></cite>, 1896 (oil on canvas, 330 × 257 cm)</span>
                 <span class="s4-diptych__sub" data-editable="s4-sub">Represents the oath of 26 February 1891 · Prudente de Moraes presiding at the centre</span>
               </figcaption>
 
@@ -1434,12 +1452,12 @@
 
               <figcaption class="artwork-official-caption s4-diptych__caption" id="s5-caption-text">
                 <strong class="s4-diptych__artist" data-editable="s5-artist">Alfredo Ceschiatti</strong>
-                <span class="s4-diptych__work" data-editable="s5-work"><cite lang="pt">A Justiça</cite>, 1961 · Stone (“pedra de Petrópolis”), 3.30 m</span>
+                <span class="s4-diptych__work" data-editable="s5-work"><cite lang="pt"><mark class="academic-term" data-annotation-key="pedra-de-petropolis" tabindex="0">A Justiça</mark></cite>, 1961 · Stone (<mark class="academic-term" data-annotation-key="pedra-de-petropolis" tabindex="0">“pedra de Petrópolis”</mark>), 3.30 m</span>
                 <span class="s4-diptych__sub" data-editable="s5-sub">Supremo Tribunal Federal · Praça dos Três Poderes, Brasília</span>
               </figcaption>
 
               <div class="s5-photo-bar">
-                <span class="t-meta">Stone (“pedra de Petrópolis”), 3.30 m · Photograph: Fellipe Sampaio / STF</span>
+                <span class="t-meta">Stone (<mark class="academic-term" data-annotation-key="pedra-de-petropolis" tabindex="0">“pedra de Petrópolis”</mark>), 3.30 m · Photograph: Fellipe Sampaio / STF</span>
                 <div class="s5-photo-actions">
                   <button class="text-link-sm" type="button" id="toggle-sword-focus" aria-pressed="false">Detail: Sword on lap</button>
                   <button class="text-link-sm" type="button" id="s5-justica-full-btn" data-image="./assets/report/justica.jpg" data-alt="Alfredo Ceschiatti, A Justiça, 1961. Supremo Tribunal Federal." data-caption="Alfredo Ceschiatti, A Justiça, 1961, stone (“pedra de Petrópolis”), 3.30 m, Supremo Tribunal Federal, Praça dos Três Poderes, Brasília. (Photograph: Fellipe Sampaio / STF)">Full photo ↗</button>
@@ -1608,7 +1626,7 @@
                 <div class="v3-chip-row">
                   <span class="voice-chip voice-chip--other">OTHER SOURCE · WATSON 1974 (IN ¶11)</span>
                 </div>
-                <h3 class="t-display-serif" data-editable="s6-c1-title">Alan Watson: rules move &amp; grow</h3>
+                <h3 class="t-display-serif" data-editable="s6-c1-title"><mark class="academic-term" data-annotation-key="transplantes-juridicos" tabindex="0">Alan Watson</mark>: rules move &amp; grow</h3>
                 <p class="s3-fn-risk" data-editable="s6-c1-body">
                   Spatial transfers: a transplanted rule <span lang="fr">« se développera dans son nouveau corps »</span> (“will grow in its new body”) and continue to evolve in the receiving system.
                 </p>
@@ -1618,7 +1636,7 @@
                 <div class="v3-chip-row">
                   <span class="voice-chip voice-chip--other">OTHER SOURCE · LEGRAND 1997 (IN ¶11–12)</span>
                 </div>
-                <h3 class="t-display-serif" data-editable="s6-c2-title">Pierre Legrand: « contextualité »</h3>
+                <h3 class="t-display-serif" data-editable="s6-c2-title"><mark class="academic-term" data-annotation-key="transplantes-juridicos" tabindex="0">Pierre Legrand</mark>: « contextualité »</h3>
                 <p class="s3-fn-risk" data-editable="s6-c2-body">
                   Legal meaning depends on cultural context (<cite>MJ</cite> 4(2): 111–124); crossing borders alters meaning, so transplants are declared <span lang="fr">« impossibles »</span>.
                 </p>
@@ -1630,7 +1648,7 @@
                 </div>
                 <h3 class="t-display-serif" data-editable="s6-c3-title">Historical hybridity &amp; Beviláqua</h3>
                 <p class="s3-fn-risk" data-editable="s6-c3-body">
-                  <span lang="fr">« transplantations imposées, de réceptions assumées, de souverainetés changeantes … leurs frontières sont constamment renégociées »</span> — closing with Clóvis Beviláqua’s 1916 Brazilian Civil Code.
+                  <span lang="fr">« <mark class="academic-term" data-annotation-key="transplantes-juridicos" tabindex="0">transplantations imposées</mark>, de réceptions assumées, de souverainetés changeantes … leurs <mark class="academic-term" data-annotation-key="frontieres-renegociees" tabindex="0">frontières sont constamment renégociées</mark> »</span> — closing with <mark class="academic-term" data-annotation-key="transplantes-juridicos" tabindex="0">Clóvis Beviláqua’s 1916 Brazilian Civil Code</mark>.
                 </p>
               </article>
             </div>
@@ -1742,7 +1760,7 @@
                   <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶13–14 · RENEGOTIATION OF LEGAL BOUNDARIES</span>
                 </div>
                 <p class="v3-source-summary" data-editable="s7-dauchy-p14">
-                  <span lang="fr">« … conséquences de transplantations imposées, de réceptions assumées, de souverainetés changeantes et donc de superpositions de systèmes juridiques successifs … leurs frontières sont constamment renégociées. »</span> — occurring through <span lang="fr">« un contact direct entre les ordres juridiques au sein d’un discours juridique mondial »</span> (Teubner, cited in ¶14; 1916 Civil Code).
+                  <span lang="fr">« … conséquences de <mark class="academic-term" data-annotation-key="transplantes-juridicos" tabindex="0">transplantations imposées</mark>, de réceptions assumées, de souverainetés changeantes et donc de superpositions de systèmes juridiques successifs … leurs <mark class="academic-term" data-annotation-key="frontieres-renegociees" tabindex="0">frontières sont constamment renégociées</mark>. »</span> — occurring through <span lang="fr">« un contact direct entre les ordres juridiques au sein d’un discours juridique mondial »</span> (Teubner, cited in ¶14; <mark class="academic-term" data-annotation-key="transplantes-juridicos" tabindex="0">1916 Civil Code</mark>).
                 </p>
               </article>
 
@@ -1751,7 +1769,7 @@
                   <span class="voice-chip voice-chip--dauchy">DAUCHY · ¶6–7 · LIBERTY BEYOND THE CONSTITUTIONAL FORMULA</span>
                 </div>
                 <p class="v3-source-summary" data-editable="s7-dauchy-p7">
-                  <span lang="fr">« Enfermer Montesquieu dans une vision purement “constitutionnaliste” serait toutefois réducteur. »</span> — requiring <span lang="fr">« lois civiles et criminelles »</span> and <span lang="fr">« un cadre institutionnel (surtout judiciaire) »</span>.
+                  <span lang="fr">« Enfermer Montesquieu dans une vision purement “constitutionnaliste” serait toutefois réducteur. »</span> — requiring <span lang="fr">« lois civiles et criminelles »</span> and <span lang="fr">« <mark class="academic-term" data-annotation-key="system-of-liberty" tabindex="0">un cadre institutionnel (surtout judiciaire)</mark> »</span>.
                 </p>
               </article>
             </div>
@@ -2954,6 +2972,88 @@
     </div>
   </aside>
 </section>
+
+<!-- =========================================================================
+     ACADEMIC ANNOTATIONS & CRITICAL FOOTNOTES LAYER
+     Interactive real-time gloss, primary source citations, and Dauchy paragraph ties
+     ========================================================================= -->
+<!-- 1. Real-time Floating Academic Annotation Popover Card -->
+<div
+  id="academic-annotation-popover"
+  class="academic-annotation-popover"
+  role="dialog"
+  aria-label="Academic Footnote &amp; Source Annotation"
+  aria-hidden="true"
+  hidden
+>
+  <div class="academic-popover__card">
+    <div class="academic-popover__header">
+      <div class="academic-popover__meta-group">
+        <span class="academic-popover__kicker t-meta" id="academic-popover-category">PRIMARY SOURCE · MONTESQUIEU</span>
+        <span class="academic-popover__dauchy-tag t-meta" id="academic-popover-dauchy">DAUCHY ¶8–10</span>
+      </div>
+      <button type="button" class="academic-popover__close" id="academic-popover-close" aria-label="Close annotation (Esc)">×</button>
+    </div>
+
+    <div class="academic-popover__body">
+      <h4 class="academic-popover__term t-display-serif" id="academic-popover-term">Esprit général</h4>
+      <p class="academic-popover__citation t-meta" id="academic-popover-citation">De l’esprit des lois (1748), Book XIX, Chap. 4</p>
+
+      <blockquote class="academic-popover__quote" id="academic-popover-quote">
+        <p class="academic-popover__quote-orig" id="academic-popover-quote-orig"></p>
+        <p class="academic-popover__quote-trans t-meta" id="academic-popover-quote-trans"></p>
+      </blockquote>
+
+      <div class="academic-popover__section">
+        <h5 class="academic-popover__section-title t-meta">SCHOLARLY FOOTNOTE &amp; MANUSCRIPT TIE</h5>
+        <p class="academic-popover__footnote" id="academic-popover-footnote"></p>
+      </div>
+
+      <div class="academic-popover__section academic-popover__section--discussant">
+        <h5 class="academic-popover__section-title t-meta">DISCUSSANT READING · ANA VITÓRIA VANZIN MENDES</h5>
+        <p class="academic-popover__discussant" id="academic-popover-discussant"></p>
+      </div>
+    </div>
+
+    <div class="academic-popover__footer">
+      <div class="academic-popover__actions">
+        <button type="button" class="academic-popover__btn t-ui" id="academic-popover-copy-btn">
+          <span>📋 Copy Citation</span>
+        </button>
+        <button type="button" class="academic-popover__btn t-ui" id="academic-popover-pin-btn">
+          <span>📌 Pin Marginalia</span>
+        </button>
+      </div>
+      <span class="academic-popover__shortcut-hint t-meta">Shortcut: <strong>A</strong> toggles layer · <strong>Esc</strong> closes</span>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Slide Marginalia Rail (Docked Scholarly Footnotes) -->
+<aside
+  id="academic-marginalia-rail"
+  class="academic-marginalia-rail"
+  role="complementary"
+  aria-label="Academic Footnotes &amp; Critical Annotations for Active Slide"
+  hidden
+>
+  <header class="marginalia-rail__header">
+    <div class="marginalia-rail__title-group">
+      <span class="marginalia-rail__badge t-meta">CRITICAL MARGINALIA</span>
+      <h3 class="marginalia-rail__title t-condensed">Academic Footnotes</h3>
+      <p class="marginalia-rail__sub t-meta" id="marginalia-rail-slide-sub">Slide 01 · 2 Annotations</p>
+    </div>
+    <button type="button" class="marginalia-rail__close" id="marginalia-rail-close" aria-label="Close Marginalia Rail">×</button>
+  </header>
+
+  <div class="marginalia-rail__list" id="marginalia-rail-list">
+    <!-- Populated dynamically based on the current active slide -->
+  </div>
+
+  <footer class="marginalia-rail__footer">
+    <span class="t-meta">Press <strong>A</strong> to toggle annotation highlights on slide canvas</span>
+  </footer>
+</aside>
 
 <script src="./vendor/js/gsap.min.js"></script>
 <script type="module" src="./js/report.js"></script>
